@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 const navLinks = [
-  { name: "Scent Marketing", path: "/scent-marketing" },
+  { name: "Scent marketing", path: "/scent-marketing" },
   { name: "Products", path: "/products" },
   { name: "Clients", path: "/clients" },
   { name: "Blog", path: "/blog" },
@@ -17,57 +17,39 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-white z-50">
       {/* Top tier */}
-      <div className="w-full flex justify-between items-center px-6 lg:px-12 py-5 border-b border-gray-100">
+      <div className="w-full flex justify-between items-center px-6 lg:px-12 py-6">
         
         {/* Mobile Menu Button / Placeholder */}
-        <button 
-          className="text-black hover:text-gray-500 transition-colors"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X size={26} strokeWidth={1.5} /> : <Menu size={26} strokeWidth={1.5} />}
-        </button>
+        <div className="w-[26px]">
+          <button 
+            className="md:hidden text-black hover:text-gray-500 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={26} strokeWidth={1.5} /> : <Menu size={26} strokeWidth={1.5} />}
+          </button>
+        </div>
         
         {/* Logo */}
         <Link to="/" className="mx-auto flex justify-center items-center">
-          <img 
-            src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/09/airaroma-logo2x.png" 
-            alt="Air Aroma Logo" 
-            className="h-7 w-auto object-contain sm:h-8"
-          />
+          <span className="text-[34px] md:text-[44px] font-light tracking-tight text-black leading-none">Air<span className="text-[#a8a8a8]">/</span>Aroma</span>
         </Link>
 
-        {/* Desktop Cart / Mobile Toggle */}
-        <div className="flex items-center space-x-6">
-          <Link to="/store/cart/" className="hidden md:flex text-[13px] font-medium tracking-wide text-black hover:text-gray-500 transition-colors items-center">
-            Cart (<span id="store-count">0</span>)
-          </Link>
-          <Link to="/my-account/" className="hidden md:flex text-[13px] font-medium tracking-wide text-black hover:text-gray-500 transition-colors">
-            Sign in / Sign up
-          </Link>
-          <Link to="/cart" className="text-black hover:text-gray-500 transition-colors">
-            <ShoppingCart size={22} strokeWidth={1.5} />
-          </Link>
-        </div>
+        {/* Desktop Right Spacer */}
+        <div className="w-[26px]"></div>
       </div>
       
       {/* Bottom tier (Desktop) */}
-      <div className="hidden md:flex justify-center items-center px-6 lg:px-12 py-4 border-b border-gray-100 text-[13px] font-medium tracking-wide">
-        <div className="flex space-x-12">
+      <div className="hidden md:flex justify-between items-center px-6 lg:px-12 pb-5 text-[13px] font-light tracking-wide">
+        <div className="flex space-x-8">
           {navLinks.map((link) => (
             <Link 
               key={link.name} 
               to={link.path}
-              className="text-black hover:text-gray-500 transition-colors uppercase tracking-[0.15em] text-[11px]"
+              className="text-black hover:text-gray-500 transition-colors"
             >
               {link.name}
             </Link>
           ))}
-          <Link 
-            to="/store" 
-            className="text-black hover:text-gray-500 transition-colors uppercase tracking-[0.15em] text-[11px]"
-          >
-            Store
-          </Link>
         </div>
       </div>
 
@@ -92,21 +74,7 @@ export default function Navbar() {
                  {link.name}
                </Link>
              ))}
-             <Link
-               to="/store"
-               onClick={() => setMobileMenuOpen(false)}
-               className="text-black hover:text-gray-500"
-             >
-               Store
-             </Link>
-             <div className="pt-4 mt-4 border-t border-gray-100 flex flex-col space-y-4">
-               <Link to="/store/cart/" className="text-black hover:text-gray-500 transition-colors">
-                  Cart (0)
-               </Link>
-               <Link to="/my-account/" className="text-black hover:text-gray-500 transition-colors">
-                  Sign in / Sign up
-               </Link>
-             </div>
+
            </div>
          </motion.div>
         )}

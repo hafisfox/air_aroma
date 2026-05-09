@@ -10,7 +10,6 @@ export default function Footer() {
           <Link to="/products" className="hover:text-gray-500 transition-colors">Products</Link>
           <Link to="/clients" className="hover:text-gray-500 transition-colors">Clients</Link>
           <Link to="/blog" className="hover:text-gray-500 transition-colors">Blog</Link>
-          <Link to="/store" className="hover:text-gray-500 transition-colors">Store</Link>
         </div>
         
         {/* Column 2 */}

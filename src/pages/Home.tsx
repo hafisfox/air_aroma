@@ -29,23 +29,19 @@ const slides = [
   },
   {
     title: "Fairmont Signature Scent",
-    description: "Get the exclusive brand scented candles.",
+    description: "Discover our exclusive brand scented candles.",
     image: "https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2024/11/fairmont-candle-for-sale.jpg",
-    link: "/store/candles/fairmont-iconic-white",
+    link: "/fragrances",
     textColor: "text-gray-200",
     descColor: "text-gray-400"
   }
 ];
 
 export default function Home() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(1);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+  // Keep slides functional but remove auto-play to match static reference
+
 
   return (
     <div className="w-full bg-white text-black">
@@ -140,25 +136,29 @@ export default function Home() {
           </Link>
         </div>
         
-        {/* Small logos */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-          <div className="bg-white border border-gray-100 aspect-square flex items-center justify-center p-8 group cursor-pointer transition-colors hover:bg-neutral-50">
-            <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2026/05/Raffles-logo.png" alt="Raffles" className="w-full max-w-[150px] object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
+        {/* Small logos & Link block */}
+        <div className="bg-[#f5f5f5] w-full flex flex-col mt-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 w-full">
+            <div className="flex items-center justify-center p-12 md:p-16 border-b border-r border-white md:border-b-0 group cursor-pointer">
+              <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2026/05/Raffles-logo.png" alt="Raffles" className="w-full max-w-[140px] object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <div className="flex items-center justify-center p-12 md:p-16 border-b border-white md:border-b-0 md:border-r group cursor-pointer">
+              <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/09/max-mara.png" alt="Max Mara" className="w-full max-w-[140px] object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <div className="flex items-center justify-center p-12 md:p-16 border-r border-white md:border-r group cursor-pointer">
+              <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/09/aston-martin.png" alt="Aston Martin" className="w-full max-w-[140px] object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <div className="flex items-center justify-center p-12 md:p-16 group cursor-pointer">
+               <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/09/cathay-pacific.png" alt="Cathay Pacific" className="w-full max-w-[140px] object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
+            </div>
           </div>
-          <div className="bg-white border border-gray-100 aspect-square flex items-center justify-center p-8 group cursor-pointer transition-colors hover:bg-neutral-50">
-            <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/09/max-mara.png" alt="Max Mara Logo" className="w-full max-w-[150px] object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
-          </div>
-          <div className="bg-white border border-gray-100 aspect-square flex flex-col items-center justify-center p-8 group cursor-pointer transition-colors hover:bg-neutral-50">
-            <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/09/aston-martin.png" alt="Aston Martin Logo" className="w-full max-w-[150px] object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
-          </div>
-          <div className="bg-white border border-gray-100 aspect-square flex flex-col items-center justify-center p-8 group cursor-pointer transition-colors hover:bg-neutral-50">
-             <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/09/cathay-pacific.png" alt="Cathay Pacific Logo" className="w-full max-w-[150px] object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
-          </div>
+          
+          <div className="w-full h-px bg-white"></div>
+          
+          <Link to="/clients/" className="block w-full py-10 text-center text-[15px] font-light text-neutral-600 hover:text-black transition-colors">
+            View more clients
+          </Link>
         </div>
-
-        <Link to="/clients/" className="block w-full border border-gray-100 py-12 text-[15px] font-light hover:bg-neutral-50 transition-colors text-black tracking-wide">
-          View more clients
-        </Link>
       </section>
 
       {/* Two column articles section */}
