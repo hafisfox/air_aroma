@@ -15,7 +15,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="w-full bg-white z-50">
+    <nav className="w-full bg-white z-50" aria-label="Main navigation" role="navigation">
       {/* Top tier */}
       <div className="w-full flex justify-between items-center px-6 lg:px-12 py-6">
         
@@ -24,14 +24,17 @@ export default function Navbar() {
           <button 
             className="md:hidden text-black hover:text-gray-500 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             {mobileMenuOpen ? <X size={26} strokeWidth={1.5} /> : <Menu size={26} strokeWidth={1.5} />}
           </button>
         </div>
         
         {/* Logo */}
-        <Link to="/" className="mx-auto flex justify-center items-center">
-          <span className="text-[34px] md:text-[44px] font-light tracking-tight text-black leading-none">Air<span className="text-[#a8a8a8]">/</span>Aroma</span>
+        <Link to="/" className="mx-auto flex justify-center items-center" aria-label="Air Aroma — Home">
+          <span className="text-[34px] md:text-[44px] font-light tracking-tight text-black leading-none">Air<span className="text-[#a8a8a8]" aria-hidden="true">/</span>Aroma</span>
         </Link>
 
         {/* Desktop Right Spacer */}
@@ -57,11 +60,14 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
            <motion.div
+           id="mobile-menu"
            initial={{ opacity: 0, height: 0 }}
            animate={{ opacity: 1, height: "auto" }}
            exit={{ opacity: 0, height: 0 }}
            transition={{ duration: 0.3 }}
            className="md:hidden border-b border-gray-100 bg-white overflow-hidden"
+           role="menu"
+           aria-label="Mobile navigation menu"
          >
            <div className="flex flex-col px-6 py-4 space-y-4 text-sm font-medium uppercase tracking-[0.15em]">
              {navLinks.map((link) => (
@@ -70,6 +76,7 @@ export default function Navbar() {
                  to={link.path}
                  onClick={() => setMobileMenuOpen(false)}
                  className="text-black hover:text-gray-500"
+                 role="menuitem"
                >
                  {link.name}
                </Link>

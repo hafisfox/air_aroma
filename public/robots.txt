@@ -1,0 +1,11 @@
+# Air Aroma - Robots.txt
+# https://air-aroma.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://air-aroma.com/sitemap.xml
+
+# Crawl-delay (optional, for polite crawling)
+Crawl-delay: 1
