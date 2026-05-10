@@ -15,7 +15,7 @@ export default function Footer() {
         {/* Column 2 — Company & social */}
         <nav aria-label="Company pages" className="flex flex-col space-y-4">
           <Link to="/about" className="hover:text-gray-500 transition-colors">About</Link>
-          <Link to="/services" className="hover:text-gray-500 transition-colors">Services</Link>
+          <Link to="/scent-marketing" className="hover:text-gray-500 transition-colors">Services</Link>
           <Link to="/contact" className="hover:text-gray-500 transition-colors">Contact</Link>
           <a href="https://www.facebook.com/AirAroma" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors" aria-label="Visit Air Aroma on Facebook">Facebook</a>
           <a href="https://www.instagram.com/airaroma" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors" aria-label="Visit Air Aroma on Instagram">Instagram</a>
@@ -25,8 +25,8 @@ export default function Footer() {
         <nav aria-label="Social media and legal" className="flex flex-col space-y-4">
           <a href="https://twitter.com/AirAroma" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors" aria-label="Visit Air Aroma on Twitter">Twitter</a>
           <a href="https://www.youtube.com/user/airaroma" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors" aria-label="Visit Air Aroma on YouTube">YouTube</a>
-          <Link to="/legal" className="hover:text-gray-500 transition-colors">Legal</Link>
-          <Link to="/faq" className="hover:text-gray-500 transition-colors">FAQ</Link>
+          <Link to="/about" className="hover:text-gray-500 transition-colors">Legal</Link>
+          <Link to="/contact" className="hover:text-gray-500 transition-colors">FAQ</Link>
         </nav>
 
         {/* Newsletter Column */}
@@ -57,7 +57,7 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto pt-6 flex flex-col md:flex-row justify-between items-center text-[12px] font-light text-gray-500 space-y-4 md:space-y-0">
         <p>&copy; 2026 Air Aroma. All rights reserved.</p>
         <div className="flex items-center space-x-3 cursor-pointer hover:text-black transition-colors">
-          <Link to="/country/" aria-label="Select your country or region">Select country or region</Link>
+          <Link to="/" aria-label="Select your country or region">Select country or region</Link>
           <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2021/05/flag-us.png" alt="United States flag" width="18" height="12" className="w-[18px] object-contain block" loading="lazy" />
         </div>
       </div>

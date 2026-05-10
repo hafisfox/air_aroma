@@ -163,12 +163,12 @@ export default function Home() {
         
         {/* Large tiles */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <Link to="/clients/capella-hotels-scent/" className="bg-[#f2f2f2] aspect-[4/3] flex flex-col items-center justify-center relative group overflow-hidden" aria-label="View Capella Hotels scent marketing case study">
+          <Link to="/clients" className="bg-[#f2f2f2] aspect-[4/3] flex flex-col items-center justify-center relative group overflow-hidden" aria-label="View Capella Hotels scent marketing case study">
             <h3 className="text-[22px] font-light z-10 p-8 group-hover:opacity-0 transition-opacity duration-300 tracking-wide">Capella Hotels</h3>
             <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2023/06/feature-capella-hotels.jpg" alt="Capella Hotels luxury lobby with Air Aroma custom scent diffusion" loading="lazy" className="absolute bottom-0 w-full h-[55%] object-cover transition-all duration-500 group-hover:h-full" />
             <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center text-white z-20 font-light tracking-widest uppercase text-sm">View</div>
           </Link>
-          <Link to="/clients/jlr-scent/" className="bg-[#f2f2f2] aspect-[4/3] flex flex-col items-center justify-center relative group overflow-hidden" aria-label="View JLR scent marketing case study">
+          <Link to="/clients" className="bg-[#f2f2f2] aspect-[4/3] flex flex-col items-center justify-center relative group overflow-hidden" aria-label="View JLR scent marketing case study">
             <h3 className="text-[22px] font-light z-10 p-8 group-hover:opacity-0 transition-opacity duration-300 tracking-wide">JLR</h3>
             <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2021/05/UPDATED-JLR-feature.jpg" alt="JLR Jaguar Land Rover showroom with Air Aroma signature scent" loading="lazy" className="absolute bottom-0 w-full h-[55%] object-cover transition-all duration-500 group-hover:h-full" />
             <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center text-white z-20 font-light tracking-widest uppercase text-sm">View</div>
@@ -203,18 +203,18 @@ export default function Home() {
       {/* Two column articles section */}
       <section id="latest-articles" aria-label="Latest articles and insights" className="py-20 px-6 lg:px-12 max-w-6xl mx-auto border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8">
         <article className="md:border-r border-gray-100 md:pr-12 flex flex-col items-start">
-          <h3 className="text-xl font-light mb-4"><Link to="/blog/sofitel-products/" className="hover:text-gray-600 transition-colors">Sofitel and Air Aroma's Custom Fragrance Products</Link></h3>
+          <h3 className="text-xl font-light mb-4"><Link to="/blog" className="hover:text-gray-600 transition-colors">Sofitel and Air Aroma's Custom Fragrance Products</Link></h3>
           <p className="text-neutral-500 font-light text-[15px] leading-relaxed mb-6">
             Sofitel Hotels & Resorts has long understood that luxury is a feeling, and not just a simple combination of parts. As the largest international hospitality brand rooted in French heritage, Sofitel has built its identity around...
           </p>
-          <Link to="/blog/sofitel-products/" className="underline decoration-1 underline-offset-4 hover:text-gray-600 font-light text-sm tracking-wide" aria-label="Read more about Sofitel and Air Aroma's custom fragrance products">Read More</Link>
+          <Link to="/blog" className="underline decoration-1 underline-offset-4 hover:text-gray-600 font-light text-sm tracking-wide" aria-label="Read more about Sofitel and Air Aroma's custom fragrance products">Read More</Link>
         </article>
         <article className="md:pl-4 flex flex-col items-start">
-          <h3 className="text-xl font-light mb-4"><Link to="/scenting/" className="hover:text-gray-600 transition-colors">Who's Scenting?</Link></h3>
+          <h3 className="text-xl font-light mb-4"><Link to="/clients" className="hover:text-gray-600 transition-colors">Who's Scenting?</Link></h3>
           <p className="text-neutral-500 font-light text-[15px] leading-relaxed mb-6">
             We design scents for hotels, retail stores, financial institutions, fashion brands, events, residential homes and so much more.
           </p>
-          <Link to="/scenting/" className="underline decoration-1 underline-offset-4 hover:text-gray-600 font-light text-sm tracking-wide" aria-label="Read more about who uses scent marketing">Read More</Link>
+          <Link to="/clients" className="underline decoration-1 underline-offset-4 hover:text-gray-600 font-light text-sm tracking-wide" aria-label="Read more about who uses scent marketing">Read More</Link>
         </article>
       </section>
     </div>
