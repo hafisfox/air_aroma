@@ -2,6 +2,14 @@ import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import SEOHead from "../components/SEOHead";
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Air Aroma Products",
+  "description": "Discover our premium fragrances, diffusers, and essential oils.",
+  "url": "https://air-aroma.com/products"
+};
+
 export default function Products() {
   return (
     <div className="w-full bg-white text-black">
@@ -9,6 +17,7 @@ export default function Products() {
         title="Products | Air Aroma"
         description="Discover our premium fragrances, diffusers, and essential oils."
         canonicalPath="/products"
+        structuredData={structuredData}
       />
       <section className="relative h-[40vh] flex flex-col justify-center px-6 lg:px-12 border-b border-gray-100">
         <div className="max-w-4xl">

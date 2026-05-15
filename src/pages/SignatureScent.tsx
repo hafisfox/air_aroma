@@ -1,6 +1,16 @@
 import { motion } from "motion/react";
 import SEOHead from "../components/SEOHead";
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Signature Scent Design",
+  "provider": { "@type": "Organization", "name": "Air Aroma" },
+  "description": "Create your brand's unique signature scent with Air Aroma's master perfumers.",
+  "url": "https://air-aroma.com/signature-scent",
+  "serviceType": "Scent Design"
+};
+
 export default function SignatureScent() {
   return (
     <div className="w-full bg-white text-black">
@@ -8,6 +18,7 @@ export default function SignatureScent() {
         title="Signature Scent Design | Air Aroma"
         description="Create your brand's unique signature scent with Air Aroma's master perfumers."
         canonicalPath="/signature-scent"
+        structuredData={structuredData}
       />
       <section className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-gray-100">
         <div className="max-w-4xl">

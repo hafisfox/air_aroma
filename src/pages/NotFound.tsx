@@ -9,6 +9,7 @@ export default function NotFound() {
         title="Page Not Found | Air Aroma"
         description="The page you are looking for does not exist."
         canonicalPath="/404"
+        noindex={true}
       />
       <motion.h1 
         initial={{ opacity: 0, y: 20 }}

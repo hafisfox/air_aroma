@@ -1,6 +1,14 @@
 import { motion } from "motion/react";
 import SEOHead from "../components/SEOHead";
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Air Aroma Essential Oils",
+  "description": "100% pure and natural essential oil blends.",
+  "url": "https://air-aroma.com/essential-oils"
+};
+
 export default function EssentialOils() {
   return (
     <div className="w-full bg-white text-black">
@@ -8,6 +16,7 @@ export default function EssentialOils() {
         title="Essential Oils | Air Aroma"
         description="100% pure and natural essential oil blends."
         canonicalPath="/essential-oils"
+        structuredData={structuredData}
       />
       <section className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-gray-100">
         <div className="max-w-4xl">

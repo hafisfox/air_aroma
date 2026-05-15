@@ -1,6 +1,14 @@
 import { motion } from "motion/react";
 import SEOHead from "../components/SEOHead";
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Air Aroma Clients",
+  "description": "Discover the luxury brands that trust Air Aroma for their scent marketing.",
+  "url": "https://air-aroma.com/clients"
+};
+
 export default function Clients() {
   return (
     <div className="w-full bg-white text-black">
@@ -8,6 +16,7 @@ export default function Clients() {
         title="Clients | Air Aroma"
         description="Discover the luxury brands that trust Air Aroma for their scent marketing."
         canonicalPath="/clients"
+        structuredData={structuredData}
       />
       <section className="relative h-[40vh] flex flex-col justify-center px-6 lg:px-12 border-b border-gray-100">
         <div className="max-w-4xl">
