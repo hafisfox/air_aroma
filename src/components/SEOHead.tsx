@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { getRouteMetadata, type RouteKey } from "../seo/routes";
+import { useLocation } from "react-router-dom";
+import { getRouteMetadata } from "../seo/routes";
 import { SITE_NAME, type Locale } from "../seo/site";
 
 interface SEOHeadProps {
   locale: Locale;
-  routeKey: RouteKey;
 }
 
 function upsertMeta(attribute: "name" | "property", value: string, content: string) {
@@ -37,9 +37,11 @@ function upsertLink(
   }
 }
 
-export default function SEOHead({ locale, routeKey }: SEOHeadProps) {
+export default function SEOHead({ locale }: SEOHeadProps) {
+  const { pathname } = useLocation();
+
   useEffect(() => {
-    const metadata = getRouteMetadata(routeKey, locale);
+    const metadata = getRouteMetadata(pathname);
 
     document.documentElement.lang = locale;
     document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
@@ -110,7 +112,7 @@ export default function SEOHead({ locale, routeKey }: SEOHeadProps) {
       script.textContent = JSON.stringify(metadata.structuredData);
       document.head.appendChild(script);
     }
-  }, [locale, routeKey]);
+  }, [locale, pathname]);
 
   return null;
 }

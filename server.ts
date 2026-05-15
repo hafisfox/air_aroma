@@ -3,15 +3,11 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import express from "express";
 import { createServer as createViteServer } from "vite";
-import {
-  getRouteKeyForBasePath,
-  isKnownBasePath,
-} from "./src/seo/routes";
+import { getRouteResponseInfo } from "./src/seo/routes";
 import { renderHeadHtml } from "./src/seo/renderHead";
 import {
   type Locale,
   getLocaleFromPath,
-  stripLocalePrefix,
 } from "./src/seo/site";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -62,9 +58,8 @@ async function createServer() {
     try {
       const url = request.originalUrl;
       const locale = getLocaleFromPath(url);
-      const normalizedPath = stripLocalePrefix(new URL(url, "http://localhost").pathname);
-      const statusCode = isKnownBasePath(normalizedPath) ? 200 : 404;
-      const routeKey = getRouteKeyForBasePath(normalizedPath);
+      const pathname = new URL(url, "http://localhost").pathname;
+      const { statusCode } = getRouteResponseInfo(pathname);
 
       const templatePath = isProduction
         ? path.resolve(__dirname, "dist/client/index.html")
@@ -92,7 +87,7 @@ async function createServer() {
       }
 
       const { appHtml } = await render(url);
-      const headHtml = renderHeadHtml(routeKey, locale);
+      const headHtml = renderHeadHtml(pathname);
 
       const html = template
         .replace("%LANG%", locale)

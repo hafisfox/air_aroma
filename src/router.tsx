@@ -1,10 +1,6 @@
 import type { ReactNode } from "react";
 import { useEffect } from "react";
-import {
-  type RouteObject,
-  useRoutes,
-  matchRoutes,
-} from "react-router-dom";
+import { type RouteObject, useRoutes } from "react-router-dom";
 import Layout from "./components/Layout";
 import NotFound from "./pages/NotFound";
 import ScentMarketing from "./pages/ScentMarketing";
@@ -18,24 +14,21 @@ import Clients from "./pages/Clients";
 import Blog from "./pages/Blog";
 import SignatureScent from "./pages/SignatureScent";
 import EssentialOils from "./pages/EssentialOils";
+import ProductDetail from "./pages/ProductDetail";
 import { setLocale } from "./i18n";
 import SEOHead from "./components/SEOHead";
-import type { RouteKey } from "./seo/routes";
 import type { Locale } from "./seo/site";
-import { getLocaleFromPath } from "./seo/site";
 
 function RouteShell({
   children,
   locale,
-  routeKey,
 }: {
   children: ReactNode;
   locale: Locale;
-  routeKey: RouteKey;
 }) {
   return (
     <>
-      <SEOHead locale={locale} routeKey={routeKey} />
+      <SEOHead locale={locale} />
       {children}
     </>
   );
@@ -54,110 +47,106 @@ function buildLocalizedChildren(locale: Locale): RouteObject[] {
     {
       index: true,
       element: (
-        <RouteShell locale={locale} routeKey="home">
+        <RouteShell locale={locale}>
           <Home />
         </RouteShell>
       ),
-      handle: { routeKey: "home", status: 200 },
     },
     {
       path: "scent-marketing",
       element: (
-        <RouteShell locale={locale} routeKey="scentMarketing">
+        <RouteShell locale={locale}>
           <ScentMarketing />
         </RouteShell>
       ),
-      handle: { routeKey: "scentMarketing", status: 200 },
     },
     {
       path: "fragrances",
       element: (
-        <RouteShell locale={locale} routeKey="fragrances">
+        <RouteShell locale={locale}>
           <Fragrances />
         </RouteShell>
       ),
-      handle: { routeKey: "fragrances", status: 200 },
     },
     {
       path: "diffusers",
       element: (
-        <RouteShell locale={locale} routeKey="diffusers">
+        <RouteShell locale={locale}>
           <Diffusers />
         </RouteShell>
       ),
-      handle: { routeKey: "diffusers", status: 200 },
     },
     {
       path: "about",
       element: (
-        <RouteShell locale={locale} routeKey="about">
+        <RouteShell locale={locale}>
           <About />
         </RouteShell>
       ),
-      handle: { routeKey: "about", status: 200 },
     },
     {
       path: "contact",
       element: (
-        <RouteShell locale={locale} routeKey="contact">
+        <RouteShell locale={locale}>
           <Contact />
         </RouteShell>
       ),
-      handle: { routeKey: "contact", status: 200 },
     },
     {
       path: "products",
       element: (
-        <RouteShell locale={locale} routeKey="products">
+        <RouteShell locale={locale}>
           <Products />
         </RouteShell>
       ),
-      handle: { routeKey: "products", status: 200 },
+    },
+    {
+      path: "products/:productId",
+      element: (
+        <RouteShell locale={locale}>
+          <ProductDetail />
+        </RouteShell>
+      ),
     },
     {
       path: "clients",
       element: (
-        <RouteShell locale={locale} routeKey="clients">
+        <RouteShell locale={locale}>
           <Clients />
         </RouteShell>
       ),
-      handle: { routeKey: "clients", status: 200 },
     },
     {
       path: "blog",
       element: (
-        <RouteShell locale={locale} routeKey="blog">
+        <RouteShell locale={locale}>
           <Blog />
         </RouteShell>
       ),
-      handle: { routeKey: "blog", status: 200 },
     },
     {
       path: "signature-scent",
       element: (
-        <RouteShell locale={locale} routeKey="signatureScent">
+        <RouteShell locale={locale}>
           <SignatureScent />
         </RouteShell>
       ),
-      handle: { routeKey: "signatureScent", status: 200 },
     },
     {
       path: "essential-oils",
       element: (
-        <RouteShell locale={locale} routeKey="essentialOils">
+        <RouteShell locale={locale}>
           <EssentialOils />
         </RouteShell>
       ),
-      handle: { routeKey: "essentialOils", status: 200 },
     },
     {
       path: "*",
       element: (
-        <RouteShell locale={locale} routeKey="notFound">
+        <RouteShell locale={locale}>
           <NotFound />
         </RouteShell>
       ),
-      handle: { routeKey: "notFound", status: 404 },
     },
   ];
 }
@@ -179,16 +168,4 @@ export function getRouteObjects(): RouteObject[] {
 
 export function AppRouter() {
   return useRoutes(getRouteObjects());
-}
-
-export function getRouteResponseInfo(pathname: string) {
-  const locale = getLocaleFromPath(pathname);
-  const matches = matchRoutes(getRouteObjects(), pathname);
-  const leafMatch = matches?.at(-1);
-  const statusCode =
-    typeof leafMatch?.route.handle?.status === "number"
-      ? leafMatch.route.handle.status
-      : 200;
-
-  return { locale, statusCode };
 }

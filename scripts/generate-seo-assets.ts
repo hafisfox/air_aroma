@@ -2,10 +2,13 @@ import { mkdir, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  getLlmsEntries,
   getRouteDefinition,
   indexableRouteKeys,
 } from "../src/seo/routes";
+import {
+  getProductDetailBasePath,
+  products,
+} from "../src/data/products";
 import {
   getAbsoluteUrl,
   withLocale,
@@ -19,12 +22,12 @@ const publicDir = path.join(rootDir, "public");
 async function generate() {
   await mkdir(publicDir, { recursive: true });
 
-  const routeEntries = await Promise.all(
+  const staticEntries = await Promise.all(
     indexableRouteKeys.flatMap((routeKey) => {
       const definition = getRouteDefinition(routeKey);
 
       return (["en", "ar"] as Locale[]).map(async (locale) => ({
-        routeKey,
+        alternateBasePath: definition.basePath,
         locale,
         lastModified: await getLastModified(definition.sourceFiles),
         url: getAbsoluteUrl(withLocale(definition.basePath, locale)),
@@ -32,14 +35,67 @@ async function generate() {
     }),
   );
 
+  const productSourceFiles = [
+    "src/pages/ProductDetail.tsx",
+    "src/data/products.ts",
+  ];
+
+  const productEntries = await Promise.all(
+    products.flatMap((product) =>
+      (["en", "ar"] as Locale[]).map(async (locale) => ({
+        alternateBasePath: getProductDetailBasePath(product),
+        locale,
+        lastModified: await getLastModified(productSourceFiles),
+        url: getAbsoluteUrl(withLocale(getProductDetailBasePath(product), locale)),
+      })),
+    ),
+  );
+
+  const routeEntries = [...staticEntries, ...productEntries];
+
+  const llmsEntriesEn = [
+    ...indexableRouteKeys.map((routeKey) => {
+      const definition = getRouteDefinition(routeKey);
+      return {
+        title: definition.title.en,
+        url: getAbsoluteUrl(withLocale(definition.basePath, "en")),
+        description:
+          definition.llmsDescription?.en ?? definition.description.en,
+      };
+    }),
+    ...products.map((product) => ({
+      title: `${product.nameEn} | ${product.type === "diffuser" ? "Luxury Diffuser" : "Luxury Fragrance"} by Air Aroma`,
+      url: getAbsoluteUrl(withLocale(getProductDetailBasePath(product), "en")),
+      description: product.storyEn,
+    })),
+  ];
+
+  const llmsEntriesAr = [
+    ...indexableRouteKeys.map((routeKey) => {
+      const definition = getRouteDefinition(routeKey);
+      return {
+        title: definition.title.ar,
+        url: getAbsoluteUrl(withLocale(definition.basePath, "ar")),
+        description:
+          definition.llmsDescription?.ar ?? definition.description.ar,
+      };
+    }),
+    ...products.map((product) => ({
+      title: `${product.nameAr} | ${product.type === "diffuser" ? "موزع عطور فاخر" : "عطر فاخر"} من Air Aroma`,
+      url: getAbsoluteUrl(withLocale(getProductDetailBasePath(product), "ar")),
+      description: product.storyAr,
+    })),
+  ];
+
   const sitemapXml = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
     '        xmlns:xhtml="http://www.w3.org/1999/xhtml">',
     ...routeEntries.map((entry) => {
-      const definition = getRouteDefinition(entry.routeKey);
-      const englishUrl = getAbsoluteUrl(definition.basePath);
-      const arabicUrl = getAbsoluteUrl(withLocale(definition.basePath, "ar"));
+      const englishUrl = getAbsoluteUrl(entry.alternateBasePath);
+      const arabicUrl = getAbsoluteUrl(
+        withLocale(entry.alternateBasePath, "ar"),
+      );
 
       return [
         "  <url>",
@@ -60,12 +116,12 @@ async function generate() {
     "> Premium scent marketing, fragrance design, and diffuser solutions for Saudi Arabia and the GCC.",
     "",
     "## English pages",
-    ...getLlmsEntries("en").map(
+    ...llmsEntriesEn.map(
       (entry) => `- [${entry.title}](${entry.url}): ${entry.description}`,
     ),
     "",
     "## Arabic pages",
-    ...getLlmsEntries("ar").map(
+    ...llmsEntriesAr.map(
       (entry) => `- [${entry.title}](${entry.url}): ${entry.description}`,
     ),
     "",

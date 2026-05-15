@@ -1,4 +1,10 @@
-import { motion } from "motion/react";
+import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "motion/react";
 import { Link } from "react-router-dom";
 import { useLocaleRouting } from "../lib/localeRouting";
 
@@ -40,19 +46,64 @@ const faqItems = {
 };
 
 export default function Home() {
-  const { isArabic, toLocalePath } = useLocaleRouting();
-  const locale = isArabic ? "ar" : "en";
+  const { isArabic, locale, toLocalePath } = useLocaleRouting();
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end end"],
+  });
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 28,
+    mass: 0.45,
+  });
+
+  const mediaScale = useTransform(smoothProgress, [0, 0.5, 1], [1, 1.08, 1.16]);
+  const mediaOpacity = useTransform(smoothProgress, [0, 0.82, 1], [0.72, 0.46, 0.18]);
+
+  const phase1Opacity = useTransform(smoothProgress, [0, 0.12, 0.28], [1, 1, 0]);
+  const phase1Y = useTransform(smoothProgress, [0, 0.28], [0, -42]);
+
+  const phase2Opacity = useTransform(
+    smoothProgress,
+    [0.18, 0.35, 0.58],
+    [0, 1, 0],
+  );
+  const phase2Y = useTransform(smoothProgress, [0.18, 0.35, 0.58], [44, 0, -38]);
+
+  const phase3Opacity = useTransform(
+    smoothProgress,
+    [0.52, 0.72, 1],
+    [0, 1, 1],
+  );
+  const phase3Y = useTransform(smoothProgress, [0.52, 0.72, 1], [40, 0, 0]);
 
   const copy = isArabic
     ? {
         badge: "حلول عطرية للضيافة الفاخرة والتجزئة",
-        title: "هوية عطرية فاخرة للمشاريع في السعودية ودول الخليج",
-        intro:
-          "تصمم Air Aroma برامج تسويق الروائح والعطور المميزة وأنظمة النشر بالهواء البارد للفنادق والمتاجر والمساكن الراقية والوجهات ذات العلامات التجارية.",
-        support:
-          "من تطوير الرائحة المميزة إلى اختيار نظام النشر المناسب، نساعد الفرق على بناء تجربة حسية واضحة وقابلة للتوسع ومتناغمة مع مستوى المشروع.",
+        heroPhases: [
+          {
+            eyebrow: "هوية عطرية",
+            title: "تجربة حسية فاخرة للمشاريع في السعودية ودول الخليج",
+            body:
+              "تصمم Air Aroma برامج تسويق الروائح التي تجعل الوصول إلى المكان أكثر فخامةً ووضوحًا في الذاكرة وأكثر ارتباطًا بالعلامة التجارية.",
+          },
+          {
+            eyebrow: "اتجاه العطر",
+            title: "عطور مميزة تبني الانطباع قبل أن تُقال أي كلمة",
+            body:
+              "من تطوير العطر المميز إلى اختيار النفحات الجاهزة للاكتشاف، نساعد الفرق على تحديد مزاج عطري متناسق مع شخصية المشروع.",
+          },
+          {
+            eyebrow: "تقنية النشر",
+            title: "أنظمة هواء بارد أنيقة وجاهزة للتشغيل على نطاق راقٍ",
+            body:
+              "نربط بين الهوية العطرية والنظام المناسب للتشغيل اليومي، سواء لمساحات الضيافة الكبيرة أو المتاجر أو المساكن الفاخرة.",
+          },
+        ],
         primaryCta: "ابدأ مشروعك العطري",
         secondaryCta: "استكشف أنظمة النشر",
+        scrollHint: "اسحب لاكتشاف المراحل",
         focusLabel: "مجالات العمل",
         focusTitle: "كيف ندعم مشاريع الروائح في الخليج",
         focusCards: [
@@ -75,6 +126,7 @@ export default function Home() {
             link: toLocalePath("/diffusers"),
           },
         ],
+        focusLink: "اعرف المزيد",
         proofLabel: "لماذا Air Aroma",
         proofTitle: "تصميم عطري واضح من الفكرة إلى التشغيل",
         proofPoints: [
@@ -96,13 +148,29 @@ export default function Home() {
       }
     : {
         badge: "Scent strategy for luxury hospitality and retail",
-        title: "Luxury scent marketing for Saudi Arabia and the GCC",
-        intro:
-          "Air Aroma creates premium scent marketing programs, signature fragrances, and cold-air diffusion systems for hotels, retail destinations, residences, and branded environments.",
-        support:
-          "From fragrance development through diffuser selection, we help teams build a scent identity that feels elevated, scalable, and operationally dependable.",
+        heroPhases: [
+          {
+            eyebrow: "Scent Strategy",
+            title: "Luxury scent marketing for Saudi Arabia and the GCC",
+            body:
+              "Air Aroma creates premium scent programs that make arrivals feel more elevated, reinforce brand memory, and shape how a space is remembered.",
+          },
+          {
+            eyebrow: "Fragrance Identity",
+            title: "Signature fragrances that define the mood before a word is spoken",
+            body:
+              "From bespoke scent design to curated blends ready to review, we help teams shape a fragrance direction that feels coherent, premium, and brand-led.",
+          },
+          {
+            eyebrow: "Diffusion Systems",
+            title: "Cold-air diffusion designed to perform beautifully at scale",
+            body:
+              "We connect fragrance identity to the right delivery system, whether the project is a hotel, boutique, residence, wellness space, or large-format destination.",
+          },
+        ],
         primaryCta: "Start Your Scent Project",
         secondaryCta: "Explore Diffuser Systems",
+        scrollHint: "Scroll to move through the story",
         focusLabel: "Where We Work",
         focusTitle: "How we support GCC fragrance projects",
         focusCards: [
@@ -125,6 +193,7 @@ export default function Home() {
             link: toLocalePath("/diffusers"),
           },
         ],
+        focusLink: "Learn More",
         proofLabel: "Why Air Aroma",
         proofTitle: "A clearer fragrance path from concept to rollout",
         proofPoints: [
@@ -147,76 +216,114 @@ export default function Home() {
 
   return (
     <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <section className="relative isolate overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0">
-          <img
-            src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2024/11/fairmont-candle-for-sale.jpg"
-            alt={
-              isArabic
-                ? "مشهد عطري فاخر من Air Aroma"
-                : "Luxury scent marketing scene by Air Aroma"
-            }
-            width="1800"
-            height="1200"
-            fetchPriority="high"
-            decoding="async"
-            className="h-full w-full object-cover object-center opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/70 to-black" />
-        </div>
-
-        <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-center px-6 py-32 lg:px-12">
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-6 max-w-max rounded-full border border-brand-gold/40 bg-brand-gold/10 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-brand-gold"
-          >
-            {copy.badge}
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.08 }}
-            className="max-w-4xl text-5xl font-light leading-[1.05] text-white md:text-7xl"
-          >
-            {copy.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.16 }}
-            className="mt-8 max-w-3xl text-lg leading-8 text-white/75 md:text-xl"
-          >
-            {copy.intro}
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.24 }}
-            className="mt-4 max-w-3xl text-base leading-8 text-white/55"
-          >
-            {copy.support}
-          </motion.p>
+      <section
+        ref={heroRef}
+        className="relative h-[220vh] border-b border-white/10 bg-black md:h-[280vh] xl:h-[300vh]"
+      >
+        <div className="sticky top-0 flex h-screen items-center overflow-hidden">
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.32 }}
-            className="mt-10 flex flex-col gap-4 sm:flex-row"
+            style={{ scale: mediaScale, opacity: mediaOpacity }}
+            className="absolute inset-0"
           >
-            <Link
-              to={toLocalePath("/contact")}
-              className="inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
-            >
-              {copy.primaryCta}
-            </Link>
-            <Link
-              to={toLocalePath("/diffusers")}
-              className="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
-            >
-              {copy.secondaryCta}
-            </Link>
+            <img
+              src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2024/11/fairmont-candle-for-sale.jpg"
+              alt={
+                isArabic
+                  ? "مشهد عطري فاخر من Air Aroma"
+                  : "Luxury scent marketing scene by Air Aroma"
+              }
+              width="1800"
+              height="1200"
+              fetchPriority="high"
+              decoding="async"
+              className="h-full w-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(197,160,89,0.22),transparent_38%)]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/68 to-black" />
           </motion.div>
+
+          <div className="relative mx-auto flex h-full w-full max-w-7xl flex-col justify-center px-6 py-24 lg:px-12">
+            <div className="absolute top-24 left-6 right-6 flex items-center justify-between text-[10px] uppercase tracking-[0.28em] text-white/35 lg:left-12 lg:right-12">
+              <span className="rounded-full border border-brand-gold/40 bg-brand-gold/10 px-4 py-2 text-brand-gold">
+                {copy.badge}
+              </span>
+              <span className="hidden md:block">{copy.scrollHint}</span>
+            </div>
+
+            <div className="relative h-[62vh] md:h-[70vh]">
+              <motion.div
+                style={{ opacity: phase1Opacity, y: phase1Y }}
+                className="absolute inset-0 flex max-w-4xl flex-col justify-center"
+              >
+                <p className="mb-5 text-[11px] uppercase tracking-[0.34em] text-brand-gold">
+                  {copy.heroPhases[0].eyebrow}
+                </p>
+                <h1 className="max-w-4xl text-5xl font-light leading-[1.02] text-white md:text-7xl lg:text-8xl">
+                  {copy.heroPhases[0].title}
+                </h1>
+                <p className="mt-8 max-w-3xl text-lg leading-8 text-white/75 md:text-xl">
+                  {copy.heroPhases[0].body}
+                </p>
+              </motion.div>
+
+              <motion.div
+                style={{ opacity: phase2Opacity, y: phase2Y }}
+                className="absolute inset-0 flex max-w-3xl flex-col justify-center"
+              >
+                <p className="mb-5 text-[11px] uppercase tracking-[0.34em] text-brand-gold">
+                  {copy.heroPhases[1].eyebrow}
+                </p>
+                <h2 className="max-w-4xl text-4xl font-light leading-[1.05] text-white md:text-6xl lg:text-7xl">
+                  {copy.heroPhases[1].title}
+                </h2>
+                <p className="mt-8 max-w-3xl text-lg leading-8 text-white/72 md:text-xl">
+                  {copy.heroPhases[1].body}
+                </p>
+              </motion.div>
+
+              <motion.div
+                style={{ opacity: phase3Opacity, y: phase3Y }}
+                className="absolute inset-0 flex max-w-3xl flex-col justify-center"
+              >
+                <p className="mb-5 text-[11px] uppercase tracking-[0.34em] text-brand-gold">
+                  {copy.heroPhases[2].eyebrow}
+                </p>
+                <h2 className="max-w-4xl text-4xl font-light leading-[1.05] text-white md:text-6xl lg:text-7xl">
+                  {copy.heroPhases[2].title}
+                </h2>
+                <p className="mt-8 max-w-3xl text-lg leading-8 text-white/72 md:text-xl">
+                  {copy.heroPhases[2].body}
+                </p>
+                <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                  <Link
+                    to={toLocalePath("/contact")}
+                    className="inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
+                  >
+                    {copy.primaryCta}
+                  </Link>
+                  <Link
+                    to={toLocalePath("/diffusers")}
+                    className="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
+                  >
+                    {copy.secondaryCta}
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+
+            <div className="absolute bottom-10 left-6 right-6 lg:left-12 lg:right-12">
+              <div className="flex items-center gap-4 md:gap-8">
+                {copy.heroPhases.map((phase, index) => (
+                  <div key={phase.eyebrow} className="flex items-center gap-3">
+                    <span className="h-2 w-2 rounded-full bg-brand-gold" />
+                    <span className="hidden text-[10px] uppercase tracking-[0.28em] text-white/35 md:block">
+                      0{index + 1} {phase.eyebrow}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -248,7 +355,7 @@ export default function Home() {
                 to={card.link}
                 className="max-w-max text-[11px] uppercase tracking-[0.24em] text-brand-gold transition-colors hover:text-white"
               >
-                {isArabic ? "اعرف المزيد" : "Learn More"}
+                {copy.focusLink}
               </Link>
             </motion.article>
           ))}

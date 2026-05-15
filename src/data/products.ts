@@ -17,6 +17,8 @@ export interface Product {
   ifYouEnjoyedAr?: string[];
 }
 
+export type ProductLocale = "en" | "ar";
+
 export const products: Product[] = [
   {
     id: "amber-grand",
@@ -227,3 +229,66 @@ export const products: Product[] = [
 
 export const fragrances = products.filter((p) => p.type === "fragrance");
 export const diffuserProducts = products.filter((p) => p.type === "diffuser");
+
+export function getProductById(productId: string) {
+  return products.find((product) => product.id === productId);
+}
+
+export function getProductName(product: Product, locale: ProductLocale) {
+  return locale === "ar" ? product.nameAr : product.nameEn;
+}
+
+export function getProductStory(product: Product, locale: ProductLocale) {
+  return locale === "ar" ? product.storyAr : product.storyEn;
+}
+
+export function getProductNotes(product: Product, locale: ProductLocale) {
+  return locale === "ar" ? product.notesAr : product.notesEn;
+}
+
+export function getProductCharacteristics(product: Product, locale: ProductLocale) {
+  return locale === "ar"
+    ? product.characteristicsAr
+    : product.characteristicsEn;
+}
+
+export function getProductUsedBy(product: Product, locale: ProductLocale) {
+  return locale === "ar" ? product.usedByAr ?? [] : product.usedByEn ?? [];
+}
+
+export function getProductIfYouEnjoyed(product: Product, locale: ProductLocale) {
+  return locale === "ar"
+    ? product.ifYouEnjoyedAr ?? []
+    : product.ifYouEnjoyedEn ?? [];
+}
+
+export function getProductCollectionBasePath(product: Product) {
+  return product.type === "fragrance" ? "/fragrances" : "/diffusers";
+}
+
+export function getProductDetailBasePath(productOrId: Product | string) {
+  const productId =
+    typeof productOrId === "string" ? productOrId : productOrId.id;
+
+  return `/products/${productId}`;
+}
+
+export function getProductCategoryLabel(
+  product: Product,
+  locale: ProductLocale,
+) {
+  if (product.type === "diffuser") {
+    return locale === "ar" ? "موزع عطور فاخر" : "Luxury Diffuser";
+  }
+
+  return locale === "ar" ? "عطر فاخر" : "Luxury Fragrance";
+}
+
+export function getRelatedProducts(product: Product, limit = 3) {
+  return products
+    .filter(
+      (candidate) =>
+        candidate.type === product.type && candidate.id !== product.id,
+    )
+    .slice(0, limit);
+}

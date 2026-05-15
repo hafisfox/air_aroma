@@ -1,5 +1,5 @@
-import { getRouteMetadata, type RouteKey } from "./routes";
-import { type Locale, SITE_NAME } from "./site";
+import { getRouteMetadata } from "./routes";
+import { SITE_NAME } from "./site";
 
 function escapeHtml(value: string) {
   return value
@@ -10,8 +10,9 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#39;");
 }
 
-export function renderHeadHtml(routeKey: RouteKey, locale: Locale) {
-  const metadata = getRouteMetadata(routeKey, locale);
+export function renderHeadHtml(pathname: string) {
+  const metadata = getRouteMetadata(pathname);
+  const locale = metadata.locale;
   const tags: string[] = [
     `<title>${escapeHtml(metadata.title)}</title>`,
     `<meta name="description" content="${escapeHtml(metadata.description)}" />`,

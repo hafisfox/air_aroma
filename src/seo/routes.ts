@@ -1,4 +1,14 @@
-import { diffuserProducts, fragrances } from "../data/products";
+import {
+  diffuserProducts,
+  fragrances,
+  getProductById,
+  getProductCategoryLabel,
+  getProductDetailBasePath,
+  getProductName,
+  getProductStory,
+  products,
+  type Product,
+} from "../data/products";
 import {
   DEFAULT_OG_IMAGE,
   SITE_NAME,
@@ -6,6 +16,9 @@ import {
   SOCIAL_LINKS,
   type Locale,
   getAbsoluteUrl,
+  getLocaleFromPath,
+  normalizePath,
+  stripLocalePrefix,
   withLocale,
 } from "./site";
 
@@ -21,21 +34,11 @@ export type RouteKey =
   | "blog"
   | "signatureScent"
   | "essentialOils"
+  | "productDetail"
   | "notFound";
 
-export interface RouteSeoMetadata {
-  routeKey: RouteKey;
-  basePath: string;
-  title: string;
-  description: string;
-  keywords?: string;
-  canonicalUrl?: string;
-  alternates: Array<{ hrefLang: string; href: string }>;
-  ogType: "website" | "article";
-  ogImage: string;
-  noindex: boolean;
-  structuredData: object[];
-}
+type StaticRouteKey = Exclude<RouteKey, "productDetail">;
+type IndexableStaticRouteKey = Exclude<StaticRouteKey, "notFound">;
 
 interface RouteSeoDefinition {
   basePath: string;
@@ -49,12 +52,49 @@ interface RouteSeoDefinition {
   title: Record<Locale, string>;
 }
 
-type RouteSeoMap = Record<RouteKey, RouteSeoDefinition>;
+type RouteSeoMap = Record<StaticRouteKey, RouteSeoDefinition>;
+
+export interface RouteSeoMetadata {
+  routeKey: RouteKey;
+  locale: Locale;
+  statusCode: number;
+  basePath: string;
+  title: string;
+  description: string;
+  keywords?: string;
+  canonicalUrl?: string;
+  alternates: Array<{ hrefLang: string; href: string }>;
+  ogType: "website" | "article";
+  ogImage: string;
+  noindex: boolean;
+  structuredData: object[];
+}
+
+interface ResolvedRoute {
+  routeKey: RouteKey;
+  locale: Locale;
+  normalizedPath: string;
+  statusCode: number;
+  product?: Product;
+}
+
+interface IndexablePageEntry {
+  routeKey: Exclude<RouteKey, "notFound">;
+  title: string;
+  url: string;
+  description: string;
+  sourceFiles: string[];
+}
 
 const organizationDescription: Record<Locale, string> = {
   en: "Premium scent marketing agency for luxury hospitality, retail, and branded spaces across Saudi Arabia and the GCC.",
   ar: "وكالة رائدة في تسويق الروائح للضيافة الفاخرة والتجزئة والمساحات ذات العلامات التجارية في السعودية ودول الخليج.",
 };
+
+const productDetailSourceFiles = [
+  "src/pages/ProductDetail.tsx",
+  "src/data/products.ts",
+];
 
 const routeSeoMap: RouteSeoMap = {
   home: {
@@ -315,33 +355,127 @@ const routeSeoMap: RouteSeoMap = {
   },
 };
 
-export const indexableRouteKeys = (Object.keys(routeSeoMap) as RouteKey[]).filter(
-  (routeKey) => routeSeoMap[routeKey].indexable,
-);
+export const indexableRouteKeys = (Object.keys(routeSeoMap) as StaticRouteKey[])
+  .filter(
+    (routeKey): routeKey is IndexableStaticRouteKey =>
+      routeSeoMap[routeKey].indexable,
+  );
 
-export const routeBasePaths = (Object.keys(routeSeoMap) as RouteKey[])
-  .filter((routeKey) => routeKey !== "notFound")
-  .map((routeKey) => routeSeoMap[routeKey].basePath);
-
-export function getRouteDefinition(routeKey: RouteKey) {
+export function getRouteDefinition(routeKey: StaticRouteKey) {
   return routeSeoMap[routeKey];
 }
 
-export function isKnownBasePath(pathname: string) {
-  return routeBasePaths.includes(pathname);
-}
+export function resolveRoute(pathname: string): ResolvedRoute {
+  const cleanPath = normalizeInputPath(pathname);
+  const locale = getLocaleFromPath(cleanPath);
+  const normalizedPath = stripLocalePrefix(cleanPath);
 
-export function getRouteKeyForBasePath(pathname: string): RouteKey {
-  const match = (Object.keys(routeSeoMap) as RouteKey[]).find(
-    (routeKey) => routeSeoMap[routeKey].basePath === pathname,
+  const staticMatch = (Object.keys(routeSeoMap) as StaticRouteKey[]).find(
+    (routeKey) => routeSeoMap[routeKey].basePath === normalizedPath,
   );
 
-  return match ?? "notFound";
+  if (staticMatch && staticMatch !== "notFound") {
+    return {
+      routeKey: staticMatch,
+      locale,
+      normalizedPath,
+      statusCode: 200,
+    };
+  }
+
+  const productMatch = normalizedPath.match(/^\/products\/([^/]+)$/);
+  if (productMatch) {
+    const product = getProductById(productMatch[1]);
+
+    if (product) {
+      return {
+        routeKey: "productDetail",
+        locale,
+        normalizedPath,
+        statusCode: 200,
+        product,
+      };
+    }
+  }
+
+  return {
+    routeKey: "notFound",
+    locale,
+    normalizedPath,
+    statusCode: 404,
+  };
 }
 
-export function getRouteMetadata(
-  routeKey: RouteKey,
+export function getRouteMetadata(pathname: string): RouteSeoMetadata {
+  const resolved = resolveRoute(pathname);
+
+  if (resolved.routeKey === "productDetail" && resolved.product) {
+    return buildProductMetadata(resolved.product, resolved.locale);
+  }
+
+  if (resolved.routeKey === "productDetail") {
+    return buildStaticRouteMetadata("notFound", resolved.locale, 404);
+  }
+
+  if (resolved.routeKey === "notFound") {
+    return buildStaticRouteMetadata("notFound", resolved.locale, resolved.statusCode);
+  }
+
+  return buildStaticRouteMetadata(
+    resolved.routeKey,
+    resolved.locale,
+    resolved.statusCode,
+  );
+}
+
+export function getRouteResponseInfo(pathname: string) {
+  const resolved = resolveRoute(pathname);
+
+  return {
+    locale: resolved.locale,
+    statusCode: resolved.statusCode,
+  };
+}
+
+export function getLlmsEntries(locale: Locale) {
+  return getIndexablePageEntries(locale).map((entry) => ({
+    routeKey: entry.routeKey,
+    title: entry.title,
+    url: entry.url,
+    description: entry.description,
+    sourceFiles: entry.sourceFiles,
+  }));
+}
+
+function getIndexablePageEntries(locale: Locale): IndexablePageEntry[] {
+  const staticEntries = indexableRouteKeys.map((routeKey) => {
+    const definition = routeSeoMap[routeKey];
+
+    return {
+      routeKey,
+      title: definition.title[locale],
+      url: getAbsoluteUrl(withLocale(definition.basePath, locale)),
+      description:
+        definition.llmsDescription?.[locale] ?? definition.description[locale],
+      sourceFiles: definition.sourceFiles,
+    };
+  });
+
+  const productEntries = products.map((product) => ({
+    routeKey: "productDetail" as const,
+    title: buildProductPageTitle(product, locale),
+    url: getAbsoluteUrl(withLocale(getProductDetailBasePath(product), locale)),
+    description: getProductStory(product, locale),
+    sourceFiles: productDetailSourceFiles,
+  }));
+
+  return [...staticEntries, ...productEntries];
+}
+
+function buildStaticRouteMetadata(
+  routeKey: StaticRouteKey,
   locale: Locale,
+  statusCode: number,
 ): RouteSeoMetadata {
   const definition = routeSeoMap[routeKey];
   const localizedPath = withLocale(definition.basePath, locale);
@@ -351,53 +485,77 @@ export function getRouteMetadata(
 
   return {
     routeKey,
+    locale,
+    statusCode,
     basePath: definition.basePath,
     title: definition.title[locale],
     description: definition.description[locale],
     keywords: definition.keywords?.[locale],
     canonicalUrl,
     alternates: definition.indexable
-      ? [
-          { hrefLang: "en", href: getAbsoluteUrl(definition.basePath) },
-          { hrefLang: "ar", href: getAbsoluteUrl(withLocale(definition.basePath, "ar")) },
-          { hrefLang: "x-default", href: getAbsoluteUrl(definition.basePath) },
-        ]
+      ? buildAlternates(definition.basePath)
       : [],
     ogType: definition.ogType ?? "website",
     ogImage: DEFAULT_OG_IMAGE,
     noindex: !definition.indexable,
-    structuredData: buildStructuredData(routeKey, locale),
+    structuredData: buildStaticStructuredData(routeKey, locale),
   };
 }
 
-export function getLlmsEntries(locale: Locale) {
-  return indexableRouteKeys.map((routeKey) => {
-    const definition = routeSeoMap[routeKey];
-    return {
-      routeKey,
-      title: definition.title[locale],
-      url: getAbsoluteUrl(withLocale(definition.basePath, locale)),
-      description:
-        definition.llmsDescription?.[locale] ?? definition.description[locale],
-    };
-  });
+function buildProductMetadata(
+  product: Product,
+  locale: Locale,
+): RouteSeoMetadata {
+  const basePath = getProductDetailBasePath(product);
+  const pageUrl = getAbsoluteUrl(withLocale(basePath, locale));
+
+  return {
+    routeKey: "productDetail",
+    locale,
+    statusCode: 200,
+    basePath,
+    title: buildProductPageTitle(product, locale),
+    description: getProductStory(product, locale),
+    keywords: buildProductKeywords(product, locale),
+    canonicalUrl: pageUrl,
+    alternates: buildAlternates(basePath),
+    ogType: "website",
+    ogImage: getAbsoluteUrl(product.images[0].file),
+    noindex: false,
+    structuredData: buildProductStructuredData(product, locale),
+  };
 }
 
-function buildStructuredData(routeKey: RouteKey, locale: Locale): object[] {
+function buildStaticStructuredData(
+  routeKey: StaticRouteKey,
+  locale: Locale,
+): object[] {
   const definition = routeSeoMap[routeKey];
   const pageUrl = definition.indexable
     ? getAbsoluteUrl(withLocale(definition.basePath, locale))
     : getAbsoluteUrl("/");
 
   const baseSchemas = definition.indexable
-    ? [
-        buildOrganizationSchema(locale),
-        buildWebsiteSchema(locale),
-      ]
+    ? [buildOrganizationSchema(locale), buildWebsiteSchema(locale)]
     : [];
 
   const breadcrumbSchema = definition.indexable
-    ? buildBreadcrumbSchema(routeKey, locale)
+    ? buildBreadcrumbSchema(
+        [
+          {
+            name: routeSeoMap.home.breadcrumbLabel[locale],
+            item: getAbsoluteUrl(withLocale("/", locale)),
+          },
+          ...(routeKey === "home"
+            ? []
+            : [
+                {
+                  name: definition.breadcrumbLabel[locale],
+                  item: getAbsoluteUrl(withLocale(definition.basePath, locale)),
+                },
+              ]),
+        ],
+      )
     : null;
 
   switch (routeKey) {
@@ -407,10 +565,10 @@ function buildStructuredData(routeKey: RouteKey, locale: Locale): object[] {
         {
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": definition.title[locale],
-          "description": definition.description[locale],
-          "url": pageUrl,
-          "about": buildOrganizationReference(),
+          name: definition.title[locale],
+          description: definition.description[locale],
+          url: pageUrl,
+          about: buildOrganizationReference(),
         },
         ...(breadcrumbSchema ? [breadcrumbSchema] : []),
       ];
@@ -420,11 +578,11 @@ function buildStructuredData(routeKey: RouteKey, locale: Locale): object[] {
         {
           "@context": "https://schema.org",
           "@type": "Service",
-          "name": definition.title[locale],
-          "description": definition.description[locale],
-          "provider": buildOrganizationReference(),
-          "serviceType": locale === "ar" ? "تسويق الروائح" : "Scent Marketing",
-          "url": pageUrl,
+          name: definition.title[locale],
+          description: definition.description[locale],
+          provider: buildOrganizationReference(),
+          serviceType: locale === "ar" ? "تسويق الروائح" : "Scent Marketing",
+          url: pageUrl,
         },
         ...(breadcrumbSchema ? [breadcrumbSchema] : []),
       ];
@@ -434,20 +592,23 @@ function buildStructuredData(routeKey: RouteKey, locale: Locale): object[] {
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "name": definition.title[locale],
-          "description": definition.description[locale],
-          "url": pageUrl,
-          "numberOfItems": fragrances.length,
-          "itemListElement": fragrances.map((fragrance, index) => ({
+          name: definition.title[locale],
+          description: definition.description[locale],
+          url: pageUrl,
+          numberOfItems: fragrances.length,
+          itemListElement: fragrances.map((fragrance, index) => ({
             "@type": "ListItem",
-            "position": index + 1,
-            "item": {
+            position: index + 1,
+            item: {
               "@type": "Product",
-              "name": locale === "ar" ? fragrance.nameAr : fragrance.nameEn,
-              "description": locale === "ar" ? fragrance.storyAr : fragrance.storyEn,
-              "image": getAbsoluteUrl(fragrance.images[0].file),
-              "brand": { "@type": "Brand", "name": SITE_NAME },
-              "category": locale === "ar" ? "عطر فاخر" : "Luxury Fragrance",
+              name: getProductName(fragrance, locale),
+              description: getProductStory(fragrance, locale),
+              image: getAbsoluteUrl(fragrance.images[0].file),
+              url: getAbsoluteUrl(
+                withLocale(getProductDetailBasePath(fragrance), locale),
+              ),
+              brand: { "@type": "Brand", name: SITE_NAME },
+              category: getProductCategoryLabel(fragrance, locale),
             },
           })),
         },
@@ -459,35 +620,40 @@ function buildStructuredData(routeKey: RouteKey, locale: Locale): object[] {
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "name": definition.title[locale],
-          "description": definition.description[locale],
-          "url": pageUrl,
-          "numberOfItems": diffuserProducts.length,
-          "itemListElement": diffuserProducts.map((product, index) => ({
+          name: definition.title[locale],
+          description: definition.description[locale],
+          url: pageUrl,
+          numberOfItems: diffuserProducts.length,
+          itemListElement: diffuserProducts.map((product, index) => ({
             "@type": "ListItem",
-            "position": index + 1,
-            "item": {
+            position: index + 1,
+            item: {
               "@type": "Product",
-              "name": locale === "ar" ? product.nameAr : product.nameEn,
-              "description": locale === "ar" ? product.storyAr : product.storyEn,
-              "image": getAbsoluteUrl(product.images[0].file),
-              "brand": { "@type": "Brand", "name": SITE_NAME },
-              "category":
-                locale === "ar" ? "موزع عطور فاخر" : "Luxury Aroma Diffuser",
+              name: getProductName(product, locale),
+              description: getProductStory(product, locale),
+              image: getAbsoluteUrl(product.images[0].file),
+              url: getAbsoluteUrl(
+                withLocale(getProductDetailBasePath(product), locale),
+              ),
+              brand: { "@type": "Brand", name: SITE_NAME },
+              category: getProductCategoryLabel(product, locale),
             },
           })),
         },
         ...(breadcrumbSchema ? [breadcrumbSchema] : []),
       ];
     case "products":
+    case "clients":
+    case "blog":
+    case "essentialOils":
       return [
         ...baseSchemas,
         {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          "name": definition.title[locale],
-          "description": definition.description[locale],
-          "url": pageUrl,
+          name: definition.title[locale],
+          description: definition.description[locale],
+          url: pageUrl,
         },
         ...(breadcrumbSchema ? [breadcrumbSchema] : []),
       ];
@@ -497,10 +663,10 @@ function buildStructuredData(routeKey: RouteKey, locale: Locale): object[] {
         {
           "@context": "https://schema.org",
           "@type": "AboutPage",
-          "name": definition.title[locale],
-          "description": definition.description[locale],
-          "url": pageUrl,
-          "mainEntity": buildOrganizationReference(),
+          name: definition.title[locale],
+          description: definition.description[locale],
+          url: pageUrl,
+          mainEntity: buildOrganizationReference(),
         },
         ...(breadcrumbSchema ? [breadcrumbSchema] : []),
       ];
@@ -510,24 +676,10 @@ function buildStructuredData(routeKey: RouteKey, locale: Locale): object[] {
         {
           "@context": "https://schema.org",
           "@type": "ContactPage",
-          "name": definition.title[locale],
-          "description": definition.description[locale],
-          "url": pageUrl,
-          "mainEntity": buildOrganizationReference(),
-        },
-        ...(breadcrumbSchema ? [breadcrumbSchema] : []),
-      ];
-    case "clients":
-    case "blog":
-    case "essentialOils":
-      return [
-        ...baseSchemas,
-        {
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          "name": definition.title[locale],
-          "description": definition.description[locale],
-          "url": pageUrl,
+          name: definition.title[locale],
+          description: definition.description[locale],
+          url: pageUrl,
+          mainEntity: buildOrganizationReference(),
         },
         ...(breadcrumbSchema ? [breadcrumbSchema] : []),
       ];
@@ -537,12 +689,12 @@ function buildStructuredData(routeKey: RouteKey, locale: Locale): object[] {
         {
           "@context": "https://schema.org",
           "@type": "Service",
-          "name": definition.title[locale],
-          "description": definition.description[locale],
-          "provider": buildOrganizationReference(),
-          "serviceType":
+          name: definition.title[locale],
+          description: definition.description[locale],
+          provider: buildOrganizationReference(),
+          serviceType:
             locale === "ar" ? "تصميم عطر مميز" : "Signature Scent Design",
-          "url": pageUrl,
+          url: pageUrl,
         },
         ...(breadcrumbSchema ? [breadcrumbSchema] : []),
       ];
@@ -551,31 +703,94 @@ function buildStructuredData(routeKey: RouteKey, locale: Locale): object[] {
   }
 }
 
-function buildBreadcrumbSchema(routeKey: RouteKey, locale: Locale) {
-  const definition = routeSeoMap[routeKey];
+function buildProductStructuredData(product: Product, locale: Locale) {
+  const basePath = getProductDetailBasePath(product);
+  const pageUrl = getAbsoluteUrl(withLocale(basePath, locale));
+  const categoryLabel = getProductCategoryLabel(product, locale);
+  const productName = getProductName(product, locale);
 
-  const items = [
+  return [
+    buildOrganizationSchema(locale),
+    buildWebsiteSchema(locale),
     {
-      "@type": "ListItem",
-      "position": 1,
-      "name": routeSeoMap.home.breadcrumbLabel[locale],
-      "item": getAbsoluteUrl(withLocale("/", locale)),
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: productName,
+      description: getProductStory(product, locale),
+      category: categoryLabel,
+      image: product.images.map((image) => getAbsoluteUrl(image.file)),
+      url: pageUrl,
+      brand: {
+        "@type": "Brand",
+        name: SITE_NAME,
+      },
+      additionalProperty: product.images.map((image) => ({
+        "@type": "PropertyValue",
+        name: locale === "ar" ? "الخيار" : "Option",
+        value: image.size,
+      })),
     },
+    buildBreadcrumbSchema([
+      {
+        name: routeSeoMap.home.breadcrumbLabel[locale],
+        item: getAbsoluteUrl(withLocale("/", locale)),
+      },
+      {
+        name: routeSeoMap.products.breadcrumbLabel[locale],
+        item: getAbsoluteUrl(withLocale(routeSeoMap.products.basePath, locale)),
+      },
+      {
+        name: productName,
+        item: pageUrl,
+      },
+    ]),
   ];
+}
 
-  if (routeKey !== "home") {
-    items.push({
-      "@type": "ListItem",
-      "position": 2,
-      "name": definition.breadcrumbLabel[locale],
-      "item": getAbsoluteUrl(withLocale(definition.basePath, locale)),
-    });
+function buildProductPageTitle(product: Product, locale: Locale) {
+  const productName = getProductName(product, locale);
+
+  if (locale === "ar") {
+    return `${productName} | ${getProductCategoryLabel(product, locale)} من Air Aroma`;
   }
 
+  return `${productName} | ${getProductCategoryLabel(product, locale)} by Air Aroma`;
+}
+
+function buildProductKeywords(product: Product, locale: Locale) {
+  const keywords = [
+    getProductName(product, locale),
+    getProductCategoryLabel(product, locale),
+    ...(locale === "ar" ? product.notesAr : product.notesEn).slice(0, 6),
+    ...(locale === "ar"
+      ? product.characteristicsAr
+      : product.characteristicsEn).slice(0, 4),
+    locale === "ar" ? "Air Aroma السعودية والخليج" : "Air Aroma Saudi Arabia GCC",
+  ];
+
+  return keywords.filter(Boolean).join(", ");
+}
+
+function buildAlternates(basePath: string) {
+  return [
+    { hrefLang: "en", href: getAbsoluteUrl(basePath) },
+    { hrefLang: "ar", href: getAbsoluteUrl(withLocale(basePath, "ar")) },
+    { hrefLang: "x-default", href: getAbsoluteUrl(basePath) },
+  ];
+}
+
+function buildBreadcrumbSchema(
+  items: Array<{ name: string; item: string }>,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": items,
+    itemListElement: items.map((entry, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: entry.name,
+      item: entry.item,
+    })),
   };
 }
 
@@ -583,10 +798,10 @@ function buildOrganizationSchema(locale: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": SITE_NAME,
-    "url": SITE_URL,
-    "description": organizationDescription[locale],
-    "sameAs": SOCIAL_LINKS,
+    name: SITE_NAME,
+    url: SITE_URL,
+    description: organizationDescription[locale],
+    sameAs: SOCIAL_LINKS,
   };
 }
 
@@ -594,18 +809,24 @@ function buildWebsiteSchema(locale: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": SITE_NAME,
-    "url": SITE_URL,
-    "inLanguage": locale,
-    "description": organizationDescription[locale],
-    "publisher": buildOrganizationReference(),
+    name: SITE_NAME,
+    url: SITE_URL,
+    inLanguage: locale,
+    description: organizationDescription[locale],
+    publisher: buildOrganizationReference(),
   };
 }
 
 function buildOrganizationReference() {
   return {
     "@type": "Organization",
-    "name": SITE_NAME,
-    "url": SITE_URL,
+    name: SITE_NAME,
+    url: SITE_URL,
   };
+}
+
+function normalizeInputPath(pathname: string) {
+  const withoutHash = pathname.split("#")[0] ?? pathname;
+  const withoutQuery = withoutHash.split("?")[0] ?? withoutHash;
+  return normalizePath(withoutQuery);
 }

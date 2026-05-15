@@ -1,9 +1,21 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import { useLocaleRouting } from "../lib/localeRouting";
+import {
+  getProductById,
+  getProductCategoryLabel,
+  getProductDetailBasePath,
+  getProductName,
+  getProductStory,
+} from "../data/products";
+
+const featuredProductIds = ["sencha", "saffron-suede", "aromax"] as const;
 
 export default function Products() {
-  const { isArabic, toLocalePath } = useLocaleRouting();
+  const { isArabic, locale, toLocalePath } = useLocaleRouting();
+  const featuredProducts = featuredProductIds
+    .map((productId) => getProductById(productId))
+    .filter((product) => product !== undefined);
 
   const copy = isArabic
     ? {
@@ -39,6 +51,10 @@ export default function Products() {
             alt: "زيوت أساسية من Air Aroma",
           },
         ],
+        sectionCta: "استكشف",
+        featuredLabel: "منتجات مميزة",
+        featuredTitle: "ابدأ من بعض الاختيارات البارزة",
+        featuredCta: "عرض المنتج",
         compareTitle: "كيف تختار الفئة المناسبة؟",
         compareText:
           "تبدأ معظم المشاريع بتحديد ما إذا كانت الأولوية هي تطوير عطر مميز أو اختيار نظام نشر أو بناء تجربة عافية قائمة على الزيوت الأساسية. صفحة المنتجات هذه تساعدك على بدء المسار الصحيح بسرعة.",
@@ -77,6 +93,10 @@ export default function Products() {
             alt: "Air Aroma essential oils",
           },
         ],
+        sectionCta: "Explore",
+        featuredLabel: "Featured Products",
+        featuredTitle: "Start with a few standout directions",
+        featuredCta: "View product",
         compareTitle: "How should a project team choose the right category?",
         compareText:
           "Most teams start by deciding whether the priority is fragrance identity, hardware selection, or a wellness-led essential-oil program. This page is designed to move you into the right path quickly.",
@@ -115,7 +135,7 @@ export default function Products() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="flex h-full flex-col bg-[#0f0f0f] border border-white/5"
+              className="flex h-full flex-col border border-white/10 bg-[#0f0f0f]"
             >
               <div className="aspect-square overflow-hidden">
                 <img
@@ -137,7 +157,7 @@ export default function Products() {
                   to={toLocalePath(section.path)}
                   className="mt-8 max-w-max text-[11px] uppercase tracking-[0.24em] text-brand-gold transition-colors hover:text-white"
                 >
-                  {isArabic ? "استكشف" : "Explore"}
+                  {copy.sectionCta}
                 </Link>
               </div>
             </motion.article>
@@ -145,7 +165,60 @@ export default function Products() {
         </div>
       </section>
 
-      <section className="border-y border-white/10 bg-[#050505]">
+      <section className="border-y border-white/5 bg-[#050505]">
+        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-brand-gold">
+            {copy.featuredLabel}
+          </p>
+          <h2 className="mt-4 max-w-3xl text-4xl font-light text-white md:text-5xl">
+            {copy.featuredTitle}
+          </h2>
+
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
+            {featuredProducts.map((product, index) => (
+              <motion.article
+                key={product.id}
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.45, delay: index * 0.08 }}
+                className="flex h-full flex-col overflow-hidden border border-white/10 bg-white/[0.03]"
+              >
+                <div className="aspect-[4/5] overflow-hidden bg-[#111]">
+                  <img
+                    src={product.images[0].file}
+                    alt={getProductName(product, locale)}
+                    width="1200"
+                    height="1500"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-7">
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-brand-gold">
+                    {getProductCategoryLabel(product, locale)}
+                  </p>
+                  <h3 className="mt-3 text-2xl font-light text-white">
+                    {getProductName(product, locale)}
+                  </h3>
+                  <p className="mt-4 flex-1 text-[15px] leading-7 text-white/60">
+                    {getProductStory(product, locale)}
+                  </p>
+                  <Link
+                    to={toLocalePath(getProductDetailBasePath(product))}
+                    className="mt-8 max-w-max text-[11px] uppercase tracking-[0.24em] text-brand-gold transition-colors hover:text-white"
+                  >
+                    {copy.featuredCta}
+                  </Link>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-white/10">
         <div className="mx-auto max-w-6xl px-6 py-24 text-center lg:px-12">
           <h2 className="text-3xl font-light text-white sm:text-4xl">
             {copy.compareTitle}
