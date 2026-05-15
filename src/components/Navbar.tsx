@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -13,16 +13,35 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   return (
-    <nav className="w-full bg-white z-50" aria-label="Main navigation" role="navigation">
+    <nav 
+      className={`w-full fixed top-0 left-0 z-50 transition-all duration-500 ${scrolled ? 'glass-nav py-2' : 'bg-transparent py-6'}`}
+      aria-label="Main navigation" 
+      role="navigation"
+    >
       {/* Top tier */}
-      <div className="w-full flex justify-between items-center px-6 lg:px-12 py-6">
+      <div className="w-full flex justify-between items-center px-6 lg:px-12">
         
-        {/* Mobile Menu Button / Placeholder */}
+        {/* Mobile Menu Button */}
         <div className="w-[26px]">
           <button 
-            className="md:hidden text-black hover:text-gray-500 transition-colors"
+            className="md:hidden text-white hover:text-brand-gold transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
@@ -33,8 +52,10 @@ export default function Navbar() {
         </div>
         
         {/* Logo */}
-        <Link to="/" className="mx-auto flex justify-center items-center" aria-label="Air Aroma — Home">
-          <span className="text-[34px] md:text-[44px] font-light tracking-tight text-black leading-none">Air<span className="text-[#a8a8a8]" aria-hidden="true">/</span>Aroma</span>
+        <Link to="/" className="mx-auto flex justify-center items-center group" aria-label="Air Aroma — Home">
+          <span className="text-[34px] md:text-[44px] font-light tracking-tight text-white leading-none transition-transform duration-500 group-hover:scale-105">
+            Air<span className="text-brand-gold transition-colors duration-500" aria-hidden="true">/</span>Aroma
+          </span>
         </Link>
 
         {/* Desktop Right Spacer */}
@@ -42,15 +63,16 @@ export default function Navbar() {
       </div>
       
       {/* Bottom tier (Desktop) */}
-      <div className="hidden md:flex justify-between items-center px-6 lg:px-12 pb-5 text-[13px] font-light tracking-wide">
-        <div className="flex space-x-8">
+      <div className={`hidden md:flex justify-between items-center px-6 lg:px-12 transition-all duration-500 ${scrolled ? 'h-0 opacity-0 overflow-hidden pointer-events-none' : 'pt-4 pb-1 opacity-100'} text-[13px] font-light tracking-wide uppercase`}>
+        <div className="flex space-x-10 mx-auto">
           {navLinks.map((link) => (
             <Link 
               key={link.name} 
               to={link.path}
-              className="text-black hover:text-gray-500 transition-colors"
+              className="relative text-white/80 hover:text-white transition-colors group py-2"
             >
               {link.name}
+              <span className="absolute left-0 bottom-0 w-0 h-px bg-brand-gold transition-all duration-300 group-hover:w-full"></span>
             </Link>
           ))}
         </div>
@@ -64,24 +86,28 @@ export default function Navbar() {
            initial={{ opacity: 0, height: 0 }}
            animate={{ opacity: 1, height: "auto" }}
            exit={{ opacity: 0, height: 0 }}
-           transition={{ duration: 0.3 }}
-           className="md:hidden border-b border-gray-100 bg-white overflow-hidden"
+           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+           className="md:hidden border-t border-white/10 bg-[#0a0a0a]/95 backdrop-blur-xl overflow-hidden absolute top-full left-0 w-full"
            role="menu"
            aria-label="Mobile navigation menu"
          >
-           <div className="flex flex-col px-6 py-4 space-y-4 text-sm font-medium uppercase tracking-[0.15em]">
-             {navLinks.map((link) => (
-               <Link
+           <div className="flex flex-col px-8 py-8 space-y-6 text-sm font-medium uppercase tracking-[0.15em]">
+             {navLinks.map((link, i) => (
+               <motion.div
                  key={link.name}
-                 to={link.path}
-                 onClick={() => setMobileMenuOpen(false)}
-                 className="text-black hover:text-gray-500"
-                 role="menuitem"
+                 initial={{ opacity: 0, x: -20 }}
+                 animate={{ opacity: 1, x: 0 }}
+                 transition={{ delay: i * 0.1, duration: 0.4 }}
                >
-                 {link.name}
-               </Link>
+                 <Link
+                   to={link.path}
+                   className="text-white/80 hover:text-brand-gold transition-colors block py-2"
+                   role="menuitem"
+                 >
+                   {link.name}
+                 </Link>
+               </motion.div>
              ))}
-
            </div>
          </motion.div>
         )}
