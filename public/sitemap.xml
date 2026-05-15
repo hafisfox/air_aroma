@@ -1,69 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://air-aroma.com/</loc>
+    <loc>https://air-aroma.com</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com" />
   </url>
   <url>
     <loc>https://air-aroma.com/scent-marketing</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/scent-marketing" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/scent-marketing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/scent-marketing" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar/scent-marketing</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/scent-marketing" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/scent-marketing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/scent-marketing" />
   </url>
   <url>
     <loc>https://air-aroma.com/fragrances</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/fragrances" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/fragrances" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/fragrances" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar/fragrances</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/fragrances" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/fragrances" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/fragrances" />
   </url>
   <url>
     <loc>https://air-aroma.com/diffusers</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/diffusers" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/diffusers" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/diffusers" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar/diffusers</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/diffusers" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/diffusers" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/diffusers" />
   </url>
   <url>
     <loc>https://air-aroma.com/about</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/about" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/about" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar/about</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/about" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/about" />
   </url>
   <url>
     <loc>https://air-aroma.com/contact</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/contact" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/contact" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar/contact</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/contact" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/contact" />
   </url>
   <url>
     <loc>https://air-aroma.com/products</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/products" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/products" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/products" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar/products</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/products" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/products" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/products" />
   </url>
   <url>
     <loc>https://air-aroma.com/clients</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/clients" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/clients" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/clients" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar/clients</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/clients" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/clients" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/clients" />
   </url>
   <url>
     <loc>https://air-aroma.com/blog</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/blog" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/blog" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/blog" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar/blog</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/blog" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/blog" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/blog" />
   </url>
   <url>
     <loc>https://air-aroma.com/signature-scent</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/signature-scent" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/signature-scent" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/signature-scent" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar/signature-scent</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/signature-scent" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/signature-scent" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/signature-scent" />
   </url>
   <url>
     <loc>https://air-aroma.com/essential-oils</loc>
     <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/essential-oils" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/essential-oils" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/essential-oils" />
+  </url>
+  <url>
+    <loc>https://air-aroma.com/ar/essential-oils</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://air-aroma.com/essential-oils" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://air-aroma.com/ar/essential-oils" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://air-aroma.com/essential-oils" />
   </url>
 </urlset>

@@ -1,59 +1,89 @@
 import { motion } from "motion/react";
-import SEOHead from "../components/SEOHead";
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Signature Scent Design",
-  "provider": { "@type": "Organization", "name": "Air Aroma" },
-  "description": "Create your brand's unique signature scent with Air Aroma's master perfumers.",
-  "url": "https://air-aroma.com/signature-scent",
-  "serviceType": "Scent Design"
-};
+import { Link } from "react-router-dom";
+import { useLocaleRouting } from "../lib/localeRouting";
 
 export default function SignatureScent() {
+  const { isArabic, toLocalePath } = useLocaleRouting();
+
+  const copy = isArabic
+    ? {
+        title: "تصميم العطر المميز",
+        intro:
+          "العطر المميز يمنح العلامة التجارية طبقة شعورية لا تحتاج إلى شرح طويل. نطوّر اتجاهاً عطرياً يمكن ربطه بالوصول والضيافة والخصوصية والترف داخل المشروع.",
+        processTitle: "مراحل تطوير العطر",
+        steps: [
+          "نبدأ بقراءة شخصية العلامة ونوع المساحة والجمهور المستهدف.",
+          "نحوّل هذه المدخلات إلى اتجاهات عطرية أولية يمكن مراجعتها مع الفريق.",
+          "بعد اعتماد الاتجاه، نربط العطر بخطة نشر تتناسب مع المساحة والاستخدام اليومي.",
+        ],
+        cta: "ناقش مشروعك",
+      }
+    : {
+        title: "Signature Scent Design",
+        intro:
+          "A signature fragrance gives a brand an emotional layer that does not rely on copy alone. We develop a scent direction that can be tied to arrival, privacy, hospitality, and luxury within the physical experience.",
+        processTitle: "How the fragrance development process works",
+        steps: [
+          "We begin with brand character, space type, and audience expectations.",
+          "Those inputs become fragrance directions that the project team can review and refine.",
+          "Once approved, the scent is paired with the right diffusion plan for the space and the daily operating reality.",
+        ],
+        cta: "Discuss Your Project",
+      };
+
   return (
     <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <SEOHead
-        title="Signature Scent Design | Air Aroma"
-        description="Create your brand's unique signature scent with Air Aroma's master perfumers."
-        canonicalPath="/signature-scent"
-        structuredData={structuredData}
-      />
-      <section className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-white/10">
-        <div className="max-w-4xl">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+      <section className="border-b border-white/10 px-6 py-28 lg:px-12">
+        <div className="mx-auto max-w-5xl">
+          <motion.h1
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl sm:text-6xl font-light tracking-wide leading-tight mb-6"
+            transition={{ duration: 0.7 }}
+            className="text-4xl font-light leading-tight sm:text-6xl"
           >
-            Signature Scent Design
+            {copy.title}
           </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-white/60 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="mt-8 max-w-3xl text-lg leading-8 text-white/60"
           >
-            A bespoke fragrance tells your brand's story without words. Collaborate with our master perfumers to design a scent exclusively yours.
+            {copy.intro}
           </motion.p>
         </div>
       </section>
-      <section className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div className="aspect-[4/3] bg-[#111] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1596433809252-260c2745cf5b?auto=format&fit=crop&q=80" alt="Perfumer creating scent" className="w-full h-full object-cover" />
+
+      <section className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-2 lg:px-12">
+        <div className="aspect-[4/3] overflow-hidden bg-[#111]">
+          <img
+            src="https://images.unsplash.com/photo-1596433809252-260c2745cf5b?auto=format&fit=crop&q=80"
+            alt={isArabic ? "خبير عطور يعمل على تطوير عطر مميز" : "Perfumer developing a signature scent"}
+            width="1600"
+            height="1200"
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover"
+          />
+        </div>
+        <div>
+          <h2 className="text-3xl font-light text-white">{copy.processTitle}</h2>
+          <div className="mt-8 space-y-5">
+            {copy.steps.map((step) => (
+              <div
+                key={step}
+                className="border border-white/10 bg-white/[0.03] p-6 text-[15px] leading-7 text-white/55"
+              >
+                {step}
+              </div>
+            ))}
           </div>
-          <div>
-            <h2 className="text-3xl font-light mb-6">The Process</h2>
-            <p className="text-white/50 font-light text-[15px] leading-relaxed mb-6">
-              Our signature scent creation process begins with a deep dive into your brand's identity, target audience, and environment. We translate your brand values into olfactory notes.
-            </p>
-            <p className="text-white/50 font-light text-[15px] leading-relaxed">
-              Once the brief is established, our perfumers craft several distinct concepts. Through an iterative review process, we refine the chosen direction until it perfectly encapsulates your brand essence.
-            </p>
-          </div>
+          <Link
+            to={toLocalePath("/contact")}
+            className="mt-10 inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
+          >
+            {copy.cta}
+          </Link>
         </div>
       </section>
     </div>

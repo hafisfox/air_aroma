@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import type { Locale } from './seo/site';
 
 import translationEN from './locales/en/translation.json';
 import translationAR from './locales/ar/translation.json';
@@ -14,26 +14,34 @@ const resources = {
   },
 };
 
-i18n
-  // detect user language
-  .use(LanguageDetector)
-  // pass the i18n instance to react-i18next.
-  .use(initReactI18next)
-  // init i18next
-  .init({
-    resources,
-    fallbackLng: 'en',
-    debug: false,
+i18n.use(initReactI18next).init({
+  resources,
+  lng: 'en',
+  fallbackLng: 'en',
+  debug: false,
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
-    interpolation: {
-      escapeValue: false, // not needed for react as it escapes by default
-    },
-  });
+function updateDocumentLanguage(lng: string) {
+  if (typeof document === 'undefined') {
+    return;
+  }
 
-// Update the document dir based on the language
-i18n.on('languageChanged', (lng) => {
   document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
   document.documentElement.lang = lng;
-});
+}
+
+i18n.on('languageChanged', updateDocumentLanguage);
+updateDocumentLanguage(i18n.language);
+
+export async function setLocale(locale: Locale) {
+  if (i18n.language !== locale) {
+    await i18n.changeLanguage(locale);
+  } else {
+    updateDocumentLanguage(locale);
+  }
+}
 
 export default i18n;

@@ -1,62 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTranslation } from "react-i18next";
-import SEOHead from "../components/SEOHead";
 import { diffuserProducts } from "../data/products";
-
-const structuredData = [
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Air Aroma Diffuser Systems",
-    "description": "State-of-the-art cold air diffusion technology for commercial and luxury spaces.",
-    "url": "https://air-aroma.com/diffusers",
-    "numberOfItems": 3,
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "item": {
-          "@type": "Product",
-          "name": "Aromax Oil Diffuser",
-          "description": "The Aromax essential oil diffuser — nature and technology combined. Anodized aluminum housing in four colors.",
-          "brand": { "@type": "Brand", "name": "Air Aroma" },
-          "category": "Home Aroma Diffuser",
-        },
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "item": {
-          "@type": "Product",
-          "name": "HVAC Integration Diffuser",
-          "description": "Enterprise-grade HVAC diffusers that connect directly to central air conditioning systems.",
-          "brand": { "@type": "Brand", "name": "Air Aroma" },
-          "category": "Commercial Aroma Diffuser",
-        },
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "item": {
-          "@type": "Product",
-          "name": "Standalone Architectural Diffuser",
-          "description": "Sleek anodized aluminum standalone units for retail boutiques, VIP rooms, and luxury residences.",
-          "brand": { "@type": "Brand", "name": "Air Aroma" },
-          "category": "Standalone Aroma Diffuser",
-        },
-      },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://air-aroma.com" },
-      { "@type": "ListItem", "position": 2, "name": "Diffusers", "item": "https://air-aroma.com/diffusers" },
-    ],
-  },
-];
 
 export default function Diffusers() {
   const { i18n } = useTranslation();
@@ -66,14 +11,6 @@ export default function Diffusers() {
 
   return (
     <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <SEOHead
-        title="Aroma Diffusers | Air Aroma — Cold Air Diffusion Technology"
-        description="State-of-the-art cold air diffusion technology by Air Aroma. HVAC-integrated and standalone aroma diffusers engineered for efficiency and designed for absolute discretion."
-        keywords="aroma diffuser, cold air diffusion, HVAC scent diffuser, commercial diffuser, luxury diffuser, Aromax diffuser, Air Aroma diffuser"
-        canonicalPath="/diffusers"
-        structuredData={structuredData}
-      />
-
       {/* Hero */}
       <section
         id="diffusers-hero"
@@ -126,7 +63,10 @@ export default function Diffusers() {
                   key={activeColorIdx}
                   src={aromax.images[activeColorIdx].file}
                   alt={`Aromax diffuser in ${aromax.images[activeColorIdx].size} — Air Aroma`}
+                  width="1200"
+                  height="1200"
                   loading="lazy"
+                  decoding="async"
                   initial={{ opacity: 0, scale: 1.03 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
@@ -213,7 +153,10 @@ export default function Diffusers() {
             <img
               src="https://images.unsplash.com/photo-1596462502278-27bf85033e5a?auto=format&fit=crop&q=80"
               alt="Air Aroma HVAC-integrated cold air diffusion system for large commercial spaces"
+              width="1600"
+              height="1200"
               loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>
@@ -252,7 +195,10 @@ export default function Diffusers() {
             <img
               src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&q=80"
               alt="Air Aroma standalone architectural aroma diffuser in anodized aluminum finish"
+              width="1600"
+              height="1200"
               loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>

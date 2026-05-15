@@ -1,57 +1,82 @@
 import { motion } from "motion/react";
-import SEOHead from "../components/SEOHead";
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Air Aroma Essential Oils",
-  "description": "100% pure and natural essential oil blends.",
-  "url": "https://air-aroma.com/essential-oils"
-};
+import { Link } from "react-router-dom";
+import { useLocaleRouting } from "../lib/localeRouting";
 
 export default function EssentialOils() {
+  const { isArabic, toLocalePath } = useLocaleRouting();
+
+  const copy = isArabic
+    ? {
+        title: "الزيوت الأساسية",
+        intro:
+          "خلطات نقية للمساحات التي تحتاج إلى مزاج أكثر هدوءاً وطبيعة، سواء في مرافق العافية أو الفلل أو برامج الروائح الأخف داخل الضيافة الفاخرة.",
+        storyTitle: "متى تكون الزيوت الأساسية هي المسار المناسب؟",
+        storyParagraphs: [
+          "تعمل الزيوت الأساسية جيداً عندما يكون الهدف هو خلق تجربة أقرب إلى الاسترخاء أو الطبيعة أو العافية اليومية. كما يمكن استخدامها كنقطة بداية قبل الانتقال إلى عطر مخصص أكثر تميزاً.",
+          "إذا كان المشروع يحتاج إلى توازن بين الطابع الطبيعي وسهولة التشغيل داخل نظام نشر، يمكننا المساعدة في توجيه الخلطة الأنسب والهيكل المناسب للتطبيق.",
+        ],
+        cta: "استكشف أنظمة النشر",
+      }
+    : {
+        title: "Essential Oils",
+        intro:
+          "Pure blends for projects that need a softer, more wellness-led mood, whether that is a spa, villa, premium residence, or a quieter fragrance layer within luxury hospitality.",
+        storyTitle: "When are essential oils the right direction?",
+        storyParagraphs: [
+          "Essential oils work well when the objective is relaxation, nature-led calm, or a more restorative guest experience. They can also be a useful starting point before moving into a more distinctive custom fragrance.",
+          "If the project needs a balance between natural character and reliable diffuser performance, we can help guide the blend direction and the best application format.",
+        ],
+        cta: "Explore Diffuser Systems",
+      };
+
   return (
     <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <SEOHead
-        title="Essential Oils | Air Aroma"
-        description="100% pure and natural essential oil blends."
-        canonicalPath="/essential-oils"
-        structuredData={structuredData}
-      />
-      <section className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-white/10">
-        <div className="max-w-4xl">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+      <section className="border-b border-white/10 px-6 py-28 lg:px-12">
+        <div className="mx-auto max-w-5xl">
+          <motion.h1
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl sm:text-6xl font-light tracking-wide leading-tight mb-6"
+            transition={{ duration: 0.7 }}
+            className="text-4xl font-light leading-tight sm:text-6xl"
           >
-            Essential Oils
+            {copy.title}
           </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-white/60 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="mt-8 max-w-3xl text-lg leading-8 text-white/60"
           >
-            Sourced from the finest natural ingredients across the globe, our 100% pure essential oil blends offer aromachology benefits and sensory delight.
+            {copy.intro}
           </motion.p>
         </div>
       </section>
-      <section className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-3xl font-light mb-6">Nature's Essence</h2>
-            <p className="text-white/50 font-light text-[15px] leading-relaxed mb-6">
-              Our essential oils are cold-pressed or steam distilled to preserve their therapeutic properties. We offer single notes and complex blends designed to invigorate, relax, or balance your environment.
+
+      <section className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-2 lg:px-12">
+        <div>
+          <h2 className="text-3xl font-light text-white">{copy.storyTitle}</h2>
+          {copy.storyParagraphs.map((paragraph) => (
+            <p key={paragraph} className="mt-6 text-[15px] leading-8 text-white/55">
+              {paragraph}
             </p>
-            <p className="text-white/50 font-light text-[15px] leading-relaxed">
-              Ideal for wellness centers, spas, and residential spaces seeking the authentic touch of nature.
-            </p>
-          </div>
-          <div className="aspect-[4/3] bg-[#111] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1608528577891-eb0559d18e58?auto=format&fit=crop&q=80" alt="Essential oils" className="w-full h-full object-cover" />
-          </div>
+          ))}
+          <Link
+            to={toLocalePath("/diffusers")}
+            className="mt-10 inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
+          >
+            {copy.cta}
+          </Link>
+        </div>
+        <div className="aspect-[4/3] overflow-hidden bg-[#111]">
+          <img
+            src="https://images.unsplash.com/photo-1608528577891-eb0559d18e58?auto=format&fit=crop&q=80"
+            alt={isArabic ? "زيوت أساسية من Air Aroma" : "Air Aroma essential oils"}
+            width="1600"
+            height="1200"
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover"
+          />
         </div>
       </section>
     </div>

@@ -1,13 +1,10 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="%LANG%" dir="%DIR%">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
 
-    <!-- Global / Fallback Meta Tags (managed mostly by react-helmet-async per route) -->
-    <title>Air Aroma</title>
-
-    <!-- Performance: Preconnect to external resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://d3vawd8bbgt5rs.cloudfront.net" />
@@ -15,71 +12,12 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://d3vawd8bbgt5rs.cloudfront.net" />
     <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Structured Data: Organization -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Air Aroma",
-      "url": "https://air-aroma.com",
-      "logo": "https://air-aroma.com/logo.png",
-      "description": "Premium scent marketing agency designing custom fragrances for luxury brands worldwide.",
-      "foundingDate": "2000",
-      "sameAs": [
-        "https://www.facebook.com/AirAroma",
-        "https://www.instagram.com/airaroma",
-        "https://twitter.com/AirAroma",
-        "https://www.youtube.com/user/airaroma",
-        "https://maps.app.goo.gl/MUXsUc1ihvQJVN2Y7"
-      ],
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "+1-800-123-4567",
-          "contactType": "customer service",
-          "email": "info@air-aroma.com",
-          "availableLanguage": ["English", "Arabic"]
-        }
-      ],
-      "address": [
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "New York",
-          "addressRegion": "NY",
-          "addressCountry": "US"
-        },
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "Dubai",
-          "addressCountry": "AE"
-        },
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "London",
-          "addressCountry": "GB"
-        }
-      ]
-    }
-    </script>
-
-    <!-- Structured Data: WebSite with SearchAction -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Air Aroma",
-      "url": "https://air-aroma.com",
-      "description": "Premium scent marketing agency designing custom fragrances for luxury brands worldwide.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Air Aroma"
-      }
-    }
-    </script>
+    <!--app-head-->
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="root"><!--ssr-outlet--></div>
+    <script type="module" src="/src/entry-client.tsx"></script>
   </body>
 </html>

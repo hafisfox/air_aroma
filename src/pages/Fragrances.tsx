@@ -1,39 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTranslation } from "react-i18next";
-import SEOHead from "../components/SEOHead";
 import { fragrances } from "../data/products";
-
-const structuredData = [
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Air Aroma Premium Fragrances Collection",
-    "description": "Bespoke fragrances crafted from the finest ingredients for luxury spaces.",
-    "url": "https://air-aroma.com/fragrances",
-    "numberOfItems": fragrances.length,
-    "itemListElement": fragrances.map((f, i) => ({
-      "@type": "ListItem",
-      "position": i + 1,
-      "item": {
-        "@type": "Product",
-        "name": f.nameEn,
-        "description": f.storyEn,
-        "image": `https://air-aroma.com${f.images[0].file}`,
-        "brand": { "@type": "Brand", "name": "Air Aroma" },
-        "category": "Premium Fragrance",
-      },
-    })),
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://air-aroma.com" },
-      { "@type": "ListItem", "position": 2, "name": "Fragrances", "item": "https://air-aroma.com/fragrances" },
-    ],
-  },
-];
 
 export default function Fragrances() {
   const { i18n } = useTranslation();
@@ -47,14 +15,6 @@ export default function Fragrances() {
 
   return (
     <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <SEOHead
-        title="Premium Fragrances Collection | Air Aroma — Bespoke Scent Design"
-        description="Discover Air Aroma's collection of bespoke fragrances crafted from the finest ingredients. Perfectly tailored for luxury hotels, retail, and corporate spaces."
-        keywords="premium fragrances, bespoke scent, oud fragrance, luxury scent, hotel fragrance, custom perfume, Air Aroma fragrances, signature scent collection"
-        canonicalPath="/fragrances"
-        structuredData={structuredData}
-      />
-
       {/* Hero */}
       <section
         id="fragrances-hero"
@@ -135,7 +95,10 @@ export default function Fragrances() {
                       key={imgIdx}
                       src={fragrance.images[imgIdx].file}
                       alt={`${name} — Air Aroma ${isAr ? "عطر فاخر" : "premium fragrance"}`}
+                      width="1200"
+                      height="1500"
                       loading="lazy"
+                      decoding="async"
                       initial={{ opacity: 0, scale: 1.03 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}

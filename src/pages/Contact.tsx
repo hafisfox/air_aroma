@@ -1,156 +1,102 @@
 import { motion } from "motion/react";
-import SEOHead from "../components/SEOHead";
-import { useTranslation } from "react-i18next";
-
-const structuredData = [
-  {
-    "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "name": "Contact Air Aroma",
-    "description": "Get in touch with Air Aroma for a complimentary scent consultation and fragrance demonstration.",
-    "url": "https://air-aroma.com/contact",
-    "mainEntity": {
-      "@type": "LocalBusiness",
-      "name": "Air Aroma",
-      "url": "https://air-aroma.com",
-      "telephone": "+1-800-123-4567",
-      "email": "info@air-aroma.com",
-      "description": "Premium scent marketing agency designing custom fragrances for luxury brands worldwide.",
-      "sameAs": [
-        "https://www.facebook.com/AirAroma",
-        "https://www.instagram.com/airaroma",
-        "https://twitter.com/AirAroma",
-        "https://www.youtube.com/user/airaroma",
-        "https://maps.app.goo.gl/MUXsUc1ihvQJVN2Y7"
-      ],
-      "hasMap": "https://maps.app.goo.gl/MUXsUc1ihvQJVN2Y7",
-      "address": [
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "New York",
-          "addressRegion": "NY",
-          "addressCountry": "US",
-          "name": "North America Headquarters"
-        },
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "London",
-          "addressCountry": "GB",
-          "name": "Europe Office"
-        },
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "Dubai",
-          "addressCountry": "AE",
-          "name": "Middle East Office"
-        }
-      ],
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "09:00",
-        "closes": "18:00"
-      }
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://air-aroma.com" },
-      { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://air-aroma.com/contact" }
-    ]
-  }
-];
+import { Link } from "react-router-dom";
+import { useLocaleRouting } from "../lib/localeRouting";
 
 export default function Contact() {
-  const { t } = useTranslation();
+  const { isArabic, toLocalePath } = useLocaleRouting();
+
+  const copy = isArabic
+    ? {
+        title: "تواصل مع Air Aroma",
+        subtitle:
+          "أخبرنا عن نوع المشروع والمساحة والنتيجة العطرية التي تريدها. سواء كنت تبحث عن برنامج تسويق روائح أو عطر مميز أو نظام نشر، يمكننا مساعدتك في تحديد الخطوة التالية.",
+        intakeTitle: "ما الذي يفيد مشاركته في البداية؟",
+        intakeItems: [
+          "نوع المساحة: فندق، متجر، سكن، سبا، أو مشروع متعدد الاستخدامات.",
+          "حجم الموقع أو عدد المناطق التي تحتاج إلى نشر عطري.",
+          "الانطباع المطلوب: فاخر، هادئ، منعش، دافئ، أو موجّه للعافية.",
+          "الجدول الزمني المتوقع للافتتاح أو التوريد أو الاختبار.",
+        ],
+        emailTitle: "التواصل المباشر",
+        emailText:
+          "يمكنك إرسال ملخص المشروع إلى info@air-aroma.com وسنستخدمه كنقطة بداية لمحادثة أوضح حول العطر والنشر والمتطلبات التشغيلية.",
+        primaryCta: "راسلنا عبر البريد",
+        secondaryCta: "استكشف العطور",
+      }
+    : {
+        title: "Contact Air Aroma",
+        subtitle:
+          "Tell us about the project type, space profile, and the scent experience you want to create. Whether you need a scent marketing program, a signature fragrance, or a diffuser recommendation, we can help frame the next step.",
+        intakeTitle: "What is useful to share first?",
+        intakeItems: [
+          "Space type: hotel, retail, residence, spa, or mixed-use destination.",
+          "Approximate site scale or the number of areas that need fragrance coverage.",
+          "The mood you want to create: luxurious, calming, fresh, warm, or wellness-led.",
+          "Your expected opening, supply, or testing timeline.",
+        ],
+        emailTitle: "Direct project intake",
+        emailText:
+          "You can email a short project brief to info@air-aroma.com and we will use it to start a clearer conversation around fragrance direction, diffusion needs, and operating requirements.",
+        primaryCta: "Email Air Aroma",
+        secondaryCta: "Explore Fragrances",
+      };
 
   return (
     <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <SEOHead
-        title="Contact Air Aroma | Schedule a Fragrance Consultation Worldwide"
-        description="Get in touch with Air Aroma for a complimentary scent consultation and fragrance demonstration. Offices in New York, London, and Dubai. Email info@air-aroma.com or call +1 800 123 4567."
-        keywords="contact Air Aroma, scent consultation, fragrance demonstration, scent marketing inquiry, Air Aroma offices, New York, Dubai, London"
-        canonicalPath="/contact"
-        structuredData={structuredData}
-      />
-
-      {/* Hero Section */}
-      <section id="contact-hero" aria-label="Contact introduction" className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-white/10">
-        <div className="max-w-4xl">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+      <section className="border-b border-white/10 px-6 py-28 lg:px-12">
+        <div className="mx-auto max-w-5xl">
+          <motion.h1
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl sm:text-6xl font-light tracking-wide leading-tight mb-6"
+            transition={{ duration: 0.7 }}
+            className="text-4xl font-light leading-tight sm:text-6xl"
           >
-            {t("contact.title", "Contact Us")}
+            {copy.title}
           </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-white/60 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="mt-8 max-w-3xl text-lg leading-8 text-white/60"
           >
-            {t("contact.subtitle", "Experience the power of scent. Schedule a complimentary consultation and fragrance demonstration anywhere in the world.")}
+            {copy.subtitle}
           </motion.p>
         </div>
       </section>
 
-      <section id="contact-form-section" aria-label="Contact form and office locations" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
-          <div>
-            <h2 className="text-2xl font-light mb-8 text-neutral-900">{t("contact.getInTouch", "Get in Touch")}</h2>
-            <form className="space-y-8" aria-label="Contact form" id="contact-form">
-              <div>
-                <label htmlFor="contact-name" className="block text-[11px] uppercase tracking-widest text-white/40 mb-2">{t("contact.formName", "Name")}</label>
-                <input id="contact-name" type="text" name="name" autoComplete="name" className="w-full border-b border-white/20 py-3 text-[15px] focus:outline-none focus:border-brand-gold transition-colors bg-transparent font-light text-white rtl:text-right" placeholder={t("contact.formNamePlaceholder", "Your name")} />
-              </div>
-              <div>
-                <label htmlFor="contact-email" className="block text-[11px] uppercase tracking-widest text-white/40 mb-2">{t("contact.formEmail", "Email")}</label>
-                <input id="contact-email" type="email" name="email" autoComplete="email" className="w-full border-b border-white/20 py-3 text-[15px] focus:outline-none focus:border-brand-gold transition-colors bg-transparent font-light text-white rtl:text-right" placeholder={t("contact.formEmailPlaceholder", "Your email address")} />
-              </div>
-              <div>
-                <label htmlFor="contact-company" className="block text-[11px] uppercase tracking-widest text-white/40 mb-2">{t("contact.formCompany", "Company")}</label>
-                <input id="contact-company" type="text" name="organization" autoComplete="organization" className="w-full border-b border-white/20 py-3 text-[15px] focus:outline-none focus:border-brand-gold transition-colors bg-transparent font-light text-white rtl:text-right" placeholder={t("contact.formCompanyPlaceholder", "Your organization")} />
-              </div>
-              <div>
-                <label htmlFor="contact-message" className="block text-[11px] uppercase tracking-widest text-white/40 mb-2">{t("contact.formMessage", "Message")}</label>
-                <textarea id="contact-message" name="message" className="w-full border-b border-white/20 py-3 text-[15px] focus:outline-none focus:border-brand-gold transition-colors bg-transparent font-light resize-none text-white rtl:text-right" rows={4} placeholder={t("contact.formMessagePlaceholder", "How can we help you?")}></textarea>
-              </div>
-              <button type="button" className="bg-brand-gold text-brand-black px-8 py-4 uppercase tracking-widest text-[11px] hover:bg-white transition-colors block w-full mt-8 font-medium">
-                {t("contact.formSend", "Send Message")}
-              </button>
-            </form>
-          </div>
-
-          <aside className="bg-[#111] p-12 flex flex-col justify-center" aria-label="Office locations and contact details">
-            <div className="mb-12">
-              <h3 className="text-xl font-light mb-4">{t("contact.naTitle", "North America")}</h3>
-              <address className="text-white/50 font-light leading-relaxed text-[15px] not-italic">
-                {t("contact.naGlobalHQ", "Global Headquarters")}<br />
-                {t("contact.naCity", "New York, NY")}<br />
-              </address>
-            </div>
-            
-            <div className="mb-12">
-              <h3 className="text-xl font-light mb-4">{t("contact.emeaTitle", "Europe & Middle East")}</h3>
-              <address className="text-white/50 font-light leading-relaxed text-[15px] not-italic">
-                {t("contact.emeaOffice", "Regional Office")}<br />
-                {t("contact.emeaCities", "London, UK / Dubai, UAE")}<br />
-              </address>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-light mb-4">{t("contact.directTitle", "Direct Contact")}</h3>
-              <address className="text-white/50 font-light leading-relaxed text-[15px] not-italic">
-                {t("contact.directEmail", "Email:")} <a href="mailto:info@air-aroma.com" className="underline decoration-1 underline-offset-4 hover:text-white transition-colors">info@air-aroma.com</a><br />
-                {t("contact.directPhone", "Phone:")} <a href="tel:+18001234567" className="underline decoration-1 underline-offset-4 hover:text-white transition-colors">+1 800 123 4567</a>
-              </address>
-            </div>
-          </aside>
+      <section className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-[1.1fr,0.9fr] lg:px-12">
+        <div>
+          <h2 className="text-3xl font-light text-white">{copy.intakeTitle}</h2>
+          <ul className="mt-8 space-y-4 text-[15px] leading-8 text-white/55">
+            {copy.intakeItems.map((item) => (
+              <li key={item} className="flex gap-4">
+                <span className="mt-3 h-2 w-2 flex-shrink-0 rounded-full bg-brand-gold" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
+
+        <aside className="border border-white/10 bg-[#111] p-10">
+          <h3 className="text-2xl font-light text-white">{copy.emailTitle}</h3>
+          <p className="mt-6 text-[15px] leading-8 text-white/55">
+            {copy.emailText}
+          </p>
+          <div className="mt-10 flex flex-col gap-4">
+            <a
+              href="mailto:info@air-aroma.com"
+              className="inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
+            >
+              {copy.primaryCta}
+            </a>
+            <Link
+              to={toLocalePath("/fragrances")}
+              className="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
+            >
+              {copy.secondaryCta}
+            </Link>
+          </div>
+        </aside>
       </section>
     </div>
   );

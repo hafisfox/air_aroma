@@ -3,8 +3,9 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import type { Locale } from "../seo/site";
 
-export default function Layout() {
+export default function Layout({ locale }: { locale: Locale }) {
   const { pathname } = useLocation();
 
   // Scroll to top on route change
@@ -14,11 +15,11 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col bg-brand-black text-[#f8f8f8]">
-      <Navbar />
+      <Navbar locale={locale} />
       <main className="flex-grow">
         <Outlet />
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </div>
   );
 }

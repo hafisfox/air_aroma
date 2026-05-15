@@ -4,19 +4,21 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
+import type { Locale } from "../seo/site";
+import { withLocale } from "../seo/site";
 
-export default function Navbar() {
+export default function Navbar({ locale }: { locale: Locale }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const { t } = useTranslation();
 
   const navLinks = [
-    { name: t("nav.scentMarketing"), path: "/scent-marketing" },
-    { name: t("nav.products"), path: "/products" },
-    { name: t("nav.clients"), path: "/clients" },
-    { name: t("nav.blog"), path: "/blog" },
-    { name: t("nav.contact"), path: "/contact" },
+    { name: t("nav.scentMarketing"), path: withLocale("/scent-marketing", locale) },
+    { name: t("nav.products"), path: withLocale("/products", locale) },
+    { name: t("nav.clients"), path: withLocale("/clients", locale) },
+    { name: t("nav.blog"), path: withLocale("/blog", locale) },
+    { name: t("nav.contact"), path: withLocale("/contact", locale) },
   ];
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export default function Navbar() {
         </div>
         
         {/* Logo */}
-        <Link to="/" className="mx-auto flex justify-center items-center group" aria-label="Air Aroma — Home">
+        <Link to={withLocale("/", locale)} className="mx-auto flex justify-center items-center group" aria-label="Air Aroma — Home">
           <span className="text-[34px] md:text-[44px] font-light tracking-tight text-white leading-none transition-transform duration-500 group-hover:scale-105">
             Air<span className="text-brand-gold transition-colors duration-500" aria-hidden="true">/</span>Aroma
           </span>

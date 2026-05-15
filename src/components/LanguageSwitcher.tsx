@@ -2,17 +2,22 @@ import { useTranslation } from 'react-i18next';
 import { Globe } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { setLocale } from '../i18n';
+import { getLocaleFromPath, switchLocalePath, type Locale } from '../seo/site';
 
 export default function LanguageSwitcher() {
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const currentLang = getLocaleFromPath(location.pathname);
 
-  const toggleLanguage = (lang: string) => {
-    i18n.changeLanguage(lang);
+  const toggleLanguage = async (lang: Locale) => {
+    await setLocale(lang);
+    navigate(switchLocalePath(location.pathname, lang));
     setIsOpen(false);
   };
-
-  const currentLang = i18n.language.startsWith('ar') ? 'ar' : 'en';
 
   return (
     <div className="relative inline-block text-left">

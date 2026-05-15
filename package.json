@@ -4,10 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "node --import tsx server.ts",
+    "build": "npm run generate:seo && npm run build:client && npm run build:server",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "preview": "NODE_ENV=production node --import tsx server.ts",
     "clean": "rm -rf dist",
+    "generate:seo": "tsx scripts/generate-seo-assets.ts",
     "lint": "tsc --noEmit"
   },
   "dependencies": {

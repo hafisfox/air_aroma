@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import type { Locale } from "../seo/site";
+import { withLocale } from "../seo/site";
 
-export default function Footer() {
+export default function Footer({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
 
   return (
@@ -9,28 +11,28 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-12 mb-20 text-[13px] font-light tracking-wide uppercase">
         {/* Column 1 — Main pages */}
         <nav aria-label={t('footer.mainPages', 'Main pages')} className="flex flex-col space-y-5">
-          <Link to="/scent-marketing" className="hover:text-brand-gold transition-colors w-max">{t('nav.scentMarketing', 'Scent Marketing')}</Link>
-          <Link to="/products" className="hover:text-brand-gold transition-colors w-max">{t('nav.products', 'Products')}</Link>
-          <Link to="/clients" className="hover:text-brand-gold transition-colors w-max">{t('nav.clients', 'Clients')}</Link>
-          <Link to="/blog" className="hover:text-brand-gold transition-colors w-max">{t('nav.blog', 'Blog')}</Link>
+          <Link to={withLocale("/scent-marketing", locale)} className="hover:text-brand-gold transition-colors w-max">{t('nav.scentMarketing', 'Scent Marketing')}</Link>
+          <Link to={withLocale("/products", locale)} className="hover:text-brand-gold transition-colors w-max">{t('nav.products', 'Products')}</Link>
+          <Link to={withLocale("/clients", locale)} className="hover:text-brand-gold transition-colors w-max">{t('nav.clients', 'Clients')}</Link>
+          <Link to={withLocale("/blog", locale)} className="hover:text-brand-gold transition-colors w-max">{t('nav.blog', 'Blog')}</Link>
         </nav>
         
         {/* Column 2 — Company & social */}
         <nav aria-label={t('footer.companySocial', 'Company pages')} className="flex flex-col space-y-5">
-          <Link to="/about" className="hover:text-brand-gold transition-colors w-max">{t('nav.about', 'About')}</Link>
-          <Link to="/scent-marketing" className="hover:text-brand-gold transition-colors w-max">{t('footer.services', 'Services')}</Link>
-          <Link to="/contact" className="hover:text-brand-gold transition-colors w-max">{t('nav.contact', 'Contact')}</Link>
+          <Link to={withLocale("/about", locale)} className="hover:text-brand-gold transition-colors w-max">{t('nav.about', 'About')}</Link>
+          <Link to={withLocale("/scent-marketing", locale)} className="hover:text-brand-gold transition-colors w-max">{t('footer.services', 'Services')}</Link>
+          <Link to={withLocale("/contact", locale)} className="hover:text-brand-gold transition-colors w-max">{t('nav.contact', 'Contact')}</Link>
           <a href="https://www.facebook.com/AirAroma" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors w-max" aria-label="Visit Air Aroma on Facebook">Facebook</a>
           <a href="https://www.instagram.com/airaroma" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors w-max" aria-label="Visit Air Aroma on Instagram">Instagram</a>
-          <a href="https://maps.app.goo.gl/MUXsUc1ihvQJVN2Y7" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors w-max" aria-label="Visit Air Aroma on Google Business">Google Business</a>
+          <a href="https://www.youtube.com/user/airaroma" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors w-max" aria-label="Visit Air Aroma on YouTube">YouTube</a>
         </nav>
 
         {/* Column 3 — Social & legal */}
         <nav aria-label={t('footer.socialLegal', 'Social media and legal')} className="flex flex-col space-y-5">
           <a href="https://twitter.com/AirAroma" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors w-max" aria-label="Visit Air Aroma on Twitter">Twitter</a>
-          <a href="https://www.youtube.com/user/airaroma" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors w-max" aria-label="Visit Air Aroma on YouTube">YouTube</a>
-          <Link to="/about" className="hover:text-brand-gold transition-colors w-max">{t('footer.legal', 'Legal')}</Link>
-          <Link to="/contact" className="hover:text-brand-gold transition-colors w-max">{t('footer.faq', 'FAQ')}</Link>
+          <Link to={withLocale("/about", locale)} className="hover:text-brand-gold transition-colors w-max">{t('footer.legal', 'Legal')}</Link>
+          <Link to={withLocale("/contact", locale)} className="hover:text-brand-gold transition-colors w-max">{t('footer.faq', 'FAQ')}</Link>
+          <a href="mailto:info@air-aroma.com" className="hover:text-brand-gold transition-colors w-max" aria-label="Email Air Aroma">info@air-aroma.com</a>
         </nav>
 
         {/* Newsletter Column */}
@@ -61,8 +63,10 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[12px] font-light text-white/40 space-y-4 md:space-y-0">
         <p dir="ltr">&copy; {new Date().getFullYear()} Air Aroma. {t('footer.rights', 'All rights reserved.')}</p>
         <div className="flex items-center space-x-3 cursor-pointer hover:text-white transition-colors rtl:space-x-reverse">
-          <Link to="/" aria-label={t('footer.selectCountry', 'Select country or region')}>{t('footer.selectCountry', 'Select country or region')}</Link>
-          <img src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2021/05/flag-us.png" alt="United States flag" width="18" height="12" className="w-[18px] object-contain block opacity-70" loading="lazy" />
+          <Link to={withLocale("/", locale)} aria-label={t('footer.selectCountry', 'Select country or region')}>{t('footer.selectCountry', 'Select country or region')}</Link>
+          <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-white/50">
+            EN / AR
+          </span>
         </div>
       </div>
     </footer>
