@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import { hydrateRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
@@ -10,14 +10,25 @@ async function start() {
   const locale = getLocaleFromPath(window.location.pathname);
   await setLocale(locale);
 
-  hydrateRoot(
-    document.getElementById("root")!,
+  const rootElement = document.getElementById("root")!;
+  const app = (
     <StrictMode>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </StrictMode>,
+    </StrictMode>
   );
+
+  const hasServerRenderedMarkup =
+    rootElement.childElementCount > 0 ||
+    (rootElement.textContent?.trim().length ?? 0) > 0;
+
+  if (hasServerRenderedMarkup) {
+    hydrateRoot(rootElement, app);
+    return;
+  }
+
+  createRoot(rootElement).render(app);
 }
 
 void start();
