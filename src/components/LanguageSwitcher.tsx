@@ -30,7 +30,7 @@ export default function LanguageSwitcher() {
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className="nav-icon-button min-w-[3.5rem] gap-2 px-3 text-[0.72rem] font-semibold uppercase tracking-[0.16em]"
+        className="language-switcher__button"
         aria-haspopup="menu"
         aria-label="Switch language"
         aria-expanded={isOpen}
@@ -53,15 +53,15 @@ export default function LanguageSwitcher() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="surface-panel absolute end-0 z-50 mt-3 min-w-[11rem] p-2"
+              className="language-switcher__menu"
               role="menu"
             >
               <button
                 type="button"
                 onClick={() => toggleLanguage("en")}
                 className={cx(
-                  "flex min-h-11 w-full items-center justify-between rounded-full px-4 text-sm font-semibold text-ink transition-colors hover:bg-accent-soft",
-                  currentLang === "en" && "bg-accent-soft text-accent-strong",
+                  "language-switcher__option",
+                  currentLang === "en" && "language-switcher__option--active",
                 )}
                 role="menuitem"
               >
@@ -72,8 +72,8 @@ export default function LanguageSwitcher() {
                 type="button"
                 onClick={() => toggleLanguage("ar")}
                 className={cx(
-                  "flex min-h-11 w-full items-center justify-between rounded-full px-4 text-sm font-semibold text-ink transition-colors hover:bg-accent-soft",
-                  currentLang === "ar" && "bg-accent-soft text-accent-strong",
+                  "language-switcher__option",
+                  currentLang === "ar" && "language-switcher__option--active",
                 )}
                 role="menuitem"
                 dir="rtl"

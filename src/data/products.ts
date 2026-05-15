@@ -11,6 +11,9 @@ export interface Product {
   characteristicsAr: string[];
   images: { size: string; file: string }[];
   type: "fragrance" | "diffuser";
+  storeUrl?: string;
+  placeholderStatus?: "available" | "showcase-only";
+  anchorId?: string;
   usedByEn?: string[];
   usedByAr?: string[];
   ifYouEnjoyedEn?: string[];
@@ -209,8 +212,8 @@ export const products: Product[] = [
   {
     id: "aromax",
     folderName: "AROMAX",
-    nameEn: "Aromax Oil Diffuser",
-    nameAr: "جهاز آروماكس لنشر الزيوت العطرية",
+    nameEn: "Aromax",
+    nameAr: "آروماكس",
     storyEn: "The Aromax essential oil diffuser is the result of nature and technology combined. Stylish and beautiful, the Aromax aroma diffuser is perfect for scenting your home with essential oils. The anodized aluminum housing comes in four colors ready to complement any interior. With a whisper silent nebulizer and adjustable fragrance output, the Aromax home diffuser will keep your space smelling great.",
     storyAr: "يجمع جهاز آروماكس الأساسي لنشر الزيوت العطرية في تصميمه ما بين الطبيعة والتكنولوجيا في آنٍ واحدٍ. يُعَد جهاز آروماكس الأنيق والجميل لنشر العطور مثاليًا من أجل تعطير منزلك بالزيوت الأساسية. يأتي هيكل الألومنيوم المؤكسد بأربعة ألوان جاهزة لكي تنسّقه مع أي ديكور داخلي. بفضل الرذاذة الخافتة ومزية نثر العطر القابلة للتعديل، سيحافظ جهاز آروماكس المنزلي لنشر العطور على رائحة مكانك رائعة.",
     notesEn: [],
@@ -224,6 +227,9 @@ export const products: Product[] = [
       { size: "Red", file: "/products/AROMAX/Red-Aromax.jpg" },
     ],
     type: "diffuser",
+    storeUrl: "https://www.air-aroma.com/store/aromax/",
+    placeholderStatus: "available",
+    anchorId: "aromax",
   },
 ];
 

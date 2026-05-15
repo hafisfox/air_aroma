@@ -1,136 +1,226 @@
-import { useLocaleRouting } from "../lib/localeRouting";
+import type { FormEvent } from "react";
+import { useState } from "react";
+import SecondaryNav from "../components/SecondaryNav";
 import {
-  ActionAnchor,
-  ActionLink,
-  BulletList,
-  FinalCta,
-  MountReveal,
-  Reveal,
-} from "../components/brand/BrandPrimitives";
+  contactSecondaryNav,
+  officeDetails,
+} from "../data/referenceContent";
+import {
+  type ContactResponse,
+  contactReasons,
+  normalizeContactPayload,
+  validateContactPayload,
+} from "../lib/contact";
+import { useLocaleRouting } from "../lib/localeRouting";
+
+const countries = ["United States", "Australia", "United Kingdom", "United Arab Emirates", "Saudi Arabia", "Singapore", "India"];
+const states = ["Alabama", "California", "Florida", "New York", "Texas", "Victoria", "Dubai", "Riyadh"];
 
 export default function Contact() {
-  const { isArabic, toLocalePath } = useLocaleRouting();
+  const { locale } = useLocaleRouting();
+  const isArabic = locale === "ar";
+  const [status, setStatus] = useState<ContactResponse | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const copy = isArabic
-    ? {
-        badge: "تواصل معنا",
-        title: "شاركنا نوع المشروع والانطباع الذي تريد أن يتركه المكان.",
-        body:
-          "سواء كنت تبحث عن برنامج تسويق روائح أو عطر مميز أو توصية بشأن نظام النشر، يمكننا مساعدتك على تحديد الخطوة التالية بطريقة أوضح وأهدأ.",
-        intakeTitle: "ما الذي يفيد مشاركته في البداية؟",
-        intakeItems: [
-          "نوع المساحة: فندق، متجر، مسكن، سبا، أو مشروع متعدد الاستخدامات.",
-          "الحجم التقريبي للموقع أو عدد المناطق التي تحتاج إلى تغطية عطرية.",
-          "المزاج الذي تريد خلقه: فخم، هادئ، منعش، دافئ، أو موجّه للعافية.",
-          "الجدول الزمني المتوقع للافتتاح أو الاختبار أو التوريد.",
-        ],
-        emailTitle: "المدخل المباشر للمشروع",
-        emailText:
-          "يمكنك إرسال موجز مختصر إلى info@air-aroma.com وسنستخدمه كنقطة بداية لمحادثة أكثر دقة حول العطر والنشر ومتطلبات التشغيل.",
-        primaryCta: "راسل Air Aroma",
-        secondaryCta: "استكشف العطور",
-        finalTitle: "هل تريد أن نساعدك على صياغة الموجز قبل الإرسال؟",
-        finalBody:
-          "ابدأ من العطور أو الخدمات إذا كنت لا تزال في مرحلة تحديد المسار، ثم عد إلينا عندما تكون جاهزاً للنقاش التفصيلي.",
-        finalPrimary: "استكشف الخدمات",
-        finalSecondary: "عرض العطور",
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus(null);
+
+    const form = event.currentTarget;
+    const payload = normalizeContactPayload(Object.fromEntries(new FormData(form)));
+    const validation = validateContactPayload(payload);
+
+    if (!validation.isValid) {
+      setStatus({
+        ok: false,
+        message: isArabic
+          ? "يرجى مراجعة الحقول المطلوبة قبل الإرسال."
+          : "Please review the required fields before submitting.",
+        errors: validation.errors,
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = (await response.json()) as ContactResponse;
+
+      setStatus(result);
+
+      if (result.ok) {
+        form.reset();
       }
-    : {
-        badge: "Contact Air Aroma",
-        title: "Tell us the kind of project you are planning and the feeling the space should leave behind.",
-        body:
-          "Whether the need is scent marketing, a signature fragrance, or a diffuser recommendation, we can help frame the next step with more clarity and less guesswork.",
-        intakeTitle: "What is useful to share first?",
-        intakeItems: [
-          "Space type: hotel, retail, residence, spa, or mixed-use destination.",
-          "Approximate site scale or the number of areas that need fragrance coverage.",
-          "The atmosphere the project should create: luxurious, calming, bright, warm, or wellness-led.",
-          "Expected opening, testing, or supply timeline.",
-        ],
-        emailTitle: "Direct project intake",
-        emailText:
-          "You can email a short brief to info@air-aroma.com and we will use it to begin a clearer conversation around fragrance direction, diffusion needs, and operating requirements.",
-        primaryCta: "Email Air Aroma",
-        secondaryCta: "Explore Fragrances",
-        finalTitle: "Need help shaping the brief before you send it?",
-        finalBody:
-          "Start with the services or fragrance collection if you are still deciding on direction, then come back when you are ready for a more detailed conversation.",
-        finalPrimary: "Explore Services",
-        finalSecondary: "View Fragrances",
-      };
+    } catch {
+      setStatus({
+        ok: false,
+        message: isArabic
+          ? "تعذر إرسال الرسالة الآن. يرجى المحاولة لاحقاً أو مراسلتنا مباشرة."
+          : "We could not send the message right now. Please try again later or email us directly.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <div>
-      <section className="overflow-hidden pt-28 md:pt-32">
-        <div className="section-inner section-block">
-          <div className="grid gap-10 xl:grid-cols-[1.02fr_0.98fr] xl:items-center">
-            <MountReveal className="space-y-7">
-              <span className="kicker-pill">{copy.badge}</span>
-              <h1 className="hero-title max-w-[12ch]">{copy.title}</h1>
-              <p className="hero-body">{copy.body}</p>
-            </MountReveal>
+      <SecondaryNav
+        items={contactSecondaryNav}
+        locale={locale}
+        label={isArabic ? "أقسام التواصل" : "Contact sections"}
+      />
 
-            <MountReveal delay={0.12}>
-              <div className="surface-panel p-6 md:p-8">
-                <p className="eyebrow">{copy.intakeTitle}</p>
-                <div className="mt-6">
-                  <BulletList items={copy.intakeItems} />
+      <section id="locations" className="contact-offices">
+        <div className="reference-container contact-offices__grid">
+          {[officeDetails.local, officeDetails.corporate].map((office) => (
+            <article key={office.title.en} className="office-card">
+              <h2>{office.title[locale]}</h2>
+              <p dir="ltr">{office.lines.join("\n")}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="contact-form" className="quiet-section">
+        <form
+          className="contact-form"
+          method="post"
+          action="/api/contact"
+          onSubmit={handleSubmit}
+        >
+          <input type="hidden" name="locale" value={locale} />
+          <div className="field hidden" aria-hidden="true">
+            <label htmlFor="website">Website</label>
+            <input id="website" name="website" tabIndex={-1} autoComplete="off" />
+          </div>
+
+          <div className="contact-form__grid">
+            <Field label={isArabic ? "الاسم الأول" : "First name"} name="firstName" required />
+            <Field label={isArabic ? "اسم العائلة" : "Last name"} name="lastName" required />
+            <Field label={isArabic ? "الشركة" : "Company"} name="company" />
+
+            <div className="field">
+              <label>
+                {isArabic ? "البريد الإلكتروني" : "Email"} <span className="required">*</span>
+              </label>
+              <div className="contact-form__row">
+                <div>
+                  <input name="email" type="email" required autoComplete="email" />
+                  <p className="field__hint">{isArabic ? "أدخل البريد الإلكتروني" : "Enter Email"}</p>
+                </div>
+                <div>
+                  <input name="emailConfirm" type="email" required autoComplete="email" />
+                  <p className="field__hint">{isArabic ? "تأكيد البريد الإلكتروني" : "Confirm Email"}</p>
                 </div>
               </div>
-            </MountReveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-block">
-        <div className="section-inner grid gap-10 xl:grid-cols-[0.98fr_1.02fr] xl:items-center">
-          <Reveal>
-            <div className="media-frame aspect-[4/5] min-h-[24rem]">
-              <img
-                src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=80"
-                alt={
-                  isArabic
-                    ? "مساحة ضيافة راقية تعبّر عن مشروع عطري"
-                    : "Premium hospitality space representing a scent project brief"
-                }
-                width="1800"
-                height="2200"
-                loading="lazy"
-                decoding="async"
-                className="h-full w-full object-cover"
-              />
             </div>
-          </Reveal>
 
-          <Reveal delay={0.08}>
-            <div className="surface-panel h-full p-6 md:p-8">
-              <p className="eyebrow">{copy.emailTitle}</p>
-              <h2 className="mt-4 font-display text-[2.4rem] leading-[1.02] text-ink">
-                info@air-aroma.com
-              </h2>
-              <p className="mt-5 text-[1rem] leading-8 text-ink-soft">
-                {copy.emailText}
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <ActionAnchor href="mailto:info@air-aroma.com">
-                  {copy.primaryCta}
-                </ActionAnchor>
-                <ActionLink to={toLocalePath("/fragrances")} variant="secondary">
-                  {copy.secondaryCta}
-                </ActionLink>
+            <Field label={isArabic ? "الهاتف" : "Phone"} name="phone" type="tel" />
+
+            <SelectField
+              label={isArabic ? "البلد" : "Country"}
+              name="country"
+              options={countries}
+              required
+            />
+            <SelectField
+              label={isArabic ? "الولاية / المنطقة" : "State"}
+              name="state"
+              options={states}
+              required
+            />
+            <SelectField
+              label={isArabic ? "سبب التواصل" : "Reason"}
+              name="reason"
+              options={[...contactReasons]}
+              required
+            />
+
+            <div className="field">
+              <label htmlFor="message">
+                {isArabic ? "الرسالة" : "Message"} <span className="required">*</span>
+              </label>
+              <textarea id="message" name="message" required />
+            </div>
+
+            <label className="checkbox-field">
+              <input name="subscribe" type="checkbox" defaultChecked />
+              <span>{isArabic ? "الاشتراك في النشرة الإخبارية" : "Subscribe to our newsletter"}</span>
+            </label>
+
+            {status ? (
+              <div className="form-status" data-tone={status.ok ? "success" : "error"} role="status">
+                {status.message}
               </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+            ) : null}
 
-      <FinalCta
-        title={copy.finalTitle}
-        body={copy.finalBody}
-        primary={{ label: copy.finalPrimary, to: toLocalePath("/scent-marketing") }}
-        secondary={{ label: copy.finalSecondary, to: toLocalePath("/fragrances") }}
-        tone="light"
-      />
+            <button type="submit" className="reference-button w-fit min-w-[160px]" disabled={isSubmitting}>
+              {isSubmitting
+                ? isArabic
+                  ? "جار الإرسال..."
+                  : "Submitting..."
+                : isArabic
+                  ? "إرسال"
+                  : "Submit"}
+            </button>
+          </div>
+        </form>
+      </section>
     </div>
   );
 }
+
+function Field({
+  label,
+  name,
+  type = "text",
+  required = false,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  required?: boolean;
+}) {
+  return (
+    <div className="field">
+      <label htmlFor={name}>
+        {label} {required ? <span className="required">*</span> : null}
+      </label>
+      <input id={name} name={name} type={type} required={required} />
+    </div>
+  );
+}
+
+function SelectField({
+  label,
+  name,
+  options,
+  required = false,
+}: {
+  label: string;
+  name: string;
+  options: string[];
+  required?: boolean;
+}) {
+  return (
+    <div className="field">
+      <label htmlFor={name}>
+        {label} {required ? <span className="required">*</span> : null}
+      </label>
+      <select id={name} name={name} required={required}>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+

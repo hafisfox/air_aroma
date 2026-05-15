@@ -84,7 +84,7 @@ export default function ScentMarketing() {
   const copy = isArabic
     ? {
         badge: "استراتيجية الروائح",
-        title: "خدمات تسويق الروائح للمشاريع الراقية في السعودية والخليج.",
+        title: "خدمات تسويق الروائح للمساحات والعلامات الفاخرة حول العالم.",
         body:
           "لا يقتصر الهدف على تعطير المكان. البرنامج الجيد يخلق ذاكرة حسية متماسكة مع العلامة التجارية، ويترجمها إلى تجربة وصول وإقامة وتسوق يمكن الاعتماد عليها كل يوم.",
         processEyebrow: "كيف نعمل",
@@ -108,7 +108,7 @@ export default function ScentMarketing() {
       }
     : {
         badge: "Scent Strategy",
-        title: "Scent marketing services for premium Saudi and GCC spaces.",
+        title: "Scent marketing services for premium spaces and global brands.",
         body:
           "The goal is not simply to fragrance a space. The strongest program builds a sensory memory that aligns with the brand, then translates it into an arrival, guest, or retail experience that holds up every day.",
         processEyebrow: "How We Work",

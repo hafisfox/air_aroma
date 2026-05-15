@@ -1,379 +1,254 @@
-import { useEffect, useState } from "react";
+import { Phone, ShoppingCart } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
-import NotFound from "./NotFound";
-import { useLocaleRouting } from "../lib/localeRouting";
+import SecondaryNav from "../components/SecondaryNav";
 import {
-  ActionLink,
-  ActionRow,
-  BulletList,
-  FinalCta,
-  MountReveal,
-  Reveal,
-  SectionIntro,
-} from "../components/brand/BrandPrimitives";
+  AROMAX_STORE_URL,
+  aromaxSecondaryNav,
+  referenceImages,
+} from "../data/referenceContent";
 import {
   getProductById,
-  getProductCategoryLabel,
   getProductCharacteristics,
   getProductCollectionBasePath,
-  getProductDetailBasePath,
-  getProductIfYouEnjoyed,
   getProductName,
   getProductNotes,
   getProductStory,
-  getProductUsedBy,
-  getRelatedProducts,
 } from "../data/products";
+import { useLocaleRouting } from "../lib/localeRouting";
+import NotFound from "./NotFound";
 
-const fragranceFallbackUseCases = {
-  en: ["Hotels", "Luxury retail", "Residences"],
-  ar: ["الفنادق", "التجزئة الفاخرة", "المساكن"],
-};
-
-const diffuserFallbackUseCases = {
-  en: ["Residences", "Boutiques", "VIP rooms", "Wellness suites"],
-  ar: ["المساكن", "المتاجر الراقية", "غرف كبار الشخصيات", "أجنحة العافية"],
-};
-
-const detailCopy = {
-  en: {
-    backToProducts: "Back to products",
-    backToCollection: "Back to collection",
-    storyLabel: "Scent Story",
-    notesLabel: "Notes",
-    featuresLabel: "Key Features",
-    idealLabel: "Ideal Environments",
-    enjoyedLabel: "If You Enjoyed",
-    finishesLabel: "Available Options",
-    relatedLabel: "Related Products",
-    relatedTitle: "Continue through the collection",
-    exploreLabel: "View product",
-    contactCta: "Talk to Air Aroma",
-    consultTitle: "Planning this for a project in Saudi Arabia or the GCC?",
-    consultBody:
-      "Share the type of space and the atmosphere you want to create. We will help match the right fragrance or diffuser setup.",
-    categoryHub: "Products",
-    variantLabel: "Variants",
-    notesCountLabel: "Scent notes",
-    craftedLabel: "Crafted for premium spaces",
-  },
-  ar: {
-    backToProducts: "العودة إلى المنتجات",
-    backToCollection: "العودة إلى المجموعة",
-    storyLabel: "قصة العطر",
-    notesLabel: "النفحات",
-    featuresLabel: "المزايا الأساسية",
-    idealLabel: "البيئات المناسبة",
-    enjoyedLabel: "إذا أعجبك",
-    finishesLabel: "الخيارات المتاحة",
-    relatedLabel: "منتجات ذات صلة",
-    relatedTitle: "واصل استكشاف المجموعة",
-    exploreLabel: "عرض المنتج",
-    contactCta: "تحدث مع Air Aroma",
-    consultTitle: "هل تخطط لاستخدام هذا المنتج في مشروع داخل السعودية أو الخليج؟",
-    consultBody:
-      "شاركنا نوع المساحة والانطباع الذي ترغب في صناعته، وسنساعدك على اختيار العطر أو نظام النشر الأنسب.",
-    categoryHub: "المنتجات",
-    variantLabel: "الخيارات",
-    notesCountLabel: "عدد النفحات",
-    craftedLabel: "مصمم للمساحات الراقية",
-  },
-};
+const aromaxColorTiles = [
+  { label: { en: "Silver", ar: "فضي" }, image: referenceImages.aromaxSilverTile },
+  { label: { en: "Gold", ar: "ذهبي" }, image: referenceImages.aromaxGoldTile },
+  { label: { en: "Black", ar: "أسود" }, image: referenceImages.aromaxBlackTile },
+  { label: { en: "Red", ar: "أحمر" }, image: referenceImages.aromaxRedTile },
+];
 
 export default function ProductDetail() {
   const { productId } = useParams();
-  const { isArabic, locale, toLocalePath } = useLocaleRouting();
-  const copy = isArabic ? detailCopy.ar : detailCopy.en;
+  const { locale, toLocalePath } = useLocaleRouting();
+  const isArabic = locale === "ar";
   const product = productId ? getProductById(productId) : undefined;
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-
-  useEffect(() => {
-    setActiveImageIndex(0);
-  }, [productId]);
 
   if (!product) {
     return <NotFound />;
   }
 
+  if (product.id === "aromax") {
+    return <AromaxDetail locale={locale} isArabic={isArabic} toLocalePath={toLocalePath} />;
+  }
+
   const name = getProductName(product, locale);
-  const story = getProductStory(product, locale);
-  const category = getProductCategoryLabel(product, locale);
   const notes = getProductNotes(product, locale);
   const characteristics = getProductCharacteristics(product, locale);
-  const usedBy = getProductUsedBy(product, locale);
-  const ifYouEnjoyed = getProductIfYouEnjoyed(product, locale);
-  const relatedProducts = getRelatedProducts(product, 3);
-  const collectionPath = toLocalePath(getProductCollectionBasePath(product));
-  const idealUseCases =
-    usedBy.length > 0
-      ? usedBy
-      : product.type === "diffuser"
-        ? diffuserFallbackUseCases[locale]
-        : fragranceFallbackUseCases[locale];
-  const activeImage = product.images[activeImageIndex] ?? product.images[0];
 
   return (
     <div>
-      <section className="overflow-hidden pt-28 md:pt-32">
-        <div className="section-inner section-block">
-          <div className="mb-8 flex flex-wrap items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-muted">
-            <Link to={toLocalePath("/")} className="transition-colors hover:text-ink">
-              Air Aroma
-            </Link>
-            <span>/</span>
-            <Link to={toLocalePath("/products")} className="transition-colors hover:text-ink">
-              {copy.categoryHub}
-            </Link>
-            <span>/</span>
-            <span className="text-accent-strong">{name}</span>
+      <section className="quiet-section">
+        <div className="reference-container simple-page__grid">
+          <div>
+            <p className="eyebrow">{isArabic ? "عطر من Air Aroma" : "Air Aroma scent"}</p>
+            <h1 className="simple-page__title mt-4">{name}</h1>
           </div>
-
-          <div className="grid gap-10 xl:grid-cols-[0.96fr_1.04fr] xl:items-center">
-            <MountReveal className="space-y-8">
-              <div className="kicker-row">
-                <span className="kicker-pill">{category}</span>
-                {notes.length > 0 ? (
-                  <span className="chip">
-                    {notes.length} {copy.notesLabel}
-                  </span>
-                ) : null}
-              </div>
-
-              <h1 className="hero-title max-w-[11ch]">{name}</h1>
-              <p className="hero-body">{story}</p>
-
-              <ActionRow>
-                <ActionLink to={toLocalePath("/contact")}>{copy.contactCta}</ActionLink>
-                <ActionLink to={collectionPath} variant="secondary">
-                  {copy.backToCollection}
-                </ActionLink>
-              </ActionRow>
-
-              <div className="metric-grid">
-                <div className="metric-card">
-                  <p className="metric-label">{copy.variantLabel}</p>
-                  <p className="metric-value">{product.images.length}</p>
-                </div>
-                <div className="metric-card">
-                  <p className="metric-label">
-                    {notes.length > 0 ? copy.notesCountLabel : copy.featuresLabel}
-                  </p>
-                  <p className="metric-value">
-                    {notes.length > 0 ? notes.length : characteristics.length}
-                  </p>
-                </div>
-                <div className="metric-card">
-                  <p className="metric-label">Air Aroma</p>
-                  <p className="mt-3 text-[0.98rem] font-semibold leading-7 text-accent-strong">
-                    {copy.craftedLabel}
-                  </p>
-                </div>
-              </div>
-            </MountReveal>
-
-            <MountReveal delay={0.12}>
-              <div className="surface-panel p-5 md:p-6">
-                <div className="media-frame aspect-[4/5]">
-                  <img
-                    src={activeImage.file}
-                    alt={`${name} in ${activeImage.size}`}
-                    width="1400"
-                    height="1750"
-                    decoding="async"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-
-                <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {product.images.map((image, index) => (
-                    <button
-                      key={image.file}
-                      type="button"
-                      onClick={() => setActiveImageIndex(index)}
-                      className={
-                        index === activeImageIndex
-                          ? "surface-panel p-2 text-start"
-                          : "rounded-[1.2rem] border border-line bg-white/55 p-2 text-start transition-colors hover:border-accent-strong"
-                      }
-                    >
-                      <div className="media-frame aspect-[4/4.5] rounded-[1rem]">
-                        <img
-                          src={image.file}
-                          alt={`${name} ${image.size}`}
-                          width="600"
-                          height="700"
-                          loading="lazy"
-                          decoding="async"
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                      <p className="mt-3 px-2 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-ink-soft">
-                        {image.size}
-                      </p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </MountReveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-block">
-        <div className="section-inner">
-          <div className="grid gap-6 xl:grid-cols-3">
-            <Reveal>
-              <article className="surface-panel h-full p-6 md:p-7">
-                <p className="eyebrow">{copy.storyLabel}</p>
-                <p className="mt-5 text-[1rem] leading-8 text-ink-soft">{story}</p>
-              </article>
-            </Reveal>
-
-            <Reveal delay={0.06}>
-              <article className="surface-panel h-full p-6 md:p-7">
-                <p className="eyebrow">
-                  {notes.length > 0 ? copy.notesLabel : copy.featuresLabel}
-                </p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {(notes.length > 0 ? notes : characteristics).map((item) => (
-                    <span key={item} className="chip">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            </Reveal>
-
-            <Reveal delay={0.12}>
-              <article className="surface-panel h-full p-6 md:p-7">
-                <p className="eyebrow">{copy.idealLabel}</p>
-                <div className="mt-5">
-                  <BulletList items={idealUseCases} />
-                </div>
-              </article>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="cta-band">
-        <div className="section-inner section-block">
-          <div className="grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
-            <Reveal>
-              <SectionIntro
-                eyebrow={copy.featuresLabel}
-                title={name}
-                body={
-                  product.type === "diffuser"
-                    ? isArabic
-                      ? "أنظمة نشر توازن بين المظهر والأداء اليومي."
-                      : "Diffusion hardware that balances visual refinement with everyday performance."
-                    : isArabic
-                      ? "مجموعة عطرية تقدم الشخصية والنفحات والاستخدام المقترح بوضوح."
-                      : "A fragrance profile that makes the character, notes, and intended use feel immediately legible."
-                }
-              />
-            </Reveal>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              <Reveal>
-                <div className="surface-panel-dark h-full p-6 md:p-7">
-                  <p className="eyebrow text-white/80">{copy.finishesLabel}</p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {product.images.map((image) => (
-                      <span key={image.file} className="chip border-white/15 bg-white/6 text-white/75">
-                        {image.size}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
-
-              <Reveal delay={0.08}>
-                <div className="surface-panel-dark h-full p-6 md:p-7">
-                  <p className="eyebrow text-white/80">
-                    {ifYouEnjoyed.length > 0 ? copy.enjoyedLabel : copy.featuresLabel}
-                  </p>
-                  <div className="mt-5">
-                    <BulletList
-                      items={ifYouEnjoyed.length > 0 ? ifYouEnjoyed : characteristics}
-                      dark
-                    />
-                  </div>
-                </div>
-              </Reveal>
+          <div className="simple-page__body">
+            <p>{getProductStory(product, locale)}</p>
+            <div className="action-row">
+              <Link to={toLocalePath("/contact")} className="button-primary">
+                {isArabic ? "تواصل معنا" : "Contact"}
+              </Link>
+              <Link
+                to={toLocalePath(getProductCollectionBasePath(product))}
+                className="button-secondary"
+              >
+                {isArabic ? "العودة إلى المجموعة" : "Back to collection"}
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {relatedProducts.length > 0 ? (
-        <section className="section-block">
-          <div className="section-inner">
-            <Reveal>
-              <SectionIntro
-                eyebrow={copy.relatedLabel}
-                title={copy.relatedTitle}
-                body={
-                  isArabic
-                    ? "منتجات أخرى قريبة من هذا الاتجاه يمكن أن تساعد الفريق على مواصلة المقارنة."
-                    : "Other products in the same direction that can help a team continue comparing the collection."
-                }
-                className="mb-10"
-              />
-            </Reveal>
-
-            <div className="grid gap-6 md:grid-cols-3">
-              {relatedProducts.map((related, index) => {
-                const relatedName = getProductName(related, locale);
-
-                return (
-                  <div key={related.id}>
-                    <Reveal delay={index * 0.08}>
-                      <article className="surface-panel flex h-full flex-col overflow-hidden">
-                        <div className="aspect-[4/5] overflow-hidden">
-                          <img
-                            src={related.images[0].file}
-                            alt={relatedName}
-                            width="1200"
-                            height="1500"
-                            loading="lazy"
-                            decoding="async"
-                            className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
-                          />
-                        </div>
-                        <div className="flex flex-1 flex-col gap-4 p-6">
-                          <p className="eyebrow">{getProductCategoryLabel(related, locale)}</p>
-                          <h3 className="font-display text-[2rem] leading-[1.02] text-ink">
-                            {relatedName}
-                          </h3>
-                          <p className="text-[1rem] leading-8 text-ink-soft">
-                            {getProductStory(related, locale)}
-                          </p>
-                          <Link
-                            to={toLocalePath(getProductDetailBasePath(related))}
-                            className="button-subtle mt-auto self-start"
-                          >
-                            {copy.exploreLabel}
-                          </Link>
-                        </div>
-                      </article>
-                    </Reveal>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      ) : null}
-
-      <FinalCta
-        title={copy.consultTitle}
-        body={copy.consultBody}
-        primary={{ label: copy.contactCta, to: toLocalePath("/contact") }}
-        secondary={{ label: copy.backToProducts, to: toLocalePath("/products") }}
-        tone="light"
-      />
+      <section className="quiet-section pt-0">
+        <div className="reference-container--wide simple-card-grid">
+          <article className="simple-card">
+            <img
+              src={product.images[0].file}
+              alt={name}
+              width="900"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            />
+          </article>
+          <article className="simple-card">
+            <h2>{isArabic ? "النفحات" : "Notes"}</h2>
+            <p>{notes.length > 0 ? notes.join(", ") : characteristics.join(", ")}</p>
+          </article>
+          <article className="simple-card">
+            <h2>{isArabic ? "الطابع" : "Characteristics"}</h2>
+            <p>{characteristics.join(", ")}</p>
+          </article>
+        </div>
+      </section>
     </div>
   );
 }
+
+function AromaxDetail({
+  locale,
+  isArabic,
+  toLocalePath,
+}: {
+  locale: "en" | "ar";
+  isArabic: boolean;
+  toLocalePath: (pathname: string) => string;
+}) {
+  return (
+    <div>
+      <SecondaryNav
+        items={aromaxSecondaryNav}
+        locale={locale}
+        label={isArabic ? "محتوى آروماكس" : "Aromax sections"}
+      />
+
+      <section className="page-hero page-hero--dark aromax-hero">
+        <div className="page-hero__media">
+          <img
+            src={referenceImages.aromaxHero}
+            alt=""
+            width="1800"
+            height="900"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </div>
+        <div className="page-hero__content">
+          <h1>{isArabic ? "آروماكس" : "Aromax"}</h1>
+          <p className="text-[clamp(18px,2vw,22px)] leading-[1.24]">
+            {isArabic
+              ? "آروماكس أكثر من مجرد موزع عطر. إنه التصميم والابتكار والطبيعة معاً لصنع أفضل موزع منزلي."
+              : "The Aromax aromatherapy diffuser is more than just an aroma diffuser. It's design, innovation and nature coming together to create the best home scent diffuser."}
+          </p>
+        </div>
+      </section>
+
+      <section id="overview" className="quiet-section">
+        <div className="reference-container aromax-overview">
+          <h2>{isArabic ? "تعرّف على آروماكس. ناعم، أنيق، وجاهز لتعطير منزلك." : "Meet the Aromax. Smooth, stylish, and ready to fragrance your home."}</h2>
+          <div className="aromax-overview__copy">
+            <p>
+              {isArabic
+                ? "اصنع أجواء عطرية مثالية مع موزع آروماكس. التصميم البسيط والهيكل المصنوع من الألمنيوم عالي الجودة يجعلان آروماكس موزعاً منزلياً أساسياً ينسجم مع أي مساحة داخلية."
+                : "Create the perfect scented ambience with the Aromax aromatherapy diffuser. The minimalist design and high end aluminum enclosure of the Aromax make it the essential home diffuser to complement any interior."}
+            </p>
+            <p className="mt-6">
+              {isArabic
+                ? "مع تشغيل فائق الهدوء ومؤقت مدمج وإخراج عطري قابل للتعديل، يمكنك الحفاظ على رائحة مساحتك رائعة وبأسلوب أنيق."
+                : "With whisper silent operation, a built-in timer and an adjustable scent output, you can keep your space smelling great in style."}
+            </p>
+          </div>
+          <img
+            className="aromax-overview__product"
+            src="/products/AROMAX/Aromax-Silver-01.jpg"
+            alt={isArabic ? "موزع آروماكس الفضي" : "Silver Aromax diffuser"}
+            width="900"
+            height="900"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </section>
+
+      <section id="tech-specs" className="quiet-section pt-0">
+        <div className="aromax-story">
+          <img
+            src={referenceImages.aromaxContent}
+            alt={isArabic ? "آروماكس على رف داخلي" : "Aromax diffuser on an interior shelf"}
+            width="1440"
+            height="1026"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="aromax-story__copy">
+            <h2>
+              {isArabic
+                ? "يتحد الشكل والوظيفة لصنع موزع عطر يبدو بجمال رائحته."
+                : "Form and function combine to create a fragrance diffuser that looks as good as it smells."}
+            </h2>
+            <p>
+              {isArabic
+                ? "عند تصميم آروماكس، كان الهدف هو صنع أفضل موزع زيوت للمنازل والشقق والمكاتب الصغيرة. يمنحه الشكل المنحني إحساساً ودوداً وهادئاً، بينما تعكس وظائفه البسيطة عناية واضحة بالتفاصيل."
+                : "When we set out to design the Aromax, we wanted to create the best oil diffuser ideal for apartments, homes or small offices. The curved shaped design gives the Aromax an inviting and approachable feel, creating a sense of understated luxury. The craftsmanship and attention to detail is reflected in the Aromax's functions which are simple and user friendly."}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="buy-now" className="quiet-section">
+        <div className="reference-container aromax-colors">
+          <div className="aromax-colors__copy">
+            <h2>{isArabic ? "عطرك، لونك." : "Your fragrance, your color."}</h2>
+            <p>
+              {isArabic
+                ? "يتوفر آروماكس بأربعة ألوان رائعة. لم يكن تنسيق آروماكس مع أسلوب منزلك أسهل من الآن. كل ما تبقى هو اختيار الرائحة المناسبة من مجموعة العطور المنزلية الفاخرة."
+                : "The Aromax is available in 4 brilliant color choices. Matching the Aromax to your interior style has never been easier. All that's left to do is pair the right aroma from our home luxury scents range."}
+            </p>
+          </div>
+          <a href={AROMAX_STORE_URL} className="button-secondary">
+            {isArabic ? "اشتر الآن" : "Buy Now"}
+          </a>
+        </div>
+
+        <div className="aromax-color-grid mt-14">
+          {aromaxColorTiles.map((tile) => (
+            <article key={tile.label.en} className="aromax-color-card">
+              <h3>{tile.label[locale]}</h3>
+              <img
+                src={tile.image}
+                alt={`${tile.label[locale]} Aromax`}
+                width="800"
+                height="800"
+                loading="lazy"
+                decoding="async"
+              />
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="quiet-section pt-0">
+        <div className="split-actions">
+          <article className="split-action">
+            <span className="split-action__icon" aria-hidden="true">
+              <Phone size={17} />
+            </span>
+            <h3>{isArabic ? "اتصل بنا" : "Call us"}</h3>
+            <p>
+              {isArabic
+                ? "تواصل مع ممثل Air Aroma اليوم وسنساعدك على تعطير مساحتك بأفضل شكل."
+                : "Contact an Air Aroma representative today and we'll get your business smelling great in no time."}
+            </p>
+            <Link to={toLocalePath("/contact")} className="button-subtle">
+              {isArabic ? "اتصل" : "Contact"}
+            </Link>
+          </article>
+
+          <article className="split-action">
+            <span className="split-action__icon" aria-hidden="true">
+              <ShoppingCart size={17} />
+            </span>
+            <h3>{isArabic ? "تسوق عبر الإنترنت" : "Shop online"}</h3>
+            <p>
+              {isArabic
+                ? "زر متجر Air Aroma لاكتشاف العطور والموزعات وطلبها مباشرة إلى بابك."
+                : "Visit the Air Aroma online store to discover our range of scents and diffusers and get them delivered directly to your door."}
+            </p>
+            <a href={AROMAX_STORE_URL} className="button-subtle">
+              {isArabic ? "اشتر آروماكس" : "Buy an Aromax"}
+            </a>
+          </article>
+        </div>
+      </section>
+    </div>
+  );
+}
+

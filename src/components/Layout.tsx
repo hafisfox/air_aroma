@@ -12,9 +12,9 @@ export default function Layout({ locale }: { locale: Locale }) {
   }, [pathname]);
 
   return (
-    <div className="site-shell flex min-h-screen flex-col text-ink">
+    <div className="site-shell">
       <Navbar locale={locale} />
-      <main className="flex-1">
+      <main className="site-main">
         <Outlet />
       </main>
       <Footer locale={locale} />

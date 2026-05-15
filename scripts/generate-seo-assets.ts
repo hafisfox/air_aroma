@@ -113,7 +113,7 @@ async function generate() {
 
   const llmsTxt = [
     "# Air Aroma",
-    "> Premium scent marketing, fragrance design, and diffuser solutions for Saudi Arabia and the GCC.",
+    "> Global scent marketing, fragrance design, and diffuser solutions for luxury brands.",
     "",
     "## English pages",
     ...llmsEntriesEn.map(

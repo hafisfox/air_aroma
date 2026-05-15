@@ -87,8 +87,8 @@ interface IndexablePageEntry {
 }
 
 const organizationDescription: Record<Locale, string> = {
-  en: "Premium scent marketing agency for luxury hospitality, retail, and branded spaces across Saudi Arabia and the GCC.",
-  ar: "وكالة رائدة في تسويق الروائح للضيافة الفاخرة والتجزئة والمساحات ذات العلامات التجارية في السعودية ودول الخليج.",
+  en: "Global scent marketing agency designing custom fragrances, diffuser systems, and sensory branding for luxury brands.",
+  ar: "وكالة عالمية في تسويق الروائح تصمم العطور المخصصة وأنظمة النشر والهوية الحسية للعلامات الفاخرة.",
 };
 
 const productDetailSourceFiles = [
@@ -101,35 +101,35 @@ const routeSeoMap: RouteSeoMap = {
     basePath: "/",
     breadcrumbLabel: { en: "Home", ar: "الرئيسية" },
     description: {
-      en: "Air Aroma designs premium scent marketing programs, custom fragrances, and luxury diffuser systems for Saudi Arabia and GCC destinations.",
-      ar: "تصمم Air Aroma برامج تسويق الروائح والعطور المخصصة وأنظمة نشر العطور الفاخرة للوجهات الراقية في السعودية ودول الخليج.",
+      en: "Air Aroma designs scent marketing programs, custom fragrances, and premium diffuser systems for luxury brands around the world.",
+      ar: "تصمم Air Aroma برامج تسويق الروائح والعطور المخصصة وأنظمة النشر الفاخرة للعلامات الراقية حول العالم.",
     },
     indexable: true,
     keywords: {
-      en: "scent marketing Saudi Arabia, GCC scent marketing, luxury fragrance design, hotel scenting, retail scent branding",
-      ar: "تسويق الروائح السعودية، تسويق الروائح الخليج، تصميم عطور فاخرة، تعطير الفنادق، هوية عطرية للمتاجر",
+      en: "scent marketing agency, luxury fragrance design, hotel scenting, retail scent branding, aroma diffuser systems",
+      ar: "وكالة تسويق الروائح، تصميم عطور فاخرة، تعطير الفنادق، هوية عطرية للمتاجر، أنظمة نشر العطور",
     },
     llmsDescription: {
-      en: "Overview of Air Aroma's scent marketing, fragrance design, and diffusion systems for luxury brands in Saudi Arabia and the GCC.",
-      ar: "نظرة عامة على خدمات Air Aroma في تسويق الروائح وتصميم العطور وأنظمة النشر للعلامات الفاخرة في السعودية والخليج.",
+      en: "Overview of Air Aroma's scent marketing, fragrance design, and diffusion systems for luxury brands worldwide.",
+      ar: "نظرة عامة على خدمات Air Aroma في تسويق الروائح وتصميم العطور وأنظمة النشر للعلامات الفاخرة عالمياً.",
     },
     sourceFiles: ["src/pages/Home.tsx", "src/data/products.ts"],
     title: {
-      en: "Scent Marketing in Saudi Arabia | Air Aroma GCC Fragrance Agency",
-      ar: "تسويق الروائح في السعودية | Air Aroma لوكالة العطور في الخليج",
+      en: "Scent Marketing Agency for Luxury Brands | Air Aroma",
+      ar: "وكالة تسويق الروائح للعلامات الفاخرة | Air Aroma",
     },
   },
   scentMarketing: {
     basePath: "/scent-marketing",
     breadcrumbLabel: { en: "Scent Marketing", ar: "تسويق الروائح" },
     description: {
-      en: "Luxury scent marketing strategy for hotels, retail, residences, and branded destinations in Saudi Arabia and the GCC.",
-      ar: "استراتيجية تسويق روائح فاخرة للفنادق والمتاجر والمساكن والوجهات ذات العلامات التجارية في السعودية ودول الخليج.",
+      en: "Luxury scent marketing strategy for hotels, retail, residences, and branded destinations.",
+      ar: "استراتيجية تسويق روائح فاخرة للفنادق والمتاجر والمساكن والوجهات ذات العلامات التجارية.",
     },
     indexable: true,
     keywords: {
-      en: "scent marketing services Saudi Arabia, hotel scenting GCC, retail scent strategy, olfactory branding Middle East",
-      ar: "خدمات تسويق الروائح السعودية، تعطير الفنادق الخليج، استراتيجية الروائح للمتاجر، الهوية العطرية الشرق الأوسط",
+      en: "scent marketing services, hotel scenting, retail scent strategy, olfactory branding, sensory branding",
+      ar: "خدمات تسويق الروائح، تعطير الفنادق، استراتيجية الروائح للمتاجر، الهوية العطرية، الهوية الحسية",
     },
     llmsDescription: {
       en: "Service page covering Air Aroma's scent marketing approach for hospitality, retail, and premium developments.",
@@ -137,21 +137,21 @@ const routeSeoMap: RouteSeoMap = {
     },
     sourceFiles: ["src/pages/ScentMarketing.tsx"],
     title: {
-      en: "Scent Marketing Services for Saudi & GCC Brands | Air Aroma",
-      ar: "خدمات تسويق الروائح للعلامات السعودية والخليجية | Air Aroma",
+      en: "Scent Marketing Services for Luxury Brands | Air Aroma",
+      ar: "خدمات تسويق الروائح للعلامات الفاخرة | Air Aroma",
     },
   },
   fragrances: {
     basePath: "/fragrances",
     breadcrumbLabel: { en: "Fragrances", ar: "العطور" },
     description: {
-      en: "Explore premium fragrance blends designed for luxury hotels, retail environments, and branded spaces across Saudi Arabia and the GCC.",
-      ar: "اكتشف مجموعات عطرية فاخرة صُممت للفنادق الراقية وبيئات التجزئة والمساحات ذات العلامات التجارية في السعودية ودول الخليج.",
+      en: "Explore premium fragrance blends designed for luxury hotels, retail environments, and branded spaces.",
+      ar: "اكتشف مجموعات عطرية فاخرة صُممت للفنادق الراقية وبيئات التجزئة والمساحات ذات العلامات التجارية.",
     },
     indexable: true,
     keywords: {
-      en: "signature fragrances Saudi Arabia, hotel scent collection GCC, luxury ambient fragrance",
-      ar: "عطور مميزة السعودية، مجموعة عطور الفنادق الخليج، عطور الأجواء الفاخرة",
+      en: "signature fragrances, hotel scent collection, luxury ambient fragrance, premium fragrance oils",
+      ar: "عطور مميزة، مجموعة عطور الفنادق، عطور الأجواء الفاخرة، زيوت عطرية فاخرة",
     },
     llmsDescription: {
       en: "Collection of Air Aroma signature fragrances with scent stories, notes, and use cases.",
@@ -159,21 +159,21 @@ const routeSeoMap: RouteSeoMap = {
     },
     sourceFiles: ["src/pages/Fragrances.tsx", "src/data/products.ts"],
     title: {
-      en: "Luxury Fragrance Collection for Saudi Arabia & GCC | Air Aroma",
-      ar: "مجموعة عطور فاخرة للسعودية والخليج | Air Aroma",
+      en: "Luxury Fragrance Collection | Air Aroma",
+      ar: "مجموعة عطور فاخرة | Air Aroma",
     },
   },
   diffusers: {
     basePath: "/diffusers",
     breadcrumbLabel: { en: "Diffusers", ar: "الموزعات" },
     description: {
-      en: "Cold-air diffuser systems for villas, hospitality, retail, and commercial projects across Saudi Arabia and the GCC.",
-      ar: "أنظمة نشر العطور بالهواء البارد للفلل والضيافة والتجزئة والمشروعات التجارية في السعودية ودول الخليج.",
+      en: "Cold-air diffuser systems for homes, hospitality, retail, and commercial projects.",
+      ar: "أنظمة نشر العطور بالهواء البارد للمنازل والضيافة والتجزئة والمشروعات التجارية.",
     },
     indexable: true,
     keywords: {
-      en: "aroma diffusers Saudi Arabia, cold air diffuser GCC, HVAC scent diffuser, luxury diffuser systems",
-      ar: "موزعات عطرية السعودية، موزع هواء بارد الخليج، موزع عطور HVAC، أنظمة عطرية فاخرة",
+      en: "aroma diffusers, cold air diffuser, HVAC scent diffuser, luxury diffuser systems",
+      ar: "موزعات عطرية، موزع هواء بارد، موزع عطور HVAC، أنظمة عطرية فاخرة",
     },
     llmsDescription: {
       en: "Commercial and residential diffuser systems, including HVAC and standalone cold-air diffusion solutions.",
@@ -181,21 +181,21 @@ const routeSeoMap: RouteSeoMap = {
     },
     sourceFiles: ["src/pages/Diffusers.tsx", "src/data/products.ts"],
     title: {
-      en: "Luxury Aroma Diffusers in Saudi Arabia & GCC | Air Aroma",
-      ar: "موزعات عطرية فاخرة في السعودية والخليج | Air Aroma",
+      en: "Luxury Aroma Diffusers | Air Aroma",
+      ar: "موزعات عطرية فاخرة | Air Aroma",
     },
   },
   about: {
     basePath: "/about",
     breadcrumbLabel: { en: "About", ar: "عن الشركة" },
     description: {
-      en: "Learn how Air Aroma combines fragrance design, diffusion technology, and service strategy for GCC luxury brands.",
-      ar: "تعرّف على كيفية دمج Air Aroma بين تصميم العطور وتقنيات النشر واستراتيجية الخدمة للعلامات الفاخرة في الخليج.",
+      en: "Learn how Air Aroma combines fragrance design, diffusion technology, and service strategy for luxury brands.",
+      ar: "تعرّف على كيفية دمج Air Aroma بين تصميم العطور وتقنيات النشر واستراتيجية الخدمة للعلامات الفاخرة.",
     },
     indexable: true,
     keywords: {
-      en: "about Air Aroma GCC, fragrance design team, scent marketing specialists Saudi Arabia",
-      ar: "عن Air Aroma الخليج، فريق تصميم العطور، مختصو تسويق الروائح السعودية",
+      en: "about Air Aroma, fragrance design team, scent marketing specialists",
+      ar: "عن Air Aroma، فريق تصميم العطور، مختصو تسويق الروائح",
     },
     llmsDescription: {
       en: "About page for Air Aroma's scent design expertise, technology, and service philosophy.",
@@ -203,43 +203,43 @@ const routeSeoMap: RouteSeoMap = {
     },
     sourceFiles: ["src/pages/About.tsx"],
     title: {
-      en: "About Air Aroma | Fragrance Design & Diffusion Expertise for GCC",
-      ar: "عن Air Aroma | خبرة تصميم العطور وأنظمة النشر للخليج",
+      en: "About Air Aroma | Fragrance Design & Diffusion Expertise",
+      ar: "عن Air Aroma | خبرة تصميم العطور وأنظمة النشر",
     },
   },
   contact: {
     basePath: "/contact",
     breadcrumbLabel: { en: "Contact", ar: "اتصل بنا" },
     description: {
-      en: "Contact Air Aroma to discuss scent marketing, luxury diffuser systems, and signature fragrance projects in Saudi Arabia and the GCC.",
-      ar: "تواصل مع Air Aroma لمناقشة تسويق الروائح وأنظمة النشر الفاخرة ومشروعات العطور المميزة في السعودية ودول الخليج.",
+      en: "Contact Air Aroma to discuss scent marketing, luxury diffuser systems, and signature fragrance projects.",
+      ar: "تواصل مع Air Aroma لمناقشة تسويق الروائح وأنظمة النشر الفاخرة ومشروعات العطور المميزة.",
     },
     indexable: true,
     keywords: {
-      en: "contact Air Aroma Saudi Arabia, fragrance consultation GCC, scent marketing consultation",
-      ar: "التواصل مع Air Aroma السعودية، استشارة عطور الخليج، استشارة تسويق الروائح",
+      en: "contact Air Aroma, fragrance consultation, scent marketing consultation",
+      ar: "التواصل مع Air Aroma، استشارة عطور، استشارة تسويق الروائح",
     },
     llmsDescription: {
-      en: "Consultation and project brief page for prospective Saudi and GCC scent marketing clients.",
-      ar: "صفحة الاستشارات وملخصات المشاريع للعملاء المحتملين في السعودية والخليج.",
+      en: "Consultation and project brief page for prospective scent marketing clients.",
+      ar: "صفحة الاستشارات وملخصات المشاريع للعملاء المحتملين في تسويق الروائح.",
     },
     sourceFiles: ["src/pages/Contact.tsx"],
     title: {
-      en: "Contact Air Aroma for Saudi & GCC Scent Projects",
-      ar: "تواصل مع Air Aroma لمشروعات الروائح في السعودية والخليج",
+      en: "Contact Air Aroma for Scent Projects",
+      ar: "تواصل مع Air Aroma لمشروعات الروائح",
     },
   },
   products: {
     basePath: "/products",
     breadcrumbLabel: { en: "Products", ar: "المنتجات" },
     description: {
-      en: "Compare Air Aroma fragrance, diffuser, and essential oil solutions for hospitality, retail, and premium residences in the GCC.",
-      ar: "قارن بين حلول Air Aroma للعطور والموزعات والزيوت الأساسية للضيافة والتجزئة والمساكن الراقية في الخليج.",
+      en: "Compare Air Aroma fragrance, diffuser, and essential oil solutions for hospitality, retail, and premium homes.",
+      ar: "قارن بين حلول Air Aroma للعطور والموزعات والزيوت الأساسية للضيافة والتجزئة والمنازل الراقية.",
     },
     indexable: true,
     keywords: {
-      en: "Air Aroma products GCC, scent marketing products Saudi Arabia, diffusers and fragrances",
-      ar: "منتجات Air Aroma الخليج، منتجات تسويق الروائح السعودية، موزعات وعطور",
+      en: "Air Aroma products, scent marketing products, diffusers and fragrances",
+      ar: "منتجات Air Aroma، منتجات تسويق الروائح، موزعات وعطور",
     },
     llmsDescription: {
       en: "Product hub that compares fragrance, diffuser, and essential oil categories for premium spaces.",
@@ -247,8 +247,8 @@ const routeSeoMap: RouteSeoMap = {
     },
     sourceFiles: ["src/pages/Products.tsx", "src/data/products.ts"],
     title: {
-      en: "Scent Marketing Products for Saudi Arabia & GCC | Air Aroma",
-      ar: "منتجات تسويق الروائح للسعودية والخليج | Air Aroma",
+      en: "Scent Marketing Products | Air Aroma",
+      ar: "منتجات تسويق الروائح | Air Aroma",
     },
   },
   clients: {
@@ -277,13 +277,13 @@ const routeSeoMap: RouteSeoMap = {
     basePath: "/blog",
     breadcrumbLabel: { en: "Insights", ar: "المعرفة" },
     description: {
-      en: "Read practical scent branding insights for hotels, retail destinations, and developers in Saudi Arabia and the GCC.",
-      ar: "اقرأ رؤى عملية حول الهوية العطرية للفنادق ووجهات التجزئة والمطورين في السعودية ودول الخليج.",
+      en: "Read practical scent branding insights for hotels, retail destinations, and brand teams.",
+      ar: "اقرأ رؤى عملية حول الهوية العطرية للفنادق ووجهات التجزئة وفرق العلامات.",
     },
     indexable: true,
     keywords: {
-      en: "scent marketing insights Saudi Arabia, fragrance branding articles GCC, hotel scent strategy",
-      ar: "رؤى تسويق الروائح السعودية، مقالات الهوية العطرية الخليج، استراتيجية تعطير الفنادق",
+      en: "scent marketing insights, fragrance branding articles, hotel scent strategy",
+      ar: "رؤى تسويق الروائح، مقالات الهوية العطرية، استراتيجية تعطير الفنادق",
     },
     llmsDescription: {
       en: "Insight hub for scent marketing education, project strategy, and regional inspiration.",
@@ -291,21 +291,21 @@ const routeSeoMap: RouteSeoMap = {
     },
     sourceFiles: ["src/pages/Blog.tsx"],
     title: {
-      en: "Scent Marketing Insights for Saudi Arabia & GCC | Air Aroma",
-      ar: "رؤى تسويق الروائح للسعودية والخليج | Air Aroma",
+      en: "Scent Marketing Insights | Air Aroma",
+      ar: "رؤى تسويق الروائح | Air Aroma",
     },
   },
   signatureScent: {
     basePath: "/signature-scent",
     breadcrumbLabel: { en: "Signature Scent", ar: "العطر المميز" },
     description: {
-      en: "Create a signature scent for hotels, retail spaces, residences, and branded environments in Saudi Arabia and the GCC.",
-      ar: "ابتكر عطراً مميزاً للفنادق والمتاجر والمساكن والبيئات ذات العلامات التجارية في السعودية ودول الخليج.",
+      en: "Create a signature scent for hotels, retail spaces, homes, and branded environments.",
+      ar: "ابتكر عطراً مميزاً للفنادق والمتاجر والمنازل والبيئات ذات العلامات التجارية.",
     },
     indexable: true,
     keywords: {
-      en: "signature scent Saudi Arabia, bespoke fragrance GCC, custom ambient scent design",
-      ar: "عطر مميز السعودية، عطر مخصص الخليج، تصميم روائح مخصصة للأجواء",
+      en: "signature scent, bespoke fragrance, custom ambient scent design",
+      ar: "عطر مميز، عطر مخصص، تصميم روائح مخصصة للأجواء",
     },
     llmsDescription: {
       en: "Service page focused on signature scent creation and the fragrance development process.",
@@ -313,21 +313,21 @@ const routeSeoMap: RouteSeoMap = {
     },
     sourceFiles: ["src/pages/SignatureScent.tsx"],
     title: {
-      en: "Signature Scent Design for Saudi Arabia & GCC | Air Aroma",
-      ar: "تصميم العطر المميز للسعودية والخليج | Air Aroma",
+      en: "Signature Scent Design | Air Aroma",
+      ar: "تصميم العطر المميز | Air Aroma",
     },
   },
   essentialOils: {
     basePath: "/essential-oils",
     breadcrumbLabel: { en: "Essential Oils", ar: "الزيوت الأساسية" },
     description: {
-      en: "Explore essential oil blends designed for diffuser programs, wellness spaces, and premium guest experiences in the GCC.",
-      ar: "استكشف خلطات الزيوت الأساسية المصممة لبرامج نشر العطور ومساحات العافية وتجارب الضيوف الراقية في الخليج.",
+      en: "Explore essential oil blends designed for diffuser programs, wellness spaces, and premium guest experiences.",
+      ar: "استكشف خلطات الزيوت الأساسية المصممة لبرامج نشر العطور ومساحات العافية وتجارب الضيوف الراقية.",
     },
     indexable: true,
     keywords: {
-      en: "essential oils Saudi Arabia, premium diffuser oils GCC, wellness scent blends",
-      ar: "زيوت أساسية السعودية، زيوت موزعات فاخرة الخليج، خلطات عطرية للعافية",
+      en: "essential oils, premium diffuser oils, wellness scent blends",
+      ar: "زيوت أساسية، زيوت موزعات فاخرة، خلطات عطرية للعافية",
     },
     llmsDescription: {
       en: "Essential oil collection page for wellness-led fragrance programs and diffuser use.",
@@ -335,8 +335,8 @@ const routeSeoMap: RouteSeoMap = {
     },
     sourceFiles: ["src/pages/EssentialOils.tsx"],
     title: {
-      en: "Essential Oils for Saudi Arabia & GCC Scent Programs | Air Aroma",
-      ar: "الزيوت الأساسية لبرامج الروائح في السعودية والخليج | Air Aroma",
+      en: "Essential Oils for Scent Programs | Air Aroma",
+      ar: "الزيوت الأساسية لبرامج الروائح | Air Aroma",
     },
   },
   notFound: {
@@ -765,7 +765,7 @@ function buildProductKeywords(product: Product, locale: Locale) {
     ...(locale === "ar"
       ? product.characteristicsAr
       : product.characteristicsEn).slice(0, 4),
-    locale === "ar" ? "Air Aroma السعودية والخليج" : "Air Aroma Saudi Arabia GCC",
+    locale === "ar" ? "Air Aroma عالمي" : "Air Aroma global",
   ];
 
   return keywords.filter(Boolean).join(", ");
