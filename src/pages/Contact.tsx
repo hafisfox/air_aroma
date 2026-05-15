@@ -1,103 +1,136 @@
-import { motion } from "motion/react";
-import { Link } from "react-router-dom";
 import { useLocaleRouting } from "../lib/localeRouting";
+import {
+  ActionAnchor,
+  ActionLink,
+  BulletList,
+  FinalCta,
+  MountReveal,
+  Reveal,
+} from "../components/brand/BrandPrimitives";
 
 export default function Contact() {
   const { isArabic, toLocalePath } = useLocaleRouting();
 
   const copy = isArabic
     ? {
-        title: "تواصل مع Air Aroma",
-        subtitle:
-          "أخبرنا عن نوع المشروع والمساحة والنتيجة العطرية التي تريدها. سواء كنت تبحث عن برنامج تسويق روائح أو عطر مميز أو نظام نشر، يمكننا مساعدتك في تحديد الخطوة التالية.",
+        badge: "تواصل معنا",
+        title: "شاركنا نوع المشروع والانطباع الذي تريد أن يتركه المكان.",
+        body:
+          "سواء كنت تبحث عن برنامج تسويق روائح أو عطر مميز أو توصية بشأن نظام النشر، يمكننا مساعدتك على تحديد الخطوة التالية بطريقة أوضح وأهدأ.",
         intakeTitle: "ما الذي يفيد مشاركته في البداية؟",
         intakeItems: [
-          "نوع المساحة: فندق، متجر، سكن، سبا، أو مشروع متعدد الاستخدامات.",
-          "حجم الموقع أو عدد المناطق التي تحتاج إلى نشر عطري.",
-          "الانطباع المطلوب: فاخر، هادئ، منعش، دافئ، أو موجّه للعافية.",
-          "الجدول الزمني المتوقع للافتتاح أو التوريد أو الاختبار.",
+          "نوع المساحة: فندق، متجر، مسكن، سبا، أو مشروع متعدد الاستخدامات.",
+          "الحجم التقريبي للموقع أو عدد المناطق التي تحتاج إلى تغطية عطرية.",
+          "المزاج الذي تريد خلقه: فخم، هادئ، منعش، دافئ، أو موجّه للعافية.",
+          "الجدول الزمني المتوقع للافتتاح أو الاختبار أو التوريد.",
         ],
-        emailTitle: "التواصل المباشر",
+        emailTitle: "المدخل المباشر للمشروع",
         emailText:
-          "يمكنك إرسال ملخص المشروع إلى info@air-aroma.com وسنستخدمه كنقطة بداية لمحادثة أوضح حول العطر والنشر والمتطلبات التشغيلية.",
-        primaryCta: "راسلنا عبر البريد",
+          "يمكنك إرسال موجز مختصر إلى info@air-aroma.com وسنستخدمه كنقطة بداية لمحادثة أكثر دقة حول العطر والنشر ومتطلبات التشغيل.",
+        primaryCta: "راسل Air Aroma",
         secondaryCta: "استكشف العطور",
+        finalTitle: "هل تريد أن نساعدك على صياغة الموجز قبل الإرسال؟",
+        finalBody:
+          "ابدأ من العطور أو الخدمات إذا كنت لا تزال في مرحلة تحديد المسار، ثم عد إلينا عندما تكون جاهزاً للنقاش التفصيلي.",
+        finalPrimary: "استكشف الخدمات",
+        finalSecondary: "عرض العطور",
       }
     : {
-        title: "Contact Air Aroma",
-        subtitle:
-          "Tell us about the project type, space profile, and the scent experience you want to create. Whether you need a scent marketing program, a signature fragrance, or a diffuser recommendation, we can help frame the next step.",
+        badge: "Contact Air Aroma",
+        title: "Tell us the kind of project you are planning and the feeling the space should leave behind.",
+        body:
+          "Whether the need is scent marketing, a signature fragrance, or a diffuser recommendation, we can help frame the next step with more clarity and less guesswork.",
         intakeTitle: "What is useful to share first?",
         intakeItems: [
           "Space type: hotel, retail, residence, spa, or mixed-use destination.",
           "Approximate site scale or the number of areas that need fragrance coverage.",
-          "The mood you want to create: luxurious, calming, fresh, warm, or wellness-led.",
-          "Your expected opening, supply, or testing timeline.",
+          "The atmosphere the project should create: luxurious, calming, bright, warm, or wellness-led.",
+          "Expected opening, testing, or supply timeline.",
         ],
         emailTitle: "Direct project intake",
         emailText:
-          "You can email a short project brief to info@air-aroma.com and we will use it to start a clearer conversation around fragrance direction, diffusion needs, and operating requirements.",
+          "You can email a short brief to info@air-aroma.com and we will use it to begin a clearer conversation around fragrance direction, diffusion needs, and operating requirements.",
         primaryCta: "Email Air Aroma",
         secondaryCta: "Explore Fragrances",
+        finalTitle: "Need help shaping the brief before you send it?",
+        finalBody:
+          "Start with the services or fragrance collection if you are still deciding on direction, then come back when you are ready for a more detailed conversation.",
+        finalPrimary: "Explore Services",
+        finalSecondary: "View Fragrances",
       };
 
   return (
-    <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <section className="border-b border-white/10 px-6 py-28 lg:px-12">
-        <div className="mx-auto max-w-5xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-4xl font-light leading-tight sm:text-6xl"
-          >
-            {copy.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="mt-8 max-w-3xl text-lg leading-8 text-white/60"
-          >
-            {copy.subtitle}
-          </motion.p>
-        </div>
-      </section>
+    <div>
+      <section className="overflow-hidden pt-28 md:pt-32">
+        <div className="section-inner section-block">
+          <div className="grid gap-10 xl:grid-cols-[1.02fr_0.98fr] xl:items-center">
+            <MountReveal className="space-y-7">
+              <span className="kicker-pill">{copy.badge}</span>
+              <h1 className="hero-title max-w-[12ch]">{copy.title}</h1>
+              <p className="hero-body">{copy.body}</p>
+            </MountReveal>
 
-      <section className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-[1.1fr,0.9fr] lg:px-12">
-        <div>
-          <h2 className="text-3xl font-light text-white">{copy.intakeTitle}</h2>
-          <ul className="mt-8 space-y-4 text-[15px] leading-8 text-white/55">
-            {copy.intakeItems.map((item) => (
-              <li key={item} className="flex gap-4">
-                <span className="mt-3 h-2 w-2 flex-shrink-0 rounded-full bg-brand-gold" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <aside className="border border-white/10 bg-[#111] p-10">
-          <h3 className="text-2xl font-light text-white">{copy.emailTitle}</h3>
-          <p className="mt-6 text-[15px] leading-8 text-white/55">
-            {copy.emailText}
-          </p>
-          <div className="mt-10 flex flex-col gap-4">
-            <a
-              href="mailto:info@air-aroma.com"
-              className="inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
-            >
-              {copy.primaryCta}
-            </a>
-            <Link
-              to={toLocalePath("/fragrances")}
-              className="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
-            >
-              {copy.secondaryCta}
-            </Link>
+            <MountReveal delay={0.12}>
+              <div className="surface-panel p-6 md:p-8">
+                <p className="eyebrow">{copy.intakeTitle}</p>
+                <div className="mt-6">
+                  <BulletList items={copy.intakeItems} />
+                </div>
+              </div>
+            </MountReveal>
           </div>
-        </aside>
+        </div>
       </section>
+
+      <section className="section-block">
+        <div className="section-inner grid gap-10 xl:grid-cols-[0.98fr_1.02fr] xl:items-center">
+          <Reveal>
+            <div className="media-frame aspect-[4/5] min-h-[24rem]">
+              <img
+                src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=80"
+                alt={
+                  isArabic
+                    ? "مساحة ضيافة راقية تعبّر عن مشروع عطري"
+                    : "Premium hospitality space representing a scent project brief"
+                }
+                width="1800"
+                height="2200"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.08}>
+            <div className="surface-panel h-full p-6 md:p-8">
+              <p className="eyebrow">{copy.emailTitle}</p>
+              <h2 className="mt-4 font-display text-[2.4rem] leading-[1.02] text-ink">
+                info@air-aroma.com
+              </h2>
+              <p className="mt-5 text-[1rem] leading-8 text-ink-soft">
+                {copy.emailText}
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <ActionAnchor href="mailto:info@air-aroma.com">
+                  {copy.primaryCta}
+                </ActionAnchor>
+                <ActionLink to={toLocalePath("/fragrances")} variant="secondary">
+                  {copy.secondaryCta}
+                </ActionLink>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <FinalCta
+        title={copy.finalTitle}
+        body={copy.finalBody}
+        primary={{ label: copy.finalPrimary, to: toLocalePath("/scent-marketing") }}
+        secondary={{ label: copy.finalSecondary, to: toLocalePath("/fragrances") }}
+        tone="light"
+      />
     </div>
   );
 }

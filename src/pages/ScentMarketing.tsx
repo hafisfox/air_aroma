@@ -1,46 +1,52 @@
-import { motion } from "motion/react";
-import { Link } from "react-router-dom";
 import { useLocaleRouting } from "../lib/localeRouting";
+import {
+  ActionLink,
+  FaqAccordion,
+  FinalCta,
+  MountReveal,
+  Reveal,
+  SectionIntro,
+} from "../components/brand/BrandPrimitives";
 
 const serviceCards = {
   en: [
     {
       title: "Luxury Hospitality",
-      desc: "Create a recognizable arrival and guest-room experience for hotels, resorts, spas, and branded residences.",
-      img: "https://images.unsplash.com/photo-1542314831-c6a4d1424869?auto=format&fit=crop&q=80",
+      desc: "Arrival, suite, spa, and guest-zone scent programs that shape memory while respecting the daily discipline of hospitality operations.",
+      img: "https://images.unsplash.com/photo-1542314831-c6a4d1424869?auto=format&fit=crop&w=1600&q=80",
       alt: "Luxury hospitality scent marketing by Air Aroma",
     },
     {
       title: "Premium Retail",
-      desc: "Use scent to support store identity, dwell time, and a more premium in-store atmosphere across flagship or multi-site programs.",
-      img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80",
+      desc: "A clearer sensory layer for brands that want the in-store atmosphere to feel more recognizable, more memorable, and more consistent.",
+      img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80",
       alt: "Premium retail scent marketing by Air Aroma",
     },
     {
       title: "Branded Developments",
-      desc: "Support showrooms, private clubs, wellness concepts, and lifestyle destinations with a scent direction that feels considered from day one.",
-      img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80",
-      alt: "Branded development scent design by Air Aroma",
+      desc: "Support for private clubs, residential destinations, wellness concepts, and mixed-use projects that need a more considered emotional environment.",
+      img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80",
+      alt: "Branded development scent strategy by Air Aroma",
     },
   ],
   ar: [
     {
       title: "الضيافة الفاخرة",
-      desc: "اصنع تجربة وصول وإقامة يمكن تمييزها للفنادق والمنتجعات والسبا والمساكن ذات العلامات التجارية.",
-      img: "https://images.unsplash.com/photo-1542314831-c6a4d1424869?auto=format&fit=crop&q=80",
+      desc: "برامج وصول وأجنحة وسبا ومناطق ضيافة تشكل الذاكرة مع احترام متطلبات التشغيل اليومية داخل الفنادق والمنتجعات.",
+      img: "https://images.unsplash.com/photo-1542314831-c6a4d1424869?auto=format&fit=crop&w=1600&q=80",
       alt: "تسويق الروائح للضيافة الفاخرة من Air Aroma",
     },
     {
       title: "التجزئة الراقية",
-      desc: "استخدم الروائح لدعم هوية المتجر وزمن البقاء وخلق أجواء أكثر فخامة في الفروع الرئيسية أو متعددة المواقع.",
-      img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80",
+      desc: "طبقة حسية أوضح للعلامات التي تريد أن تبدو أجواؤها أكثر تميزاً وقابلية للتذكر واتساقاً عبر الفروع.",
+      img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80",
       alt: "تسويق الروائح للتجزئة الراقية من Air Aroma",
     },
     {
       title: "المشروعات ذات العلامات",
-      desc: "ادعم صالات العرض والنوادي الخاصة ومفاهيم العافية والوجهات السكنية باتجاه عطري مدروس منذ البداية.",
-      img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80",
-      alt: "تصميم عطري للمشروعات ذات العلامات من Air Aroma",
+      desc: "دعم للنوادي الخاصة والوجهات السكنية ومفاهيم العافية والمشروعات متعددة الاستخدامات التي تحتاج بيئة أكثر حساسية واتزاناً.",
+      img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80",
+      alt: "استراتيجية عطرية للمشروعات ذات العلامات",
     },
   ],
 };
@@ -48,208 +54,213 @@ const serviceCards = {
 const faqItems = {
   en: [
     {
-      question: "How is a scent marketing brief structured?",
+      question: "How is a scent marketing brief usually structured?",
       answer:
-        "A useful brief usually includes brand positioning, guest or shopper profile, site type, diffusion zone requirements, and the emotional outcome you want the space to trigger.",
+        "A strong brief covers the brand character, audience profile, site type, zones that need coverage, and the emotional or commercial outcome the project should support.",
     },
     {
-      question: "When should a project team decide on fragrance and diffuser hardware?",
+      question: "When should the fragrance and diffuser strategy be decided?",
       answer:
-        "The best time is early in design development so fragrance direction, air handling constraints, and diffuser placement can be aligned before opening or handover.",
+        "Ideally during design development, so the fragrance direction, air-handling constraints, and hardware planning can be aligned before launch or handover.",
     },
   ],
   ar: [
     {
-      question: "كيف تُبنى وثيقة مشروع تسويق الروائح؟",
+      question: "كيف تُبنى وثيقة مشروع تسويق الروائح عادة؟",
       answer:
-        "تشمل الوثيقة المفيدة عادة تموضع العلامة التجارية وملف الضيف أو المتسوق ونوع الموقع ومتطلبات مناطق النشر والنتيجة الشعورية المطلوبة من المساحة.",
+        "تغطي الوثيقة الجيدة شخصية العلامة التجارية وملف الجمهور ونوع الموقع والمناطق التي تحتاج إلى تغطية والنتيجة الشعورية أو التجارية التي يجب أن يدعمها المشروع.",
     },
     {
-      question: "متى يجب تحديد العطر ونظام النشر؟",
+      question: "متى يجب تحديد العطر وخطة النشر؟",
       answer:
-        "الوقت الأنسب هو مبكراً أثناء تطوير التصميم حتى يتوافق الاتجاه العطري وقيود أنظمة الهواء ومواقع الأجهزة قبل الافتتاح أو التسليم.",
+        "يفضل ذلك أثناء تطوير التصميم، حتى يمكن تنسيق الاتجاه العطري وقيود الهواء والأجهزة قبل الافتتاح أو التسليم.",
     },
   ],
 };
 
 export default function ScentMarketing() {
-  const { isArabic, toLocalePath } = useLocaleRouting();
-  const locale = isArabic ? "ar" : "en";
+  const { isArabic, locale, toLocalePath } = useLocaleRouting();
 
   const copy = isArabic
     ? {
-        eyebrow: "استراتيجية الروائح",
-        title: "خدمات تسويق الروائح للمشاريع الراقية في السعودية والخليج",
-        intro:
-          "نطوّر برامج روائح مخصصة للضيافة الفاخرة والتجزئة والعافية والوجهات السكنية. الهدف ليس مجرد تعطير المكان، بل بناء ذاكرة حسية متناسقة مع العلامة وتجربة الضيف.",
-        processLabel: "كيف نعمل",
-        processTitle: "من الهوية إلى الأداء اليومي",
+        badge: "استراتيجية الروائح",
+        title: "خدمات تسويق الروائح للمشاريع الراقية في السعودية والخليج.",
+        body:
+          "لا يقتصر الهدف على تعطير المكان. البرنامج الجيد يخلق ذاكرة حسية متماسكة مع العلامة التجارية، ويترجمها إلى تجربة وصول وإقامة وتسوق يمكن الاعتماد عليها كل يوم.",
+        processEyebrow: "كيف نعمل",
+        processTitle: "من فكرة العلامة إلى خطة تشغيل قابلة للتنفيذ.",
+        processBody:
+          "العمل يبدأ من الإحساس المطلوب، لكنه لا يكتمل إلا عندما يصبح قابلاً للتنفيذ داخل الموقع نفسه.",
         processSteps: [
-          "نحدد نوع المساحة والجمهور المستهدف والهدف التجاري أو التشغيلي.",
-          "نقترح اتجاهات عطرية أو عطر مميز يتناسب مع شخصية المشروع.",
-          "نطابق العطر مع نظام نشر يناسب حجم المساحة ومتطلبات التشغيل.",
+          "نحدد نوع المساحة والجمهور المستهدف والهدف العاطفي أو التجاري للتجربة.",
+          "نقترح اتجاهات عطرية أو مسار عطر مميز يتناسب مع شخصية المشروع.",
+          "نطابق ذلك مع نظام نشر يناسب الحجم، وتوزيع المناطق، ومتطلبات التشغيل.",
         ],
-        ctaTitle: "هل تحتاج إلى عطر مميز أو خطة نشر واضحة؟",
-        ctaText:
-          "يمكنك البدء بخدمة تسويق الروائح أو الانتقال مباشرة إلى تصميم العطر المميز أو أنظمة النشر بحسب مرحلة المشروع.",
-        ctaPrimary: "ناقش مشروعك",
-        ctaSecondary: "تصميم عطر مميز",
-        faqLabel: "أسئلة شائعة",
+        faqEyebrow: "أسئلة شائعة",
+        faqTitle: "ما الذي تحتاج الفرق إلى معرفته قبل البدء؟",
+        faqBody:
+          "هذه الأسئلة تساعد على توضيح ما إذا كان المشروع يحتاج برنامج روائح كامل أو تطوير عطر مميز أو مراجعة تقنية للنشر.",
+        finalTitle: "هل تحتاج إلى صياغة موجز عطري أوضح؟",
+        finalBody:
+          "يمكننا مساعدتك على تحديد ما إذا كانت الخطوة التالية هي تسويق الروائح أو العطر المميز أو نظام النشر الأنسب.",
+        finalPrimary: "ناقش مشروعك",
+        finalSecondary: "العطر المميز",
       }
     : {
-        eyebrow: "Scent Strategy",
-        title: "Scent marketing services for premium Saudi and GCC spaces",
-        intro:
-          "We build tailored scent marketing programs for luxury hospitality, retail, wellness, and residential destinations. The goal is not just to fragrance a space, but to create a memory that fits the brand and the guest journey.",
-        processLabel: "How We Work",
-        processTitle: "From brand direction to daily performance",
+        badge: "Scent Strategy",
+        title: "Scent marketing services for premium Saudi and GCC spaces.",
+        body:
+          "The goal is not simply to fragrance a space. The strongest program builds a sensory memory that aligns with the brand, then translates it into an arrival, guest, or retail experience that holds up every day.",
+        processEyebrow: "How We Work",
+        processTitle: "From brand atmosphere to an operating plan the site can actually sustain.",
+        processBody:
+          "The work starts with the feeling the space should create, but it only succeeds when that feeling becomes operationally credible.",
         processSteps: [
-          "We define the space type, audience profile, and commercial or operational objective.",
-          "We recommend fragrance directions or a signature scent concept that fits the project identity.",
-          "We match the fragrance to a diffuser system that suits scale, airflow, and operating needs.",
+          "We define the project type, the audience, and the emotional or commercial objective the experience should support.",
+          "That becomes fragrance directions or a signature scent path that the team can review with clarity.",
+          "The scent concept is then matched to the right diffusion approach for scale, zones, and daily performance.",
         ],
-        ctaTitle: "Need a clearer scent brief or diffuser direction?",
-        ctaText:
-          "You can begin with a scent marketing consultation, move into signature scent development, or review diffuser systems based on your project stage.",
-        ctaPrimary: "Discuss Your Project",
-        ctaSecondary: "Explore Signature Scent",
-        faqLabel: "FAQ",
+        faqEyebrow: "FAQ",
+        faqTitle: "What should a team clarify before it starts?",
+        faqBody:
+          "These questions usually help define whether the next step is a full scent marketing program, signature fragrance development, or a more technical diffuser review.",
+        finalTitle: "Need help shaping a clearer fragrance brief?",
+        finalBody:
+          "We can help define whether the next move is scent marketing, signature scent development, or a diffuser recommendation shaped to the site.",
+        finalPrimary: "Discuss Your Project",
+        finalSecondary: "Signature Scent",
       };
 
   return (
-    <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <section
-        id="scent-marketing-hero"
-        aria-label={isArabic ? "مقدمة تسويق الروائح" : "Scent marketing introduction"}
-        className="relative overflow-hidden border-b border-white/10"
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/10 via-transparent to-transparent" />
-        <div className="mx-auto max-w-6xl px-6 py-32 lg:px-12">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-5 text-xs font-medium uppercase tracking-[0.3em] text-brand-gold"
-          >
-            {copy.eyebrow}
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="max-w-4xl text-4xl font-light leading-tight sm:text-6xl"
-          >
-            {copy.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-8 max-w-3xl text-lg leading-8 text-white/60"
-          >
-            {copy.intro}
-          </motion.p>
-        </div>
-      </section>
+    <div>
+      <section className="overflow-hidden pt-28 md:pt-32">
+        <div className="section-inner section-block">
+          <div className="grid gap-10 xl:grid-cols-[1.04fr_0.96fr] xl:items-center">
+            <MountReveal className="space-y-7">
+              <span className="kicker-pill">{copy.badge}</span>
+              <h1 className="hero-title max-w-[12ch]">{copy.title}</h1>
+              <p className="hero-body">{copy.body}</p>
+            </MountReveal>
 
-      <section
-        id="scent-marketing-services"
-        aria-label={isArabic ? "مجالات خدمة تسويق الروائح" : "Scent marketing service areas"}
-        className="mx-auto max-w-7xl border-b border-white/10 px-6 py-24 lg:px-12"
-      >
-        <div className="grid gap-12 md:grid-cols-3 md:gap-8">
-          {serviceCards[locale].map((item, index) => (
-            <motion.article
-              key={item.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.55, delay: index * 0.08 }}
-              className="group"
-            >
-              <div className="mb-6 aspect-square overflow-hidden">
+            <MountReveal delay={0.12}>
+              <div className="media-frame aspect-[4/5] min-h-[24rem]">
                 <img
-                  src={item.img}
-                  alt={item.alt}
-                  width="1200"
-                  height="1200"
-                  loading="lazy"
+                  src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=80"
+                  alt={
+                    isArabic
+                      ? "مساحة ضيافة فاخرة تعبّر عن استراتيجية روائح متكاملة"
+                      : "Luxury hospitality environment representing integrated scent strategy"
+                  }
+                  width="1800"
+                  height="2200"
+                  fetchPriority="high"
                   decoding="async"
-                  className="h-full w-full object-cover transition-all duration-700 group-hover:scale-105"
+                  className="h-full w-full object-cover"
                 />
               </div>
-              <h2 className="mb-4 text-xl font-light">{item.title}</h2>
-              <p className="text-[15px] leading-7 text-white/50">{item.desc}</p>
-            </motion.article>
-          ))}
+            </MountReveal>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-[0.9fr,1.1fr] lg:px-12">
-        <div>
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-gold">
-            {copy.processLabel}
-          </p>
-          <h2 className="text-3xl font-light text-white sm:text-4xl">
-            {copy.processTitle}
-          </h2>
-        </div>
-        <div className="space-y-5">
-          {copy.processSteps.map((step) => (
-            <div
-              key={step}
-              className="border border-white/10 bg-white/[0.03] p-6 text-[15px] leading-7 text-white/60"
-            >
-              {step}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-y border-white/10 bg-[#050505]">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-gold">
-            {copy.faqLabel}
-          </p>
-          <div className="grid gap-8 md:grid-cols-2">
-            {faqItems[locale].map((item) => (
-              <article key={item.question} className="border border-white/10 p-8">
-                <h3 className="text-2xl font-light text-white">{item.question}</h3>
-                <p className="mt-5 text-[15px] leading-7 text-white/55">
-                  {item.answer}
-                </p>
-              </article>
+      <section className="section-block">
+        <div className="section-inner">
+          <div className="grid gap-6 lg:grid-cols-[1.08fr_0.96fr_0.96fr]">
+            {serviceCards[locale].map((item, index) => (
+              <div key={item.title}>
+                <Reveal delay={index * 0.08}>
+                  <article className="surface-panel flex h-full flex-col overflow-hidden">
+                    <div className={index === 0 ? "aspect-[5/4]" : "aspect-[4/4.3]"}>
+                      <img
+                        src={item.img}
+                        alt={item.alt}
+                        width="1600"
+                        height="1400"
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col gap-4 p-6 md:p-7">
+                      <h2 className="font-display text-[2rem] leading-[1.02] text-ink">
+                        {item.title}
+                      </h2>
+                      <p className="text-[1rem] leading-8 text-ink-soft">{item.desc}</p>
+                    </div>
+                  </article>
+                </Reveal>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section
-        id="scent-marketing-cta"
-        aria-label={isArabic ? "دعوة للتواصل" : "Contact call to action"}
-        className="mx-auto max-w-5xl px-6 py-24 text-center lg:px-12"
-      >
-        <h2 className="text-3xl font-light text-white sm:text-4xl">
-          {copy.ctaTitle}
-        </h2>
-        <p className="mt-6 text-[15px] leading-8 text-white/60">
-          {copy.ctaText}
-        </p>
-        <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-          <Link
-            to={toLocalePath("/contact")}
-            className="inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
-          >
-            {copy.ctaPrimary}
-          </Link>
-          <Link
-            to={toLocalePath("/signature-scent")}
-            className="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
-          >
-            {copy.ctaSecondary}
-          </Link>
+      <section className="cta-band">
+        <div className="section-inner section-block">
+          <div className="grid gap-10 xl:grid-cols-[0.92fr_1.08fr]">
+            <Reveal>
+              <SectionIntro
+                eyebrow={copy.processEyebrow}
+                title={copy.processTitle}
+                body={copy.processBody}
+              />
+            </Reveal>
+
+            <div className="grid gap-4">
+              {copy.processSteps.map((step, index) => (
+                <div key={step}>
+                  <Reveal delay={index * 0.08}>
+                    <div className="surface-panel-dark p-6 md:p-7">
+                      <div className="flex items-start gap-4">
+                        <span className="chip border-white/15 bg-white/6 text-white/75">
+                          0{index + 1}
+                        </span>
+                        <p className="text-[1rem] leading-8 text-white/76">{step}</p>
+                      </div>
+                    </div>
+                  </Reveal>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
+
+      <section className="section-block">
+        <div className="section-inner grid gap-10 xl:grid-cols-[1.02fr_0.98fr]">
+          <Reveal>
+            <SectionIntro
+              eyebrow={copy.faqEyebrow}
+              title={copy.faqTitle}
+              body={copy.faqBody}
+              className="mb-8"
+            />
+            <FaqAccordion items={faqItems[locale]} />
+          </Reveal>
+
+          <Reveal delay={0.08}>
+            <div className="surface-panel h-full p-6 md:p-8">
+              <p className="eyebrow">{isArabic ? "المسارات التالية" : "Suggested Next Steps"}</p>
+              <div className="mt-5 grid gap-4">
+                <ActionLink to={toLocalePath("/signature-scent")}>
+                  {isArabic ? "تصميم العطر المميز" : "Signature Scent Design"}
+                </ActionLink>
+                <ActionLink to={toLocalePath("/diffusers")} variant="secondary">
+                  {isArabic ? "استكشف أنظمة النشر" : "Explore Diffuser Systems"}
+                </ActionLink>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <FinalCta
+        title={copy.finalTitle}
+        body={copy.finalBody}
+        primary={{ label: copy.finalPrimary, to: toLocalePath("/contact") }}
+        secondary={{ label: copy.finalSecondary, to: toLocalePath("/signature-scent") }}
+        tone="light"
+      />
     </div>
   );
 }

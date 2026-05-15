@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { MotionConfig } from "motion/react";
 import App from "./App";
 import "./index.css";
 import { setLocale } from "./i18n";
@@ -13,9 +14,16 @@ async function start() {
   const rootElement = document.getElementById("root")!;
   const app = (
     <StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <MotionConfig reducedMotion="user">
+        <BrowserRouter
+          future={{
+            v7_relativeSplatPath: true,
+            v7_startTransition: true,
+          }}
+        >
+          <App />
+        </BrowserRouter>
+      </MotionConfig>
     </StrictMode>
   );
 

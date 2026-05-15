@@ -1,72 +1,89 @@
-import { useTranslation } from 'react-i18next';
-import { Globe } from 'lucide-react';
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { setLocale } from '../i18n';
-import { getLocaleFromPath, switchLocalePath, type Locale } from '../seo/site';
+import { AnimatePresence, motion } from "motion/react";
+import { Check, Globe } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { setLocale } from "../i18n";
+import { getLocaleFromPath, switchLocalePath, type Locale } from "../seo/site";
+
+function cx(...parts: Array<string | false | null | undefined>) {
+  return parts.filter(Boolean).join(" ");
+}
 
 export default function LanguageSwitcher() {
-  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const currentLang = getLocaleFromPath(location.pathname);
 
-  const toggleLanguage = async (lang: Locale) => {
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  async function toggleLanguage(lang: Locale) {
     await setLocale(lang);
     navigate(switchLocalePath(location.pathname, lang));
     setIsOpen(false);
-  };
+  }
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative">
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-1 text-white/80 hover:text-white transition-colors"
-        aria-label="Toggle Language"
+        type="button"
+        onClick={() => setIsOpen((open) => !open)}
+        className="nav-icon-button min-w-[3.5rem] gap-2 px-3 text-[0.72rem] font-semibold uppercase tracking-[0.16em]"
+        aria-haspopup="menu"
+        aria-label="Switch language"
         aria-expanded={isOpen}
       >
-        <Globe size={18} strokeWidth={1.5} />
-        <span className="text-[11px] font-medium uppercase tracking-wider hidden md:inline-block ms-1">
-          {currentLang === 'ar' ? 'العربية' : 'EN'}
-        </span>
+        <Globe size={16} strokeWidth={1.65} />
+        <span>{currentLang.toUpperCase()}</span>
       </button>
 
       <AnimatePresence>
-        {isOpen && (
+        {isOpen ? (
           <>
-            <div 
-              className="fixed inset-0 z-40" 
-              onClick={() => setIsOpen(false)} 
+            <button
+              type="button"
+              className="fixed inset-0 z-40 cursor-default"
+              aria-label="Close language menu"
+              onClick={() => setIsOpen(false)}
             />
             <motion.div
-              initial={{ opacity: 0, y: -5 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ duration: 0.2 }}
-              className="absolute end-0 mt-2 w-32 rounded-sm bg-[#1a1a1a] shadow-xl border border-white/10 z-50 overflow-hidden"
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="surface-panel absolute end-0 z-50 mt-3 min-w-[11rem] p-2"
+              role="menu"
             >
-              <div className="py-1 flex flex-col" role="menu">
-                <button
-                  onClick={() => toggleLanguage('en')}
-                  className={`px-4 py-2 text-sm text-start w-full hover:bg-white/5 transition-colors ${currentLang === 'en' ? 'text-brand-gold' : 'text-white/80'}`}
-                  role="menuitem"
-                >
-                  {t('nav.english')}
-                </button>
-                <button
-                  onClick={() => toggleLanguage('ar')}
-                  className={`px-4 py-2 text-sm text-start w-full hover:bg-white/5 transition-colors ${currentLang === 'ar' ? 'text-brand-gold' : 'text-white/80'}`}
-                  role="menuitem"
-                  dir="rtl"
-                >
-                  {t('nav.arabic')}
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => toggleLanguage("en")}
+                className={cx(
+                  "flex min-h-11 w-full items-center justify-between rounded-full px-4 text-sm font-semibold text-ink transition-colors hover:bg-accent-soft",
+                  currentLang === "en" && "bg-accent-soft text-accent-strong",
+                )}
+                role="menuitem"
+              >
+                <span>English</span>
+                {currentLang === "en" ? <Check size={16} strokeWidth={2} /> : null}
+              </button>
+              <button
+                type="button"
+                onClick={() => toggleLanguage("ar")}
+                className={cx(
+                  "flex min-h-11 w-full items-center justify-between rounded-full px-4 text-sm font-semibold text-ink transition-colors hover:bg-accent-soft",
+                  currentLang === "ar" && "bg-accent-soft text-accent-strong",
+                )}
+                role="menuitem"
+                dir="rtl"
+              >
+                <span>العربية</span>
+                {currentLang === "ar" ? <Check size={16} strokeWidth={2} /> : null}
+              </button>
             </motion.div>
           </>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );

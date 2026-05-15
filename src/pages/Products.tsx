@@ -1,6 +1,13 @@
-import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import { useLocaleRouting } from "../lib/localeRouting";
+import {
+  ActionLink,
+  BulletList,
+  FinalCta,
+  MountReveal,
+  Reveal,
+  SectionIntro,
+} from "../components/brand/BrandPrimitives";
 import {
   getProductById,
   getProductCategoryLabel,
@@ -9,7 +16,7 @@ import {
   getProductStory,
 } from "../data/products";
 
-const featuredProductIds = ["sencha", "saffron-suede", "aromax"] as const;
+const featuredProductIds = ["aromax", "sencha", "saffron-suede"] as const;
 
 export default function Products() {
   const { isArabic, locale, toLocalePath } = useLocaleRouting();
@@ -19,221 +26,274 @@ export default function Products() {
 
   const copy = isArabic
     ? {
-        title: "منتجات Air Aroma",
-        subtitle:
-          "استكشف مسارات العطور والموزعات والزيوت الأساسية لتحديد التوليفة المناسبة للضيافة الراقية والتجزئة والمساكن الفاخرة في السعودية والخليج.",
-        sections: [
+        badge: "محور المنتجات",
+        title: "اختر المسار الأنسب بين العطور والموزعات والزيوت الأساسية.",
+        body:
+          "تساعد هذه الصفحة فرق المشاريع على الانتقال بسرعة من الفكرة العامة إلى المسار الأنسب، سواء كانت الأولوية هوية عطرية مميزة أو نظام نشر مناسب أو طبقة عطرية أكثر هدوءاً للعافية والمساكن.",
+        categories: [
           {
             title: "العطور المميزة",
             description:
-              "عطور جاهزة للاكتشاف أو كنقطة انطلاق لبناء هوية عطرية مخصصة تتماشى مع شخصية المشروع.",
+              "مكتبة عطور جاهزة للاكتشاف أو كنقطة بداية لتطوير هوية عطرية خاصة بالمشروع.",
             path: "/fragrances",
             image:
-              "https://images.unsplash.com/photo-1605371924599-2d0365da1ae0?auto=format&fit=crop&q=80",
-            alt: "مجموعة عطور Air Aroma الفاخرة",
+              "https://images.unsplash.com/photo-1605371924599-2d0365da1ae0?auto=format&fit=crop&w=1600&q=80",
+            alt: "مجموعة عطور فاخرة من Air Aroma",
+            cta: "استكشف العطور",
           },
           {
-            title: "موزعات العطور",
+            title: "الموزعات",
             description:
-              "أنظمة نشر بالهواء البارد للمساحات الصغيرة والكبيرة، تشمل حلولاً مستقلة وأخرى مرتبطة بـ HVAC.",
+              "أنظمة نشر مستقلة أو مرتبطة بـ HVAC للمشاريع الصغيرة والكبيرة التي تحتاج أداءً يومياً واضحاً.",
             path: "/diffusers",
             image:
-              "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&q=80",
-            alt: "موزعات عطرية فاخرة من Air Aroma",
+              "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=1600&q=80",
+            alt: "موزعات عطرية فاخرة",
+            cta: "استكشف الموزعات",
           },
           {
             title: "الزيوت الأساسية",
             description:
-              "خلطات نقية موجهة للعافية والتجارب الهادئة وبرامج العطور التي تركز على الطبيعة والاسترخاء.",
+              "خلطات أكثر نعومة للمساحات التي تميل إلى العافية والهدوء والطابع الطبيعي.",
             path: "/essential-oils",
             image:
-              "https://images.unsplash.com/photo-1608528577891-eb0559d18e58?auto=format&fit=crop&q=80",
-            alt: "زيوت أساسية من Air Aroma",
+              "https://images.unsplash.com/photo-1608528577891-eb0559d18e58?auto=format&fit=crop&w=1600&q=80",
+            alt: "زيوت أساسية لمشروعات العافية",
+            cta: "استكشف الزيوت",
           },
         ],
-        sectionCta: "استكشف",
-        featuredLabel: "منتجات مميزة",
-        featuredTitle: "ابدأ من بعض الاختيارات البارزة",
-        featuredCta: "عرض المنتج",
+        featuredEyebrow: "اختيارات بارزة",
+        featuredTitle: "بعض الاتجاهات التي يبدأ منها كثير من العملاء.",
+        featuredBody:
+          "هذه المنتجات تمنح نظرة سريعة على النطاق الذي تغطيه Air Aroma، من هوية العطر إلى الجهاز نفسه.",
         compareTitle: "كيف تختار الفئة المناسبة؟",
-        compareText:
-          "تبدأ معظم المشاريع بتحديد ما إذا كانت الأولوية هي تطوير عطر مميز أو اختيار نظام نشر أو بناء تجربة عافية قائمة على الزيوت الأساسية. صفحة المنتجات هذه تساعدك على بدء المسار الصحيح بسرعة.",
-        cta: "اطلب استشارة",
+        comparePoints: [
+          "ابدأ بالعطر إذا كانت الأولوية هي الشعور الذي يجب أن يتركه المكان.",
+          "ابدأ بالجهاز إذا كان التحدي الأساسي هو التغطية أو طريقة التشغيل.",
+          "ابدأ بالزيوت الأساسية إذا كان المشروع يميل إلى العافية أو طبقة عطرية أكثر هدوءاً.",
+        ],
+        finalTitle: "هل تحتاج إلى توجيه أوضح قبل اختيار المسار؟",
+        finalBody:
+          "يمكننا مساعدتك على تضييق الخيار بين العطر والجهاز والبرنامج الأنسب بحسب نوع المساحة والجدول الزمني.",
+        finalPrimary: "اطلب استشارة",
+        finalSecondary: "تواصل معنا",
       }
     : {
-        title: "Air Aroma Product Categories",
-        subtitle:
-          "Compare fragrance, diffuser, and essential-oil pathways to find the right fit for premium hospitality, retail, and residential projects in Saudi Arabia and the GCC.",
-        sections: [
+        badge: "Product Hub",
+        title: "Choose the right path across fragrance, diffusion, and essential-oil programs.",
+        body:
+          "This page helps project teams move from a broad idea to the right product path, whether the priority is signature fragrance identity, hardware performance, or a softer wellness-led scent layer.",
+        categories: [
           {
             title: "Signature Fragrances",
             description:
-              "Explore ready-to-review blends or use the collection as a starting point for a custom scent identity.",
+              "A fragrance library to review as-is or use as the first step toward a more custom scent identity.",
             path: "/fragrances",
             image:
-              "https://images.unsplash.com/photo-1605371924599-2d0365da1ae0?auto=format&fit=crop&q=80",
-            alt: "Air Aroma fragrance collection",
+              "https://images.unsplash.com/photo-1605371924599-2d0365da1ae0?auto=format&fit=crop&w=1600&q=80",
+            alt: "Luxury fragrance collection by Air Aroma",
+            cta: "Explore Fragrances",
           },
           {
-            title: "Aroma Diffusers",
+            title: "Diffusers",
             description:
-              "Cold-air systems for compact and large-format spaces, including standalone hardware and HVAC-linked options.",
+              "Standalone and HVAC-linked systems for projects that need clarity, scale, and reliable daily operation.",
             path: "/diffusers",
             image:
-              "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&q=80",
-            alt: "Air Aroma luxury diffuser systems",
+              "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=1600&q=80",
+            alt: "Luxury diffuser systems by Air Aroma",
+            cta: "Explore Diffusers",
           },
           {
             title: "Essential Oils",
             description:
-              "Wellness-led blends for calmer scent experiences, nature-led programs, and diffuser applications that need a softer profile.",
+              "Softer blends for wellness-led environments, residences, and scent programs that need a quieter profile.",
             path: "/essential-oils",
             image:
-              "https://images.unsplash.com/photo-1608528577891-eb0559d18e58?auto=format&fit=crop&q=80",
-            alt: "Air Aroma essential oils",
+              "https://images.unsplash.com/photo-1608528577891-eb0559d18e58?auto=format&fit=crop&w=1600&q=80",
+            alt: "Essential-oil program for premium wellness spaces",
+            cta: "Explore Essential Oils",
           },
         ],
-        sectionCta: "Explore",
-        featuredLabel: "Featured Products",
-        featuredTitle: "Start with a few standout directions",
-        featuredCta: "View product",
+        featuredEyebrow: "Featured Directions",
+        featuredTitle: "A few standout starting points across the collection.",
+        featuredBody:
+          "These products show how Air Aroma moves between fragrance-led, hardware-led, and hybrid project needs.",
         compareTitle: "How should a project team choose the right category?",
-        compareText:
-          "Most teams start by deciding whether the priority is fragrance identity, hardware selection, or a wellness-led essential-oil program. This page is designed to move you into the right path quickly.",
-        cta: "Request a Consultation",
+        comparePoints: [
+          "Start with fragrance if the priority is the emotional tone the space needs to leave behind.",
+          "Start with hardware if the main challenge is coverage, airflow, or day-to-day operating logic.",
+          "Start with essential oils if the project leans wellness-led or needs a quieter scent layer.",
+        ],
+        finalTitle: "Need a clearer recommendation before choosing a path?",
+        finalBody:
+          "We can help narrow the best route between fragrance, hardware, and the right program for the type of space and project stage.",
+        finalPrimary: "Request a Consultation",
+        finalSecondary: "Contact Air Aroma",
       };
 
+  const heroProduct = featuredProducts[0];
+  const sideProducts = featuredProducts.slice(1);
+
   return (
-    <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <section className="border-b border-white/10 px-6 py-28 lg:px-12">
-        <div className="mx-auto max-w-5xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-4xl font-light leading-tight sm:text-6xl"
-          >
-            {copy.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="mt-8 max-w-3xl text-lg leading-8 text-white/60"
-          >
-            {copy.subtitle}
-          </motion.p>
+    <div>
+      <section className="overflow-hidden pt-28 md:pt-32">
+        <div className="section-inner section-block">
+          <div className="grid gap-10 xl:grid-cols-[1.05fr_0.95fr] xl:items-center">
+            <MountReveal className="space-y-7">
+              <span className="kicker-pill">{copy.badge}</span>
+              <h1 className="hero-title max-w-[13ch]">{copy.title}</h1>
+              <p className="hero-body">{copy.body}</p>
+            </MountReveal>
+
+            <MountReveal delay={0.12}>
+              <div className="surface-panel p-6 md:p-8">
+                <p className="eyebrow">{copy.compareTitle}</p>
+                <div className="mt-6">
+                  <BulletList items={copy.comparePoints} />
+                </div>
+              </div>
+            </MountReveal>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-        <div className="grid gap-12 md:grid-cols-3">
-          {copy.sections.map((section, index) => (
-            <motion.article
-              key={section.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="flex h-full flex-col border border-white/10 bg-[#0f0f0f]"
-            >
-              <div className="aspect-square overflow-hidden">
-                <img
-                  src={section.image}
-                  alt={section.alt}
-                  width="1200"
-                  height="1200"
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-                />
+      <section className="section-block">
+        <div className="section-inner">
+          <div className="grid gap-6 lg:grid-cols-[1.08fr_0.96fr_0.96fr]">
+            {copy.categories.map((category, index) => (
+              <div key={category.title}>
+                <Reveal delay={index * 0.08}>
+                  <article className="surface-panel flex h-full flex-col overflow-hidden">
+                    <div className={index === 0 ? "aspect-[5/4]" : "aspect-[4/4.3]"}>
+                      <img
+                        src={category.image}
+                        alt={category.alt}
+                        width="1600"
+                        height="1400"
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col gap-5 p-6 md:p-7">
+                      <h2 className="font-display text-[2rem] leading-[1.04] text-ink">
+                        {category.title}
+                      </h2>
+                      <p className="text-[1rem] leading-8 text-ink-soft">
+                        {category.description}
+                      </p>
+                      <ActionLink
+                        to={toLocalePath(category.path)}
+                        variant="subtle"
+                        className="mt-auto"
+                      >
+                        {category.cta}
+                      </ActionLink>
+                    </div>
+                  </article>
+                </Reveal>
               </div>
-              <div className="flex flex-1 flex-col p-8">
-                <h2 className="text-2xl font-light text-white">{section.title}</h2>
-                <p className="mt-5 flex-1 text-[15px] leading-7 text-white/55">
-                  {section.description}
-                </p>
-                <Link
-                  to={toLocalePath(section.path)}
-                  className="mt-8 max-w-max text-[11px] uppercase tracking-[0.24em] text-brand-gold transition-colors hover:text-white"
-                >
-                  {copy.sectionCta}
-                </Link>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-y border-white/5 bg-[#050505]">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-brand-gold">
-            {copy.featuredLabel}
-          </p>
-          <h2 className="mt-4 max-w-3xl text-4xl font-light text-white md:text-5xl">
-            {copy.featuredTitle}
-          </h2>
-
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
-            {featuredProducts.map((product, index) => (
-              <motion.article
-                key={product.id}
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.45, delay: index * 0.08 }}
-                className="flex h-full flex-col overflow-hidden border border-white/10 bg-white/[0.03]"
-              >
-                <div className="aspect-[4/5] overflow-hidden bg-[#111]">
-                  <img
-                    src={product.images[0].file}
-                    alt={getProductName(product, locale)}
-                    width="1200"
-                    height="1500"
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col p-7">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-brand-gold">
-                    {getProductCategoryLabel(product, locale)}
-                  </p>
-                  <h3 className="mt-3 text-2xl font-light text-white">
-                    {getProductName(product, locale)}
-                  </h3>
-                  <p className="mt-4 flex-1 text-[15px] leading-7 text-white/60">
-                    {getProductStory(product, locale)}
-                  </p>
-                  <Link
-                    to={toLocalePath(getProductDetailBasePath(product))}
-                    className="mt-8 max-w-max text-[11px] uppercase tracking-[0.24em] text-brand-gold transition-colors hover:text-white"
-                  >
-                    {copy.featuredCta}
-                  </Link>
-                </div>
-              </motion.article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-b border-white/10">
-        <div className="mx-auto max-w-6xl px-6 py-24 text-center lg:px-12">
-          <h2 className="text-3xl font-light text-white sm:text-4xl">
-            {copy.compareTitle}
-          </h2>
-          <p className="mx-auto mt-8 max-w-3xl text-[15px] leading-8 text-white/60">
-            {copy.compareText}
-          </p>
-          <Link
-            to={toLocalePath("/contact")}
-            className="mt-10 inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
-          >
-            {copy.cta}
-          </Link>
+      <section className="cta-band">
+        <div className="section-inner section-block">
+          <div className="grid gap-8 xl:grid-cols-[0.92fr_1.08fr]">
+            <Reveal>
+              <SectionIntro
+                eyebrow={copy.featuredEyebrow}
+                title={copy.featuredTitle}
+                body={copy.featuredBody}
+              />
+            </Reveal>
+
+            {heroProduct ? (
+              <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
+                <Reveal>
+                  <article className="surface-panel-dark flex h-full flex-col overflow-hidden">
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img
+                        src={heroProduct.images[0].file}
+                        alt={getProductName(heroProduct, locale)}
+                        width="1400"
+                        height="1100"
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col gap-5 p-6 md:p-8">
+                      <p className="eyebrow text-white/80">
+                        {getProductCategoryLabel(heroProduct, locale)}
+                      </p>
+                      <h2 className="font-display text-[2.3rem] leading-[1.02] text-white">
+                        {getProductName(heroProduct, locale)}
+                      </h2>
+                      <p className="text-[1rem] leading-8 text-white/72">
+                        {getProductStory(heroProduct, locale)}
+                      </p>
+                      <ActionLink
+                        to={toLocalePath(getProductDetailBasePath(heroProduct))}
+                        className="mt-auto self-start"
+                      >
+                        {isArabic ? "عرض المنتج" : "View Product"}
+                      </ActionLink>
+                    </div>
+                  </article>
+                </Reveal>
+
+                <div className="grid gap-6">
+                  {sideProducts.map((product, index) => (
+                    <div key={product.id}>
+                      <Reveal delay={index * 0.08}>
+                        <article className="surface-panel flex h-full items-center gap-5 p-4 md:p-5">
+                          <div className="media-frame aspect-[4/5] w-[7rem] flex-none md:w-[8rem]">
+                            <img
+                              src={product.images[0].file}
+                              alt={getProductName(product, locale)}
+                              width="700"
+                              height="900"
+                              loading="lazy"
+                              decoding="async"
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
+                          <div className="flex flex-1 flex-col gap-3">
+                            <p className="eyebrow">{getProductCategoryLabel(product, locale)}</p>
+                            <h3 className="font-display text-[1.8rem] leading-[1.02] text-ink">
+                              {getProductName(product, locale)}
+                            </h3>
+                            <p className="text-[0.96rem] leading-7 text-ink-soft">
+                              {getProductStory(product, locale)}
+                            </p>
+                            <Link
+                              to={toLocalePath(getProductDetailBasePath(product))}
+                              className="button-subtle mt-2 self-start"
+                            >
+                              {isArabic ? "عرض المنتج" : "View Product"}
+                            </Link>
+                          </div>
+                        </article>
+                      </Reveal>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
         </div>
       </section>
+
+      <FinalCta
+        title={copy.finalTitle}
+        body={copy.finalBody}
+        primary={{ label: copy.finalPrimary, to: toLocalePath("/contact") }}
+        secondary={{ label: copy.finalSecondary, to: toLocalePath("/contact") }}
+        tone="light"
+      />
     </div>
   );
 }

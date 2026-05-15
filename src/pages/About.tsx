@@ -1,153 +1,194 @@
-import { motion } from "motion/react";
 import { useLocaleRouting } from "../lib/localeRouting";
+import {
+  BulletList,
+  FinalCta,
+  MountReveal,
+  Reveal,
+  SectionIntro,
+} from "../components/brand/BrandPrimitives";
 
 export default function About() {
-  const { isArabic } = useLocaleRouting();
+  const { isArabic, toLocalePath } = useLocaleRouting();
 
   const copy = isArabic
     ? {
-        title: "عن Air Aroma",
-        subtitle:
-          "نؤمن بأن الرائحة عنصر تصميم حقيقي، وليست مجرد طبقة إضافية. لهذا نربط بين تصميم العطر والتشغيل وتجربة المستخدم داخل المساحة.",
-        storyTitle: "تصميم عطري يجمع بين الإحساس والأداء",
-        storyP1:
-          "تعمل Air Aroma عند نقطة التقاء الهوية العطرية بالخبرة التشغيلية. نحن نهتم باتجاه العطر نفسه، لكننا نهتم أيضاً بكيفية انتشاره داخل المساحة وكيفية الحفاظ على الجودة والثبات اليومي.",
-        storyP2:
-          "هذا النهج مهم خصوصاً لمشروعات الضيافة الراقية والتجزئة والمساكن ذات المعايير العالية في السعودية والخليج، حيث يجب أن تبدو التجربة متسقة منذ لحظة الوصول وحتى أدق التفاصيل.",
-        whyChoose: "لماذا Air Aroma؟",
+        badge: "عن Air Aroma",
+        title: "الرائحة بالنسبة لنا طبقة تصميم حقيقية، لا إضافة زخرفية.",
+        body:
+          "لهذا يربط عملنا بين اتجاه العطر ذاته وطريقة انتشاره داخل المكان وقدرته على الحفاظ على الجودة والثبات والخصوصية التي يحتاجها المشروع الرفيع.",
+        storyTitle: "نفكر في العطر بوصفه جزءاً من التجربة الكاملة.",
+        storyBody:
+          "تعمل Air Aroma عند نقطة التقاء الهوية العطرية بالواقع التشغيلي. نهتم بالانطباع الذي يتركه العطر، لكننا نهتم أيضاً بكيفية تحوله إلى تجربة يومية يمكن الوثوق بها داخل الفنادق والمتاجر والمساكن الراقية.",
+        principles: [
+          "اتجاه عطري يبدأ من شخصية المشروع لا من قالب جاهز.",
+          "مطابقة بين الإحساس المطلوب وطريقة النشر والتشغيل الواقعي.",
+          "اهتمام بالتفاصيل الصغيرة التي تجعل التجربة متسقة من الوصول حتى الاستخدام المتكرر.",
+        ],
+        featureTitle: "ما الذي يميز هذا النهج؟",
         features: [
           {
             title: "تفكير استراتيجي",
             description:
-              "نربط اتجاه العطر مع نوع المساحة والهوية والعائد المطلوب من التجربة.",
+              "نربط العطر بنوع المساحة، والجمهور، والهدف التجاري أو الشعوري الذي يجب أن تدعمه التجربة.",
           },
           {
-            title: "مكتبة عطرية مرنة",
+            title: "مكتبة مرنة",
             description:
-              "يمكن البدء من مجموعات عطرية قائمة أو تطوير اتجاه مخصص للمشروع.",
+              "يمكن البدء من مجموعة قائمة أو استخدام ذلك كنقطة انطلاق لتطوير هوية عطرية خاصة.",
           },
           {
-            title: "أنظمة نشر مناسبة للموقع",
+            title: "حلول نشر مناسبة",
             description:
-              "نساعد في اختيار النظام الأنسب للمساحات الصغيرة والكبيرة مع مراعاة الاستخدام اليومي.",
+              "نساعد في اختيار النظام الذي يناسب الحجم، والهدوء المطلوب، ومتطلبات التشغيل اليومية.",
           },
         ],
+        finalTitle: "هل تريد معرفة كيف يمكن أن يبدو هذا النهج داخل مشروعك؟",
+        finalBody:
+          "يمكننا مساعدتك على ترجمة شخصية العلامة أو المكان إلى اتجاه عطري وخطة نشر واضحة.",
+        finalPrimary: "تواصل معنا",
+        finalSecondary: "استكشف الخدمات",
       }
     : {
-        title: "About Air Aroma",
-        subtitle:
-          "We see scent as a genuine design layer, not a decorative extra. That is why our work connects fragrance direction with operations and the lived experience of a space.",
-        storyTitle: "Fragrance thinking that balances feeling and performance",
-        storyP1:
-          "Air Aroma works at the intersection of scent identity and operational reality. We care about the fragrance itself, but we also care about how it moves through a space and how quality is maintained over time.",
-        storyP2:
-          "That approach matters most for hospitality, retail, and premium residential projects in Saudi Arabia and the GCC, where the experience has to feel consistent from first arrival through the smallest detail.",
-        whyChoose: "Why Air Aroma?",
+        badge: "About Air Aroma",
+        title: "We treat scent as a genuine design layer, not a decorative extra.",
+        body:
+          "That is why the work always connects the fragrance direction itself with the way it moves through a space and the quality, discretion, and consistency the project expects over time.",
+        storyTitle: "The fragrance has to belong to the full experience, not sit beside it.",
+        storyBody:
+          "Air Aroma works at the intersection of scent identity and operational reality. We care about the emotional impression a fragrance leaves, but also about how it becomes a daily experience a hospitality, retail, or residential team can rely on.",
+        principles: [
+          "Fragrance direction begins with the character of the project, not with a template.",
+          "The emotional brief is matched to a delivery plan and an operating reality.",
+          "Small experiential details matter because consistency is what makes a premium environment believable.",
+        ],
+        featureTitle: "What makes that approach different?",
         features: [
           {
             title: "Strategic Fragrance Thinking",
             description:
-              "We connect scent direction to the space type, brand character, and the commercial outcome the experience should support.",
+              "The scent is connected to the space type, the audience, and the commercial or emotional outcome it should support.",
           },
           {
-            title: "Flexible Fragrance Library",
+            title: "Flexible Library",
             description:
-              "Teams can start from existing blends or use them as the first step toward a custom scent brief.",
+              "Teams can begin with the existing collection or use it as the first step toward a more bespoke fragrance identity.",
           },
           {
             title: "Right-Sized Diffusion",
             description:
-              "We help match the scent concept to hardware that makes sense for both scale and everyday operation.",
+              "We help match the hardware to the scale of the site, the required subtlety, and the demands of daily operation.",
           },
         ],
+        finalTitle: "Want to see how this approach could translate into your project?",
+        finalBody:
+          "We can help turn the character of a brand or destination into a fragrance direction and diffusion plan with more clarity.",
+        finalPrimary: "Contact Air Aroma",
+        finalSecondary: "Explore Services",
       };
 
   return (
-    <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <section className="border-b border-white/10 px-6 py-28 lg:px-12">
-        <div className="mx-auto max-w-5xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-4xl font-light leading-tight text-white sm:text-6xl"
-          >
-            {copy.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="mt-8 max-w-3xl text-lg leading-8 text-white/60"
-          >
-            {copy.subtitle}
-          </motion.p>
+    <div>
+      <section className="overflow-hidden pt-28 md:pt-32">
+        <div className="section-inner section-block">
+          <div className="grid gap-10 xl:grid-cols-[1.05fr_0.95fr] xl:items-center">
+            <MountReveal className="space-y-7">
+              <span className="kicker-pill">{copy.badge}</span>
+              <h1 className="hero-title max-w-[12ch]">{copy.title}</h1>
+              <p className="hero-body">{copy.body}</p>
+            </MountReveal>
+
+            <MountReveal delay={0.12}>
+              <div className="surface-panel p-6 md:p-8">
+                <h2 className="font-display text-[2.3rem] leading-[1.02] text-ink">
+                  {copy.storyTitle}
+                </h2>
+                <p className="mt-5 text-[1rem] leading-8 text-ink-soft">
+                  {copy.storyBody}
+                </p>
+              </div>
+            </MountReveal>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-16 border-b border-white/10 px-6 py-24 lg:grid-cols-2 lg:px-12">
-        <div className="lg:pr-12">
-          <h2 className="text-3xl font-light leading-tight text-white sm:text-4xl">
-            {copy.storyTitle}
-          </h2>
-          <p className="mt-8 text-[15px] leading-8 text-white/60">
-            {copy.storyP1}
-          </p>
-          <p className="mt-6 text-[15px] leading-8 text-white/60">
-            {copy.storyP2}
-          </p>
+      <section className="section-block">
+        <div className="section-inner grid gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:items-center">
+          <Reveal>
+            <div className="media-frame aspect-[4/5] min-h-[24rem]">
+              <img
+                src="https://images.unsplash.com/photo-1541888048496-e2a1e6417721?auto=format&fit=crop&w=1800&q=80"
+                alt={
+                  isArabic
+                    ? "مساحة معمارية فاخرة تعبّر عن التصميم الحسي"
+                    : "Luxury architectural interior representing sensory design"
+                }
+                width="1800"
+                height="2200"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.08}>
+            <SectionIntro
+              eyebrow={copy.featureTitle}
+              title={copy.storyTitle}
+              body={copy.storyBody}
+            />
+            <div className="mt-8">
+              <BulletList items={copy.principles} />
+            </div>
+          </Reveal>
         </div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="relative aspect-[4/3] overflow-hidden bg-[#111]"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1541888048496-e2a1e6417721?auto=format&fit=crop&q=80"
-            alt={
-              isArabic
-                ? "مساحة معمارية فاخرة تعبّر عن التصميم الحسي"
-                : "Luxury architectural interior representing sensory design"
-            }
-            width="1600"
-            height="1200"
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover opacity-80"
-          />
-        </motion.div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 text-3xl font-light tracking-wide text-white"
-        >
-          {copy.whyChoose}
-        </motion.h2>
-        <div className="grid gap-12 sm:grid-cols-3">
-          {copy.features.map((feature, index) => (
-            <motion.article
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="flex flex-col"
-            >
-              <div className="mb-8 h-px w-16 bg-white/20" aria-hidden="true" />
-              <h3 className="mb-4 text-lg font-light text-white">{feature.title}</h3>
-              <p className="text-[14px] leading-7 text-white/50">
-                {feature.description}
-              </p>
-            </motion.article>
-          ))}
+      <section className="section-block">
+        <div className="section-inner">
+          <Reveal>
+            <SectionIntro
+              eyebrow={copy.featureTitle}
+              title={
+                isArabic
+                  ? "ثلاث ركائز تجعل الموقع والعمل يبدوان أكثر مصداقية."
+                  : "Three anchors that make the work feel more credible."
+              }
+              body={
+                isArabic
+                  ? "المشروع الرفيع لا يحتاج فقط إلى جماليات حسية، بل إلى منهج متماسك خلفها."
+                  : "A premium project does not only need atmosphere. It needs a coherent method behind the atmosphere."
+              }
+              className="mb-10"
+            />
+          </Reveal>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {copy.features.map((feature, index) => (
+              <div key={feature.title}>
+                <Reveal delay={index * 0.08}>
+                  <article className="surface-panel h-full p-6 md:p-7">
+                    <h2 className="font-display text-[2rem] leading-[1.02] text-ink">
+                      {feature.title}
+                    </h2>
+                    <p className="mt-5 text-[1rem] leading-8 text-ink-soft">
+                      {feature.description}
+                    </p>
+                  </article>
+                </Reveal>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
+
+      <FinalCta
+        title={copy.finalTitle}
+        body={copy.finalBody}
+        primary={{ label: copy.finalPrimary, to: toLocalePath("/contact") }}
+        secondary={{ label: copy.finalSecondary, to: toLocalePath("/scent-marketing") }}
+        tone="light"
+      />
     </div>
   );
 }

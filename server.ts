@@ -54,7 +54,7 @@ async function createServer() {
     next();
   });
 
-  app.use("*all", async (request, response, next) => {
+  app.use(async (request, response, next) => {
     try {
       const url = request.originalUrl;
       const locale = getLocaleFromPath(url);

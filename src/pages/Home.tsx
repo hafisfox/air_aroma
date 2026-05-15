@@ -1,465 +1,435 @@
-import { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "motion/react";
-import { Link } from "react-router-dom";
 import { useLocaleRouting } from "../lib/localeRouting";
+import {
+  ActionLink,
+  ActionRow,
+  BulletList,
+  FaqAccordion,
+  FinalCta,
+  MountReveal,
+  Reveal,
+  SectionIntro,
+} from "../components/brand/BrandPrimitives";
 
 const faqItems = {
   en: [
     {
-      question: "What is scent marketing for hotels and retail brands?",
+      question: "What does a strong scent brief include?",
       answer:
-        "Scent marketing uses a custom ambient fragrance to shape how guests remember a space, strengthen brand recognition, and create a more premium arrival experience.",
+        "The best starting point combines the type of space, the audience moving through it, the mood the brand wants to create, and the operational reality of the site.",
     },
     {
-      question: "Can Air Aroma support projects in Saudi Arabia and across the GCC?",
+      question: "Can Air Aroma support both fragrance direction and hardware selection?",
       answer:
-        "Yes. Air Aroma's product mix and fragrance strategy are suited to hospitality, luxury retail, residences, and branded developments across Saudi Arabia and the GCC.",
+        "Yes. The work usually moves from fragrance strategy into a delivery plan, so the scent identity and the diffuser approach feel consistent from concept to rollout.",
     },
     {
-      question: "Which diffuser system is best for a large commercial space?",
+      question: "Is this built for Saudi Arabia and the wider GCC market?",
       answer:
-        "Large-format hospitality and retail projects typically benefit from HVAC-connected cold-air systems, while boutiques, suites, and villas often need discreet standalone diffusers.",
+        "Yes. The positioning, service language, and product mix are designed around premium hospitality, retail, and residential projects across Saudi Arabia and the GCC.",
     },
   ],
   ar: [
     {
-      question: "ما المقصود بتسويق الروائح للفنادق والمتاجر الراقية؟",
+      question: "ما الذي يجب أن يتضمنه موجز مشروع عطري قوي؟",
       answer:
-        "تسويق الروائح هو استخدام عطر محيطي مخصص لتشكيل ذاكرة الضيف عن المكان وتعزيز هوية العلامة التجارية وخلق تجربة استقبال أكثر فخامة.",
+        "أفضل نقطة بداية تجمع بين نوع المساحة والجمهور الذي يتحرك داخلها والمزاج الذي تريد العلامة التجارية صنعه والواقع التشغيلي للموقع.",
     },
     {
-      question: "هل تدعم Air Aroma المشاريع في السعودية ودول الخليج؟",
+      question: "هل يمكن لـ Air Aroma دعم الاتجاه العطري واختيار الأجهزة معاً؟",
       answer:
-        "نعم. مزيج المنتجات واستراتيجية العطور لدى Air Aroma مناسب لمشروعات الضيافة الفاخرة والتجزئة والمساكن والوجهات ذات العلامات التجارية في السعودية والخليج.",
+        "نعم. يبدأ العمل عادة من الاستراتيجية العطرية ثم ينتقل إلى خطة النشر، حتى تبدو الهوية العطرية وطريقة التوزيع متماسكتين من الفكرة إلى التشغيل.",
     },
     {
-      question: "ما النظام الأنسب للمساحات التجارية الكبيرة؟",
+      question: "هل هذا موجّه لمشروعات السعودية ودول الخليج؟",
       answer:
-        "المشروعات الكبرى في الضيافة والتجزئة تستفيد عادة من أنظمة الهواء البارد المرتبطة بـ HVAC، بينما تحتاج المتاجر الصغيرة والأجنحة والفلل غالباً إلى موزعات مستقلة أنيقة.",
+        "نعم. تم إعداد التموضع واللغة الخدمية ومزيج المنتجات ليتوافق مع الضيافة الفاخرة والتجزئة والمساكن الراقية في السعودية ودول الخليج.",
     },
   ],
 };
 
 export default function Home() {
   const { isArabic, locale, toLocalePath } = useLocaleRouting();
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end end"],
-  });
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 28,
-    mass: 0.45,
-  });
-
-  const mediaScale = useTransform(smoothProgress, [0, 0.5, 1], [1, 1.08, 1.16]);
-  const mediaOpacity = useTransform(smoothProgress, [0, 0.82, 1], [0.72, 0.46, 0.18]);
-
-  const phase1Opacity = useTransform(smoothProgress, [0, 0.12, 0.28], [1, 1, 0]);
-  const phase1Y = useTransform(smoothProgress, [0, 0.28], [0, -42]);
-
-  const phase2Opacity = useTransform(
-    smoothProgress,
-    [0.18, 0.35, 0.58],
-    [0, 1, 0],
-  );
-  const phase2Y = useTransform(smoothProgress, [0.18, 0.35, 0.58], [44, 0, -38]);
-
-  const phase3Opacity = useTransform(
-    smoothProgress,
-    [0.52, 0.72, 1],
-    [0, 1, 1],
-  );
-  const phase3Y = useTransform(smoothProgress, [0.52, 0.72, 1], [40, 0, 0]);
 
   const copy = isArabic
     ? {
-        badge: "حلول عطرية للضيافة الفاخرة والتجزئة",
-        heroPhases: [
-          {
-            eyebrow: "هوية عطرية",
-            title: "تجربة حسية فاخرة للمشاريع في السعودية ودول الخليج",
-            body:
-              "تصمم Air Aroma برامج تسويق الروائح التي تجعل الوصول إلى المكان أكثر فخامةً ووضوحًا في الذاكرة وأكثر ارتباطًا بالعلامة التجارية.",
-          },
-          {
-            eyebrow: "اتجاه العطر",
-            title: "عطور مميزة تبني الانطباع قبل أن تُقال أي كلمة",
-            body:
-              "من تطوير العطر المميز إلى اختيار النفحات الجاهزة للاكتشاف، نساعد الفرق على تحديد مزاج عطري متناسق مع شخصية المشروع.",
-          },
-          {
-            eyebrow: "تقنية النشر",
-            title: "أنظمة هواء بارد أنيقة وجاهزة للتشغيل على نطاق راقٍ",
-            body:
-              "نربط بين الهوية العطرية والنظام المناسب للتشغيل اليومي، سواء لمساحات الضيافة الكبيرة أو المتاجر أو المساكن الفاخرة.",
-          },
-        ],
+        badge: "اتجاه عطري للمشاريع الراقية في السعودية والخليج",
+        heroTitle: "هوية عطرية تبدو معمارية، حسية، وواثقة من أول لحظة.",
+        heroBody:
+          "تصمم Air Aroma برامج تسويق الروائح والعطور المميزة وأنظمة النشر التي تمنح الفنادق والمتاجر والمشاريع السكنية الراقية حضوراً أوضح وذاكرة أقوى وتجربة يومية أكثر اتساقاً.",
         primaryCta: "ابدأ مشروعك العطري",
         secondaryCta: "استكشف أنظمة النشر",
-        scrollHint: "اسحب لاكتشاف المراحل",
-        focusLabel: "مجالات العمل",
-        focusTitle: "كيف ندعم مشاريع الروائح في الخليج",
-        focusCards: [
+        metrics: [
+          { label: "النتيجة", value: "ذاكرة علامة أوضح" },
+          { label: "المنهج", value: "اتجاه عطري + تشغيل" },
+          { label: "المنطقة", value: "السعودية + الخليج" },
+        ],
+        heroCaptionTitle: "بيئات فاخرة تتطلب أكثر من عطر جميل",
+        heroCaptionBody:
+          "نربط الإحساس بالمكان مع الأداء اليومي حتى تبدو التجربة مترابطة من الوصول إلى أدق التفاصيل.",
+        sectorsEyebrow: "مجالات العمل",
+        sectorsTitle: "كيف تبدو برامج الروائح عندما تُصمم من منظور المكان نفسه؟",
+        sectorsBody:
+          "بدلاً من تكرار قالب واحد، نطوّر كل اتجاه بحسب نوع المشروع والهوية وطريقة استخدام المساحة يومياً.",
+        sectors: [
           {
             title: "الفنادق والمنتجعات",
-            description:
-              "برامج روائح للاستقبال والسبا والأجنحة والممرات، مع توزيع ثابت يناسب معايير الضيافة الراقية.",
+            body:
+              "برامج وصول وأجنحة وسبا وممرات تصنع تجربة ضيافة أكثر أناقة وثباتاً.",
+            image:
+              "https://images.unsplash.com/photo-1542314831-c6a4d1424869?auto=format&fit=crop&w=1600&q=80",
+            alt: "فندق فاخر مع هوية حسية متكاملة",
             link: toLocalePath("/scent-marketing"),
+            cta: "خدمات الروائح",
           },
           {
-            title: "التجزئة الفاخرة",
-            description:
-              "هوية عطرية تساعد على تمييز العلامة وزيادة الإحساس بالفخامة عبر رحلات تسوق متناسقة.",
+            title: "التجزئة الراقية",
+            body:
+              "هوية عطرية تساعد المتجر على أن يُشعَر به قبل أن يُوصف، مع اتساق عبر الفروع أو الوجهات الرئيسية.",
+            image:
+              "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80",
+            alt: "متجر فاخر بتجربة حسية راقية",
             link: toLocalePath("/signature-scent"),
+            cta: "العطر المميز",
           },
           {
-            title: "أنظمة النشر",
-            description:
-              "موزعات مستقلة وأنظمة HVAC لمشروعات الفلل والمعارض والفنادق والمساحات التجارية الكبرى.",
+            title: "الفلل والمساحات الخاصة",
+            body:
+              "حلول أكثر هدوءاً وخصوصية للمساكن والمجالس والأماكن التي تحتاج حضوراً محسوباً لا ضجيجاً.",
+            image:
+              "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=80",
+            alt: "مسكن فاخر بتفاصيل داخلية دافئة",
             link: toLocalePath("/diffusers"),
+            cta: "أنظمة النشر",
           },
         ],
-        focusLink: "اعرف المزيد",
-        proofLabel: "لماذا Air Aroma",
-        proofTitle: "تصميم عطري واضح من الفكرة إلى التشغيل",
-        proofPoints: [
-          "استراتيجية تجمع بين الهوية العطرية ومتطلبات التشغيل والصيانة.",
-          "مجموعات عطرية مناسبة للضيافة الفاخرة والتجزئة والمساكن الراقية.",
-          "أنظمة نشر بالهواء البارد لمشروعات صغيرة ومتوسطة وكبيرة.",
+        processEyebrow: "المنهج",
+        processTitle: "من شعور العلامة إلى واقع التشغيل اليومي.",
+        processBody:
+          "القيمة لا تأتي من الرائحة وحدها. البرنامج الناجح يجمع بين الاتجاه العطري والهوية التشغيلية والطريقة التي يتحرك بها الناس داخل المساحة.",
+        processSteps: [
+          "نقرأ نوع المشروع، الجمهور، والنتيجة الشعورية التي يجب أن تبقى في الذاكرة.",
+          "نحوّل ذلك إلى اتجاه عطري أو عطر مميز يمكن مراجعته بوضوح مع فريق المشروع.",
+          "نربطه بنظام نشر يناسب الحجم، وتدفق الهواء، ومتطلبات الأداء اليومية.",
         ],
-        fragranceLabel: "العطور",
-        fragranceTitle: "مجموعات عطرية جاهزة للاكتشاف",
-        fragranceText:
-          "استكشف مزجاً بين الحمضيات والأخشاب والراتنجات والنفحات النظيفة لبناء اتجاه عطري يناسب مساحتك أو لتحديد نقطة انطلاق لعطر مخصص.",
-        fragranceCta: "عرض مجموعة العطور",
-        faqLabel: "الأسئلة الشائعة",
-        faqTitle: "إجابات سريعة لفرق المشاريع والضيافة",
-        contactTitle: "هل لديك مشروع في السعودية أو الخليج؟",
-        contactText:
-          "شاركنا نوع المساحة والهدف من التجربة والجدول الزمني، وسنساعدك على تحديد العطر والنظام المناسبين.",
-        contactCta: "التواصل مع Air Aroma",
+        spotlightEyebrow: "مكتبة العطور",
+        spotlightTitle: "استكشف المزاج قبل أن تبدأ موجز العطر المخصص.",
+        spotlightBody:
+          "يمكن للفرق البدء من مجموعات جاهزة تساعدها على تعريف المزاج المطلوب، ثم الانتقال إلى تطوير اتجاه عطري أكثر خصوصية إذا احتاج المشروع ذلك.",
+        spotlightPoints: [
+          "حمضيات نقية للمشاريع التي تحتاج حضوراً مشرقاً وسهلاً.",
+          "أخشاب وراتنجات للمساحات التي تريد عمقاً وهدوءاً ودفئاً.",
+          "مسارات عافية أخف للسبا والمساكن والبرامج الهادئة.",
+        ],
+        spotlightCta: "عرض مجموعة العطور",
+        faqEyebrow: "أسئلة شائعة",
+        faqTitle: "إجابات سريعة لفرق المشاريع والضيافة.",
+        faqBody:
+          "إذا كنت تقارن بين العطر المميز والأنظمة أو تحتاج إلى نقطة بداية أوضح، فهذه أكثر الأسئلة التي تساعد على توجيه القرار مبكراً.",
+        proofTitle: "لماذا تختار الفرق الراقية هذا النوع من العمل؟",
+        proofPoints: [
+          "لأن الهوية العطرية يجب أن تبدو مقصودة، لا تجميلية فقط.",
+          "لأن الثبات في الأداء مهم بقدر أهمية الجاذبية في اللحظة الأولى.",
+          "ولأن التجربة الراقية تُقاس بقدرتها على الاستمرار يومياً، لا بإبهارها الأول فقط.",
+        ],
+        finalTitle: "هل تخطط لمشروع عطري في السعودية أو الخليج؟",
+        finalBody:
+          "شاركنا نوع المساحة والإحساس الذي تريد خلقه والمرحلة التي وصل إليها المشروع، وسنساعدك على تحديد العطر ونظام النشر المناسبين.",
+        finalPrimary: "تواصل مع Air Aroma",
+        finalSecondary: "استكشف المنتجات",
       }
     : {
-        badge: "Scent strategy for luxury hospitality and retail",
-        heroPhases: [
-          {
-            eyebrow: "Scent Strategy",
-            title: "Luxury scent marketing for Saudi Arabia and the GCC",
-            body:
-              "Air Aroma creates premium scent programs that make arrivals feel more elevated, reinforce brand memory, and shape how a space is remembered.",
-          },
-          {
-            eyebrow: "Fragrance Identity",
-            title: "Signature fragrances that define the mood before a word is spoken",
-            body:
-              "From bespoke scent design to curated blends ready to review, we help teams shape a fragrance direction that feels coherent, premium, and brand-led.",
-          },
-          {
-            eyebrow: "Diffusion Systems",
-            title: "Cold-air diffusion designed to perform beautifully at scale",
-            body:
-              "We connect fragrance identity to the right delivery system, whether the project is a hotel, boutique, residence, wellness space, or large-format destination.",
-          },
-        ],
+        badge: "Architected scent strategy for Saudi Arabia and the GCC",
+        heroTitle: "Scent identity that feels architectural, sensory, and assured from the first arrival.",
+        heroBody:
+          "Air Aroma designs scent marketing programs, signature fragrances, and diffusion systems that give luxury hospitality, retail, and residential spaces a clearer memory, a stronger atmosphere, and a more dependable daily experience.",
         primaryCta: "Start Your Scent Project",
         secondaryCta: "Explore Diffuser Systems",
-        scrollHint: "Scroll to move through the story",
-        focusLabel: "Where We Work",
-        focusTitle: "How we support GCC fragrance projects",
-        focusCards: [
+        metrics: [
+          { label: "Outcome", value: "Stronger brand memory" },
+          { label: "Method", value: "Fragrance + operations" },
+          { label: "Region", value: "Saudi Arabia + GCC" },
+        ],
+        heroCaptionTitle: "Premium environments need more than a beautiful fragrance.",
+        heroCaptionBody:
+          "We connect the emotional feel of a space with the operational reality behind it, so the experience holds together from arrival through everyday use.",
+        sectorsEyebrow: "Where We Work",
+        sectorsTitle: "What does a scent program look like when it is designed from the space outward?",
+        sectorsBody:
+          "Instead of forcing every project into one formula, the direction is shaped around the property type, the brand character, and the way the environment is used every day.",
+        sectors: [
           {
             title: "Hotels and Resorts",
-            description:
-              "Arrival, spa, suite, and corridor scent programs designed for premium guest experiences and reliable daily performance.",
+            body:
+              "Arrival, suite, spa, and corridor programs that make hospitality environments feel more elevated and more consistent.",
+            image:
+              "https://images.unsplash.com/photo-1542314831-c6a4d1424869?auto=format&fit=crop&w=1600&q=80",
+            alt: "Luxury hospitality environment supported by scent strategy",
             link: toLocalePath("/scent-marketing"),
+            cta: "Scent Services",
           },
           {
-            title: "Luxury Retail",
-            description:
-              "Signature fragrance direction that helps premium stores feel distinctive, memorable, and consistent across locations.",
+            title: "Premium Retail",
+            body:
+              "Signature fragrance direction that helps a store feel memorable before the visitor tries to describe why.",
+            image:
+              "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80",
+            alt: "Luxury retail environment with premium atmosphere",
             link: toLocalePath("/signature-scent"),
+            cta: "Signature Scent",
           },
           {
-            title: "Diffusion Systems",
-            description:
-              "Standalone and HVAC scent systems for villas, boutiques, hospitality venues, and large-format commercial spaces.",
+            title: "Residences and Private Spaces",
+            body:
+              "A quieter fragrance layer for villas, wellness environments, and private interiors that need discretion as much as presence.",
+            image:
+              "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=80",
+            alt: "Private luxury residence with refined interior design",
             link: toLocalePath("/diffusers"),
+            cta: "Diffuser Systems",
           },
         ],
-        focusLink: "Learn More",
-        proofLabel: "Why Air Aroma",
-        proofTitle: "A clearer fragrance path from concept to rollout",
-        proofPoints: [
-          "Scent strategy that connects brand direction with day-to-day operations.",
-          "Fragrance collections suited to hospitality, retail, wellness, and residential use.",
-          "Cold-air diffusion options for compact spaces, flagships, and large developments.",
+        processEyebrow: "How It Works",
+        processTitle: "From brand atmosphere to the discipline of daily performance.",
+        processBody:
+          "The value does not come from fragrance alone. The strongest programs combine scent direction, operational logic, and an understanding of how people move through a space.",
+        processSteps: [
+          "We define the project type, the audience, and the emotional outcome the environment should leave behind.",
+          "That becomes a fragrance direction or signature scent concept the team can review with clarity.",
+          "The concept is then paired with the right diffusion system for scale, airflow, and daily performance.",
         ],
-        fragranceLabel: "Fragrance Library",
-        fragranceTitle: "Explore blends before you brief a custom scent",
-        fragranceText:
-          "Browse citrus, woods, resinous, fresh, and wellness-led profiles to define the mood of your project or to shape the first direction for a bespoke fragrance brief.",
-        fragranceCta: "View Fragrance Collection",
-        faqLabel: "FAQ",
-        faqTitle: "Quick answers for hospitality and project teams",
-        contactTitle: "Planning a scent project in Saudi Arabia or the GCC?",
-        contactText:
-          "Share the type of space, the experience you want to create, and your preferred timeline. We will help you narrow the right fragrance and diffusion approach.",
-        contactCta: "Contact Air Aroma",
+        spotlightEyebrow: "Fragrance Library",
+        spotlightTitle: "Explore the mood before you brief a custom fragrance.",
+        spotlightBody:
+          "Teams often begin with the existing collection to define the right atmosphere, then move into a more tailored scent identity if the project needs something more distinctive.",
+        spotlightPoints: [
+          "Citrus-led profiles for projects that need brightness and clarity.",
+          "Woods and resins for spaces that want calm depth and warmth.",
+          "Wellness-led blends for spas, residences, and softer scent layers.",
+        ],
+        spotlightCta: "View Fragrance Collection",
+        faqEyebrow: "FAQ",
+        faqTitle: "Quick answers for hospitality and project teams.",
+        faqBody:
+          "If you are comparing scent strategy, signature fragrance, and diffuser options, these are the questions that usually help narrow the path early.",
+        proofTitle: "Why do premium project teams invest in this kind of work?",
+        proofPoints: [
+          "Because scent identity should feel intentional, not merely decorative.",
+          "Because reliable performance matters as much as a strong first impression.",
+          "Because luxury experiences are judged by how well they hold up every day, not just by how dramatic they feel once.",
+        ],
+        finalTitle: "Planning a scent project in Saudi Arabia or the GCC?",
+        finalBody:
+          "Tell us the space type, the atmosphere you want to create, and the stage of the project. We will help narrow the right fragrance and diffusion direction.",
+        finalPrimary: "Contact Air Aroma",
+        finalSecondary: "Explore Products",
       };
 
   return (
-    <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <section
-        ref={heroRef}
-        className="relative h-[220vh] border-b border-white/10 bg-black md:h-[280vh] xl:h-[300vh]"
-      >
-        <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          <motion.div
-            style={{ scale: mediaScale, opacity: mediaOpacity }}
-            className="absolute inset-0"
-          >
-            <img
-              src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2024/11/fairmont-candle-for-sale.jpg"
-              alt={
-                isArabic
-                  ? "مشهد عطري فاخر من Air Aroma"
-                  : "Luxury scent marketing scene by Air Aroma"
-              }
-              width="1800"
-              height="1200"
-              fetchPriority="high"
-              decoding="async"
-              className="h-full w-full object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(197,160,89,0.22),transparent_38%)]" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/68 to-black" />
-          </motion.div>
+    <div>
+      <section className="overflow-hidden pt-28 md:pt-32">
+        <div className="section-inner section-block">
+          <div className="grid gap-10 xl:grid-cols-[1.02fr_0.98fr] xl:items-center">
+            <MountReveal className="space-y-8">
+              <div className="kicker-row">
+                <span className="kicker-pill">{copy.badge}</span>
+                <span className="chip">{locale === "ar" ? "مشروعات فاخرة" : "Luxury projects"}</span>
+              </div>
 
-          <div className="relative mx-auto flex h-full w-full max-w-7xl flex-col justify-center px-6 py-24 lg:px-12">
-            <div className="absolute top-24 left-6 right-6 flex items-center justify-between text-[10px] uppercase tracking-[0.28em] text-white/35 lg:left-12 lg:right-12">
-              <span className="rounded-full border border-brand-gold/40 bg-brand-gold/10 px-4 py-2 text-brand-gold">
-                {copy.badge}
-              </span>
-              <span className="hidden md:block">{copy.scrollHint}</span>
-            </div>
+              <h1 className="hero-title max-w-[12ch]">{copy.heroTitle}</h1>
+              <p className="hero-body">{copy.heroBody}</p>
 
-            <div className="relative h-[62vh] md:h-[70vh]">
-              <motion.div
-                style={{ opacity: phase1Opacity, y: phase1Y }}
-                className="absolute inset-0 flex max-w-4xl flex-col justify-center"
-              >
-                <p className="mb-5 text-[11px] uppercase tracking-[0.34em] text-brand-gold">
-                  {copy.heroPhases[0].eyebrow}
-                </p>
-                <h1 className="max-w-4xl text-5xl font-light leading-[1.02] text-white md:text-7xl lg:text-8xl">
-                  {copy.heroPhases[0].title}
-                </h1>
-                <p className="mt-8 max-w-3xl text-lg leading-8 text-white/75 md:text-xl">
-                  {copy.heroPhases[0].body}
-                </p>
-              </motion.div>
+              <ActionRow>
+                <ActionLink to={toLocalePath("/contact")}>{copy.primaryCta}</ActionLink>
+                <ActionLink to={toLocalePath("/diffusers")} variant="secondary">
+                  {copy.secondaryCta}
+                </ActionLink>
+              </ActionRow>
 
-              <motion.div
-                style={{ opacity: phase2Opacity, y: phase2Y }}
-                className="absolute inset-0 flex max-w-3xl flex-col justify-center"
-              >
-                <p className="mb-5 text-[11px] uppercase tracking-[0.34em] text-brand-gold">
-                  {copy.heroPhases[1].eyebrow}
-                </p>
-                <h2 className="max-w-4xl text-4xl font-light leading-[1.05] text-white md:text-6xl lg:text-7xl">
-                  {copy.heroPhases[1].title}
-                </h2>
-                <p className="mt-8 max-w-3xl text-lg leading-8 text-white/72 md:text-xl">
-                  {copy.heroPhases[1].body}
-                </p>
-              </motion.div>
-
-              <motion.div
-                style={{ opacity: phase3Opacity, y: phase3Y }}
-                className="absolute inset-0 flex max-w-3xl flex-col justify-center"
-              >
-                <p className="mb-5 text-[11px] uppercase tracking-[0.34em] text-brand-gold">
-                  {copy.heroPhases[2].eyebrow}
-                </p>
-                <h2 className="max-w-4xl text-4xl font-light leading-[1.05] text-white md:text-6xl lg:text-7xl">
-                  {copy.heroPhases[2].title}
-                </h2>
-                <p className="mt-8 max-w-3xl text-lg leading-8 text-white/72 md:text-xl">
-                  {copy.heroPhases[2].body}
-                </p>
-                <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                  <Link
-                    to={toLocalePath("/contact")}
-                    className="inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
-                  >
-                    {copy.primaryCta}
-                  </Link>
-                  <Link
-                    to={toLocalePath("/diffusers")}
-                    className="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
-                  >
-                    {copy.secondaryCta}
-                  </Link>
-                </div>
-              </motion.div>
-            </div>
-
-            <div className="absolute bottom-10 left-6 right-6 lg:left-12 lg:right-12">
-              <div className="flex items-center gap-4 md:gap-8">
-                {copy.heroPhases.map((phase, index) => (
-                  <div key={phase.eyebrow} className="flex items-center gap-3">
-                    <span className="h-2 w-2 rounded-full bg-brand-gold" />
-                    <span className="hidden text-[10px] uppercase tracking-[0.28em] text-white/35 md:block">
-                      0{index + 1} {phase.eyebrow}
-                    </span>
+              <div className="metric-grid">
+                {copy.metrics.map((metric) => (
+                  <div key={metric.label} className="metric-card">
+                    <p className="metric-label">{metric.label}</p>
+                    <p className="metric-value">{metric.value}</p>
                   </div>
                 ))}
               </div>
+            </MountReveal>
+
+            <MountReveal delay={0.12}>
+              <div className="media-frame media-frame--shadowed aspect-[4/5] min-h-[26rem] md:min-h-[38rem]">
+                <img
+                  src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=80"
+                  alt={
+                    isArabic
+                      ? "ردهة فاخرة تعكس حضوراً حسياً راقياً"
+                      : "Luxury interior environment with an elevated sensory atmosphere"
+                  }
+                  width="1800"
+                  height="2200"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(20,17,14,0.74)] via-transparent to-transparent" />
+                <div className="absolute inset-x-5 bottom-5 md:inset-x-8 md:bottom-8">
+                  <div className="surface-panel-dark p-6 md:p-7">
+                    <p className="eyebrow text-white/80">{copy.heroCaptionTitle}</p>
+                    <p className="mt-3 text-[0.98rem] leading-8 text-white/72">
+                      {copy.heroCaptionBody}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </MountReveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-block">
+        <div className="section-inner">
+          <Reveal>
+            <SectionIntro
+              eyebrow={copy.sectorsEyebrow}
+              title={copy.sectorsTitle}
+              body={copy.sectorsBody}
+              className="mb-12"
+            />
+          </Reveal>
+
+          <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr_0.85fr]">
+            {copy.sectors.map((sector, index) => (
+              <div key={sector.title}>
+                <Reveal delay={index * 0.08}>
+                  <article className="surface-panel flex h-full flex-col overflow-hidden">
+                    <div className={index === 0 ? "aspect-[5/4]" : "aspect-[4/4.2]"}>
+                      <img
+                        src={sector.image}
+                        alt={sector.alt}
+                        width="1600"
+                        height="1400"
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col gap-5 p-6 md:p-7">
+                      <h2 className="font-display text-[2rem] leading-[1.02] text-ink">
+                        {sector.title}
+                      </h2>
+                      <p className="text-[1rem] leading-8 text-ink-soft">{sector.body}</p>
+                      <ActionLink to={sector.link} variant="subtle" className="mt-auto">
+                        {sector.cta}
+                      </ActionLink>
+                    </div>
+                  </article>
+                </Reveal>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="cta-band">
+        <div className="section-inner section-block">
+          <div className="grid gap-10 xl:grid-cols-[0.92fr_1.08fr] xl:items-start">
+            <Reveal>
+              <SectionIntro
+                eyebrow={copy.processEyebrow}
+                title={copy.processTitle}
+                body={copy.processBody}
+              />
+            </Reveal>
+
+            <div className="grid gap-4">
+              {copy.processSteps.map((step, index) => (
+                <div key={step}>
+                  <Reveal delay={index * 0.08}>
+                    <div className="surface-panel-dark p-6 md:p-7">
+                      <div className="flex items-start gap-4">
+                        <span className="chip border-white/15 bg-white/6 text-white/72">
+                          0{index + 1}
+                        </span>
+                        <p className="text-[1rem] leading-8 text-white/78">{step}</p>
+                      </div>
+                    </div>
+                  </Reveal>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-        <div className="mb-14">
-          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-brand-gold">
-            {copy.focusLabel}
-          </p>
-          <h2 className="max-w-3xl text-4xl font-light text-white md:text-5xl">
-            {copy.focusTitle}
-          </h2>
-        </div>
+      <section className="section-block">
+        <div className="section-inner grid gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:items-center">
+          <Reveal>
+            <div className="media-frame aspect-[4/5] min-h-[24rem]">
+              <img
+                src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2025/08/custom-scent-design-banner.jpg"
+                alt={
+                  isArabic
+                    ? "مجموعة عطور Air Aroma الفاخرة"
+                    : "Air Aroma fragrance collection"
+                }
+                width="1600"
+                height="2000"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </Reveal>
 
-        <div className="grid gap-8 md:grid-cols-3">
-          {copy.focusCards.map((card, index) => (
-            <motion.article
-              key={card.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="flex h-full flex-col border border-white/10 bg-white/[0.03] p-8"
-            >
-              <h3 className="mb-4 text-2xl font-light text-white">{card.title}</h3>
-              <p className="mb-8 flex-1 text-[15px] leading-7 text-white/55">
-                {card.description}
-              </p>
-              <Link
-                to={card.link}
-                className="max-w-max text-[11px] uppercase tracking-[0.24em] text-brand-gold transition-colors hover:text-white"
-              >
-                {copy.focusLink}
-              </Link>
-            </motion.article>
-          ))}
+          <Reveal delay={0.08}>
+            <SectionIntro
+              eyebrow={copy.spotlightEyebrow}
+              title={copy.spotlightTitle}
+              body={copy.spotlightBody}
+            />
+            <div className="mt-8">
+              <BulletList items={copy.spotlightPoints} />
+            </div>
+            <ActionRow className="mt-8">
+              <ActionLink to={toLocalePath("/fragrances")}>
+                {copy.spotlightCta}
+              </ActionLink>
+            </ActionRow>
+          </Reveal>
         </div>
       </section>
 
-      <section className="border-y border-white/5 bg-[#050505]">
-        <div className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-[1.1fr,0.9fr] lg:px-12">
-          <div>
-            <p className="mb-4 text-sm uppercase tracking-[0.3em] text-brand-gold">
-              {copy.proofLabel}
-            </p>
-            <h2 className="max-w-3xl text-4xl font-light text-white md:text-5xl">
-              {copy.proofTitle}
-            </h2>
-          </div>
-          <ul className="space-y-5 text-[15px] leading-8 text-white/60">
-            {copy.proofPoints.map((point) => (
-              <li key={point} className="flex gap-4">
-                <span className="mt-3 h-2 w-2 flex-shrink-0 rounded-full bg-brand-gold" />
-                <span>{point}</span>
-              </li>
-            ))}
-          </ul>
+      <section className="section-block">
+        <div className="section-inner grid gap-10 xl:grid-cols-[1.05fr_0.95fr]">
+          <Reveal>
+            <SectionIntro
+              eyebrow={copy.faqEyebrow}
+              title={copy.faqTitle}
+              body={copy.faqBody}
+              className="mb-8"
+            />
+            <FaqAccordion items={faqItems[locale]} />
+          </Reveal>
+
+          <Reveal delay={0.08}>
+            <div className="surface-panel h-full p-6 md:p-8">
+              <p className="eyebrow">{locale === "ar" ? "سبب الاختيار" : "Why It Lands"}</p>
+              <h2 className="mt-4 font-display text-[2.6rem] leading-[1.02] text-ink">
+                {copy.proofTitle}
+              </h2>
+              <div className="mt-8">
+                <BulletList items={copy.proofPoints} />
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-2 lg:px-12">
-        <div className="overflow-hidden bg-[#111]">
-          <img
-            src="https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2025/08/custom-scent-design-banner.jpg"
-            alt={
-              isArabic
-                ? "مجموعة عطور Air Aroma الفاخرة"
-                : "Air Aroma luxury fragrance collection"
-            }
-            width="1600"
-            height="1200"
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover"
-          />
-        </div>
-        <div className="flex flex-col justify-center">
-          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-brand-gold">
-            {copy.fragranceLabel}
-          </p>
-          <h2 className="text-4xl font-light text-white md:text-5xl">
-            {copy.fragranceTitle}
-          </h2>
-          <p className="mt-8 text-[15px] leading-8 text-white/60">
-            {copy.fragranceText}
-          </p>
-          <Link
-            to={toLocalePath("/fragrances")}
-            className="mt-10 inline-flex max-w-max items-center border border-white/20 px-7 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
-          >
-            {copy.fragranceCta}
-          </Link>
-        </div>
-      </section>
-
-      <section className="border-t border-white/5 bg-[#050505]">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-brand-gold">
-            {copy.faqLabel}
-          </p>
-          <h2 className="max-w-3xl text-4xl font-light text-white md:text-5xl">
-            {copy.faqTitle}
-          </h2>
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
-            {faqItems[locale].map((item, index) => (
-              <motion.article
-                key={item.question}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.45, delay: index * 0.08 }}
-                className="border border-white/10 p-8"
-              >
-                <h3 className="text-xl font-light text-white">{item.question}</h3>
-                <p className="mt-5 text-[15px] leading-7 text-white/55">
-                  {item.answer}
-                </p>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-5xl px-6 py-24 text-center lg:px-12">
-        <h2 className="text-4xl font-light text-white md:text-5xl">
-          {copy.contactTitle}
-        </h2>
-        <p className="mx-auto mt-8 max-w-3xl text-[15px] leading-8 text-white/60">
-          {copy.contactText}
-        </p>
-        <Link
-          to={toLocalePath("/contact")}
-          className="mt-10 inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
-        >
-          {copy.contactCta}
-        </Link>
-      </section>
+      <FinalCta
+        title={copy.finalTitle}
+        body={copy.finalBody}
+        primary={{ label: copy.finalPrimary, to: toLocalePath("/contact") }}
+        secondary={{ label: copy.finalSecondary, to: toLocalePath("/products") }}
+      />
     </div>
   );
 }

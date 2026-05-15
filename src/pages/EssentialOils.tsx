@@ -1,84 +1,116 @@
-import { motion } from "motion/react";
-import { Link } from "react-router-dom";
 import { useLocaleRouting } from "../lib/localeRouting";
+import {
+  BulletList,
+  FinalCta,
+  MountReveal,
+  Reveal,
+  SectionIntro,
+} from "../components/brand/BrandPrimitives";
 
 export default function EssentialOils() {
   const { isArabic, toLocalePath } = useLocaleRouting();
 
   const copy = isArabic
     ? {
-        title: "الزيوت الأساسية",
-        intro:
-          "خلطات نقية للمساحات التي تحتاج إلى مزاج أكثر هدوءاً وطبيعة، سواء في مرافق العافية أو الفلل أو برامج الروائح الأخف داخل الضيافة الفاخرة.",
-        storyTitle: "متى تكون الزيوت الأساسية هي المسار المناسب؟",
-        storyParagraphs: [
-          "تعمل الزيوت الأساسية جيداً عندما يكون الهدف هو خلق تجربة أقرب إلى الاسترخاء أو الطبيعة أو العافية اليومية. كما يمكن استخدامها كنقطة بداية قبل الانتقال إلى عطر مخصص أكثر تميزاً.",
-          "إذا كان المشروع يحتاج إلى توازن بين الطابع الطبيعي وسهولة التشغيل داخل نظام نشر، يمكننا المساعدة في توجيه الخلطة الأنسب والهيكل المناسب للتطبيق.",
+        badge: "الزيوت الأساسية",
+        title: "خلطات أكثر هدوءاً للمشاريع التي تحتاج حضوراً طبيعياً أو موجهاً للعافية.",
+        body:
+          "هذا المسار يناسب السبا والفلل والمساكن الراقية والبرامج التي تحتاج طبقة عطرية أخف، حيث يكون الهدف هو الهدوء والاسترخاء والنقاء أكثر من الدراما العطرية الواضحة.",
+        useTitle: "متى يكون هذا المسار هو الأنسب؟",
+        usePoints: [
+          "عندما تكون العافية أو الاسترخاء أو الإيقاع الهادئ جزءاً أساسياً من التجربة.",
+          "عندما يحتاج المشروع إلى طابع أقرب إلى الطبيعة دون فقدان وضوح النشر أو الأداء.",
+          "عندما يكون الفريق في بداية الرحلة ويريد اختبار اتجاه أهدأ قبل تطوير هوية عطرية أكثر تميزاً.",
         ],
-        cta: "استكشف أنظمة النشر",
+        finalTitle: "هل تحتاج إلى معرفة ما إذا كانت الزيوت الأساسية أو العطر المميز هو المسار الأنسب؟",
+        finalBody:
+          "يمكننا المساعدة على مقارنة الخيارات بحسب نوع المساحة، وهدوء التجربة المطلوبة، وطريقة التشغيل اليومية.",
+        finalPrimary: "استكشف الموزعات",
+        finalSecondary: "تواصل معنا",
       }
     : {
-        title: "Essential Oils",
-        intro:
-          "Pure blends for projects that need a softer, more wellness-led mood, whether that is a spa, villa, premium residence, or a quieter fragrance layer within luxury hospitality.",
-        storyTitle: "When are essential oils the right direction?",
-        storyParagraphs: [
-          "Essential oils work well when the objective is relaxation, nature-led calm, or a more restorative guest experience. They can also be a useful starting point before moving into a more distinctive custom fragrance.",
-          "If the project needs a balance between natural character and reliable diffuser performance, we can help guide the blend direction and the best application format.",
+        badge: "Essential Oils",
+        title: "A quieter blend direction for projects that need a more natural, wellness-led atmosphere.",
+        body:
+          "This route suits spas, villas, premium residences, and other environments that need a softer scent layer, where the objective is calm, restoration, and clarity rather than a more dramatic fragrance statement.",
+        useTitle: "When is this the right direction?",
+        usePoints: [
+          "When relaxation, wellness, or a slower emotional rhythm is central to the experience.",
+          "When the project needs a more nature-led character without losing delivery clarity or performance.",
+          "When the team wants to test a gentler scent path before developing a more distinctive signature fragrance.",
         ],
-        cta: "Explore Diffuser Systems",
+        finalTitle: "Need help deciding whether essential oils or a signature fragrance is the better fit?",
+        finalBody:
+          "We can compare the options based on the type of space, the level of subtlety the project needs, and the daily operating pattern behind it.",
+        finalPrimary: "Explore Diffusers",
+        finalSecondary: "Contact Air Aroma",
       };
 
   return (
-    <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <section className="border-b border-white/10 px-6 py-28 lg:px-12">
-        <div className="mx-auto max-w-5xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-4xl font-light leading-tight sm:text-6xl"
-          >
-            {copy.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="mt-8 max-w-3xl text-lg leading-8 text-white/60"
-          >
-            {copy.intro}
-          </motion.p>
+    <div>
+      <section className="overflow-hidden pt-28 md:pt-32">
+        <div className="section-inner section-block">
+          <div className="grid gap-10 xl:grid-cols-[1.02fr_0.98fr] xl:items-center">
+            <MountReveal className="space-y-7">
+              <span className="kicker-pill">{copy.badge}</span>
+              <h1 className="hero-title max-w-[12ch]">{copy.title}</h1>
+              <p className="hero-body">{copy.body}</p>
+            </MountReveal>
+
+            <MountReveal delay={0.12}>
+              <div className="media-frame aspect-[4/5] min-h-[24rem]">
+                <img
+                  src="https://images.unsplash.com/photo-1608528577891-eb0559d18e58?auto=format&fit=crop&w=1800&q=80"
+                  alt={isArabic ? "زيوت أساسية من Air Aroma" : "Air Aroma essential oils"}
+                  width="1800"
+                  height="2200"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </MountReveal>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-2 lg:px-12">
-        <div>
-          <h2 className="text-3xl font-light text-white">{copy.storyTitle}</h2>
-          {copy.storyParagraphs.map((paragraph) => (
-            <p key={paragraph} className="mt-6 text-[15px] leading-8 text-white/55">
-              {paragraph}
-            </p>
-          ))}
-          <Link
-            to={toLocalePath("/diffusers")}
-            className="mt-10 inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
-          >
-            {copy.cta}
-          </Link>
-        </div>
-        <div className="aspect-[4/3] overflow-hidden bg-[#111]">
-          <img
-            src="https://images.unsplash.com/photo-1608528577891-eb0559d18e58?auto=format&fit=crop&q=80"
-            alt={isArabic ? "زيوت أساسية من Air Aroma" : "Air Aroma essential oils"}
-            width="1600"
-            height="1200"
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover"
-          />
+      <section className="section-block">
+        <div className="section-inner grid gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:items-center">
+          <Reveal>
+            <SectionIntro
+              eyebrow={isArabic ? "اتجاه الاستخدام" : "Use Direction"}
+              title={copy.useTitle}
+              body={
+                isArabic
+                  ? "هذا المسار مناسب للمشروعات التي تحتاج حضوراً أكثر هدوءاً وطابعاً أقرب إلى العافية والطبيعة."
+                  : "This path suits environments that need less perfume-like drama and more calm, restorative atmospheric support."
+              }
+            />
+            <div className="mt-8">
+              <BulletList items={copy.usePoints} />
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.08}>
+            <div className="surface-panel h-full p-6 md:p-8">
+              <p className="eyebrow">{isArabic ? "ما الذي يجب موازنته؟" : "What Needs Balancing?"}</p>
+              <p className="mt-5 text-[1rem] leading-8 text-ink-soft">
+                {isArabic
+                  ? "القرار لا يتعلق فقط بطبيعة الرائحة، بل أيضاً بمدى وضوحها داخل المساحة، وطريقة تشغيلها، وما إذا كان المشروع يحتاج لغة حسية هادئة أو هوية أكثر حضوراً."
+                  : "The choice is not only about the scent profile itself. It also depends on how present the fragrance should feel in the space, how it will be delivered, and whether the project needs a quieter layer or a more assertive identity."}
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
+
+      <FinalCta
+        title={copy.finalTitle}
+        body={copy.finalBody}
+        primary={{ label: copy.finalPrimary, to: toLocalePath("/diffusers") }}
+        secondary={{ label: copy.finalSecondary, to: toLocalePath("/contact") }}
+        tone="light"
+      />
     </div>
   );
 }

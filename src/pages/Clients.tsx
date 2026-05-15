@@ -1,6 +1,11 @@
-import { motion } from "motion/react";
-import { Link } from "react-router-dom";
 import { useLocaleRouting } from "../lib/localeRouting";
+import {
+  BulletList,
+  FinalCta,
+  MountReveal,
+  Reveal,
+  SectionIntro,
+} from "../components/brand/BrandPrimitives";
 
 const clientLogos = [
   {
@@ -26,88 +31,122 @@ export default function Clients() {
 
   const copy = isArabic
     ? {
-        title: "عملاء Air Aroma",
-        intro:
-          "تثق علامات الضيافة والأزياء والسفر ونمط الحياة بـ Air Aroma لبناء تجارب عطرية متسقة وراقية. صفحة العملاء هذه تمنح فرق المشاريع مرجعاً سريعاً على نوعية العلامات التي تعمل معنا.",
-        proofTitle: "ما الذي يعنيه ذلك للمشروعات الجديدة؟",
-        proofText:
-          "عندما تعمل العلامات المرموقة مع برنامج عطري، فهي تبحث عن ثبات في الأداء واتجاه عطري مناسب للهوية وتجربة مستخدم يمكن الاعتماد عليها يومياً.",
-        cta: "اكتشف خدمات الروائح",
+        badge: "محفظة العملاء",
+        title: "تثق علامات الضيافة والأزياء والسفر الراقية بـ Air Aroma لبناء حضور عطري أكثر اتساقاً.",
+        body:
+          "هذه الأسماء لا تمثل مجرد شهرة، بل تشير إلى نوع التوقعات التي يأتي بها عملاء يبحثون عن تجربة حسية موثوقة ومتكاملة مع صورة العلامة وطريقة تشغيلها اليومية.",
+        proofTitle: "ماذا يعني ذلك للمشروع الجديد؟",
+        proofPoints: [
+          "أن الأداء اليومي يجب أن يكون ثابتاً بقدر أهمية الانطباع الأول.",
+          "أن الاتجاه العطري يجب أن يبدو جزءاً من الهوية، لا إضافة عابرة.",
+          "أن الثقة تُبنى عندما تكون التجربة الراقية قابلة للتكرار، لا عندما تكون مؤثرة مرة واحدة فقط.",
+        ],
+        finalTitle: "هل تريد بناء تجربة عطرية تستحق هذا المستوى من الثقة؟",
+        finalBody:
+          "يمكننا مساعدتك على تحويل شخصية المشروع إلى برنامج روائح أكثر وضوحاً وقابلية للتنفيذ.",
+        finalPrimary: "استكشف خدمات الروائح",
+        finalSecondary: "تواصل معنا",
       }
     : {
-        title: "Air Aroma Client Portfolio",
-        intro:
-          "Luxury hospitality, fashion, travel, and lifestyle brands work with Air Aroma to create scent experiences that feel cohesive, premium, and operationally dependable. This page gives project teams a quick reference point for the kinds of brands the work serves.",
-        proofTitle: "What does that mean for a new project?",
-        proofText:
-          "When premium brands invest in fragrance programs, they are usually looking for reliable performance, scent direction that matches identity, and a guest experience that can hold up every day.",
-        cta: "Explore Scent Services",
+        badge: "Client Portfolio",
+        title: "Luxury hospitality, fashion, and travel brands trust Air Aroma to create a more coherent scent presence.",
+        body:
+          "These names matter not just because they are recognizable, but because they reflect the level of expectation behind projects that need a sensory experience to feel credible, refined, and dependable every day.",
+        proofTitle: "What does that signal for a new project?",
+        proofPoints: [
+          "That daily performance matters just as much as the first impression.",
+          "That fragrance direction should feel like part of the identity, not an afterthought.",
+          "That trust is built when a premium experience can be repeated consistently, not when it feels impressive once.",
+        ],
+        finalTitle: "Want to build a scent experience that earns this level of trust?",
+        finalBody:
+          "We can help turn the character of the project into a clearer scent program that is both premium and operationally grounded.",
+        finalPrimary: "Explore Scent Services",
+        finalSecondary: "Contact Air Aroma",
       };
 
   return (
-    <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <section className="border-b border-white/10 px-6 py-28 lg:px-12">
-        <div className="mx-auto max-w-5xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-4xl font-light leading-tight sm:text-6xl"
-          >
-            {copy.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="mt-8 max-w-3xl text-lg leading-8 text-white/60"
-          >
-            {copy.intro}
-          </motion.p>
+    <div>
+      <section className="overflow-hidden pt-28 md:pt-32">
+        <div className="section-inner section-block">
+          <div className="grid gap-10 xl:grid-cols-[1.05fr_0.95fr] xl:items-center">
+            <MountReveal className="space-y-7">
+              <span className="kicker-pill">{copy.badge}</span>
+              <h1 className="hero-title max-w-[12ch]">{copy.title}</h1>
+              <p className="hero-body">{copy.body}</p>
+            </MountReveal>
+
+            <MountReveal delay={0.12}>
+              <div className="surface-panel p-6 md:p-8">
+                <p className="eyebrow">{isArabic ? "ثقة العلامات" : "Brand Confidence"}</p>
+                <div className="mt-6 grid grid-cols-2 gap-4">
+                  {clientLogos.map((logo) => (
+                    <div
+                      key={logo.name}
+                      className="flex min-h-[8rem] items-center justify-center rounded-[1.5rem] border border-line bg-white/55 p-6"
+                    >
+                      <img
+                        src={logo.src}
+                        alt={logo.name}
+                        width="260"
+                        height="110"
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full max-w-[7rem] object-contain opacity-75"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </MountReveal>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {clientLogos.map((logo, index) => (
-            <motion.div
-              key={logo.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.45, delay: index * 0.08 }}
-              className="flex aspect-square items-center justify-center border border-white/5 bg-[#111] p-12"
-            >
+      <section className="section-block">
+        <div className="section-inner grid gap-10 xl:grid-cols-[0.98fr_1.02fr] xl:items-center">
+          <Reveal>
+            <div className="media-frame aspect-[4/5] min-h-[24rem]">
               <img
-                src={logo.src}
-                alt={logo.name}
-                width="280"
-                height="120"
+                src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1800&q=80"
+                alt={
+                  isArabic
+                    ? "مساحة داخلية راقية تعبّر عن ثقة العلامات المتميزة"
+                    : "Refined interior environment representing premium client confidence"
+                }
+                width="1800"
+                height="2200"
                 loading="lazy"
                 decoding="async"
-                className="w-full max-w-[140px] object-contain opacity-70 transition-opacity hover:opacity-100"
+                className="h-full w-full object-cover"
               />
-            </motion.div>
-          ))}
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.08}>
+            <SectionIntro
+              eyebrow={isArabic ? "ما يعنيه ذلك" : "What That Means"}
+              title={copy.proofTitle}
+              body={
+                isArabic
+                  ? "عندما تستثمر العلامة الراقية في برنامج عطري، فهي تبحث عن حضور متماسك يمكن الوثوق به كل يوم."
+                  : "When a premium brand invests in fragrance, it is usually looking for a sensory layer that feels deliberate, reliable, and aligned with its wider identity."
+              }
+            />
+            <div className="mt-8">
+              <BulletList items={copy.proofPoints} />
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="border-t border-white/10 bg-[#050505]">
-        <div className="mx-auto max-w-5xl px-6 py-24 text-center lg:px-12">
-          <h2 className="text-3xl font-light text-white sm:text-4xl">
-            {copy.proofTitle}
-          </h2>
-          <p className="mx-auto mt-8 max-w-3xl text-[15px] leading-8 text-white/60">
-            {copy.proofText}
-          </p>
-          <Link
-            to={toLocalePath("/scent-marketing")}
-            className="mt-10 inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
-          >
-            {copy.cta}
-          </Link>
-        </div>
-      </section>
+      <FinalCta
+        title={copy.finalTitle}
+        body={copy.finalBody}
+        primary={{ label: copy.finalPrimary, to: toLocalePath("/scent-marketing") }}
+        secondary={{ label: copy.finalSecondary, to: toLocalePath("/contact") }}
+        tone="light"
+      />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { renderToString } from "react-dom/server";
+import { MotionConfig } from "motion/react";
 import { StaticRouter } from "react-router-dom/server";
 import App from "./App";
 import { setLocale } from "./i18n";
@@ -9,9 +10,17 @@ export async function render(url: string) {
   await setLocale(locale);
 
   const appHtml = renderToString(
-    <StaticRouter location={url}>
-      <App />
-    </StaticRouter>,
+    <MotionConfig reducedMotion="user">
+      <StaticRouter
+        location={url}
+        future={{
+          v7_relativeSplatPath: true,
+            v7_startTransition: true,
+        }}
+      >
+        <App />
+      </StaticRouter>
+    </MotionConfig>,
   );
 
   return {

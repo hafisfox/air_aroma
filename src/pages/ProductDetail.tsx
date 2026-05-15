@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
 import { Link, useParams } from "react-router-dom";
 import NotFound from "./NotFound";
 import { useLocaleRouting } from "../lib/localeRouting";
+import {
+  ActionLink,
+  ActionRow,
+  BulletList,
+  FinalCta,
+  MountReveal,
+  Reveal,
+  SectionIntro,
+} from "../components/brand/BrandPrimitives";
 import {
   getProductById,
   getProductCategoryLabel,
@@ -31,37 +39,33 @@ const detailCopy = {
   en: {
     backToProducts: "Back to products",
     backToCollection: "Back to collection",
-    storyLabel: "Product Story",
-    notesLabel: "Scent Notes",
+    storyLabel: "Scent Story",
+    notesLabel: "Notes",
     featuresLabel: "Key Features",
     idealLabel: "Ideal Environments",
     enjoyedLabel: "If You Enjoyed",
     finishesLabel: "Available Options",
-    galleryLabel: "Gallery",
     relatedLabel: "Related Products",
     relatedTitle: "Continue through the collection",
     exploreLabel: "View product",
     contactCta: "Talk to Air Aroma",
-    consultTitle: "Planning this scent for a project in Saudi Arabia or the GCC?",
+    consultTitle: "Planning this for a project in Saudi Arabia or the GCC?",
     consultBody:
       "Share the type of space and the atmosphere you want to create. We will help match the right fragrance or diffuser setup.",
     categoryHub: "Products",
     variantLabel: "Variants",
-    notesCountLabel: "Notes",
+    notesCountLabel: "Scent notes",
     craftedLabel: "Crafted for premium spaces",
-    galleryBody:
-      "Refined finish options presented with the same premium attention as the fragrance collection.",
   },
   ar: {
     backToProducts: "العودة إلى المنتجات",
     backToCollection: "العودة إلى المجموعة",
-    storyLabel: "قصة المنتج",
-    notesLabel: "نفحات العطر",
+    storyLabel: "قصة العطر",
+    notesLabel: "النفحات",
     featuresLabel: "المزايا الأساسية",
     idealLabel: "البيئات المناسبة",
     enjoyedLabel: "إذا أعجبك",
     finishesLabel: "الخيارات المتاحة",
-    galleryLabel: "المعرض",
     relatedLabel: "منتجات ذات صلة",
     relatedTitle: "واصل استكشاف المجموعة",
     exploreLabel: "عرض المنتج",
@@ -71,10 +75,8 @@ const detailCopy = {
       "شاركنا نوع المساحة والانطباع الذي ترغب في صناعته، وسنساعدك على اختيار العطر أو نظام النشر الأنسب.",
     categoryHub: "المنتجات",
     variantLabel: "الخيارات",
-    notesCountLabel: "النفحات",
+    notesCountLabel: "عدد النفحات",
     craftedLabel: "مصمم للمساحات الراقية",
-    galleryBody:
-      "خيارات عرض مصقولة ومقدمة بالعناية نفسها التي تظهر في مجموعة العطور الراقية.",
   },
 };
 
@@ -111,109 +113,67 @@ export default function ProductDetail() {
   const activeImage = product.images[activeImageIndex] ?? product.images[0];
 
   return (
-    <div className="w-full bg-brand-black text-[#f8f8f8]">
-      <section className="relative isolate overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0">
-          <img
-            src={product.images[0].file}
-            alt={`${name} by Air Aroma`}
-            width="1800"
-            height="1200"
-            fetchPriority="high"
-            decoding="async"
-            className="h-full w-full object-cover object-center opacity-20"
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(197,160,89,0.22),transparent_40%)]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/80 to-brand-black" />
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-6 py-28 lg:px-12">
-          <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-white/45">
-            <Link
-              to={toLocalePath("/")}
-              className="transition-colors hover:text-white"
-            >
+    <div>
+      <section className="overflow-hidden pt-28 md:pt-32">
+        <div className="section-inner section-block">
+          <div className="mb-8 flex flex-wrap items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-muted">
+            <Link to={toLocalePath("/")} className="transition-colors hover:text-ink">
               Air Aroma
             </Link>
             <span>/</span>
-            <Link
-              to={toLocalePath("/products")}
-              className="transition-colors hover:text-white"
-            >
+            <Link to={toLocalePath("/products")} className="transition-colors hover:text-ink">
               {copy.categoryHub}
             </Link>
             <span>/</span>
-            <span className="text-brand-gold">{name}</span>
+            <span className="text-accent-strong">{name}</span>
           </div>
 
-          <div className="mt-10 grid gap-16 lg:grid-cols-[1.05fr,0.95fr] lg:items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              className="order-2 lg:order-1"
-            >
-              <p className="mb-5 text-[11px] uppercase tracking-[0.32em] text-brand-gold">
-                {category}
-              </p>
-              <h1 className="max-w-3xl text-5xl font-light leading-[1.02] text-white md:text-7xl">
-                {name}
-              </h1>
-              <p className="mt-8 max-w-2xl text-lg leading-8 text-white/70">
-                {story}
-              </p>
+          <div className="grid gap-10 xl:grid-cols-[0.96fr_1.04fr] xl:items-center">
+            <MountReveal className="space-y-8">
+              <div className="kicker-row">
+                <span className="kicker-pill">{category}</span>
+                {notes.length > 0 ? (
+                  <span className="chip">
+                    {notes.length} {copy.notesLabel}
+                  </span>
+                ) : null}
+              </div>
 
-              <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                <div className="border border-white/10 bg-white/[0.03] p-5">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-white/35">
-                    {copy.variantLabel}
+              <h1 className="hero-title max-w-[11ch]">{name}</h1>
+              <p className="hero-body">{story}</p>
+
+              <ActionRow>
+                <ActionLink to={toLocalePath("/contact")}>{copy.contactCta}</ActionLink>
+                <ActionLink to={collectionPath} variant="secondary">
+                  {copy.backToCollection}
+                </ActionLink>
+              </ActionRow>
+
+              <div className="metric-grid">
+                <div className="metric-card">
+                  <p className="metric-label">{copy.variantLabel}</p>
+                  <p className="metric-value">{product.images.length}</p>
+                </div>
+                <div className="metric-card">
+                  <p className="metric-label">
+                    {notes.length > 0 ? copy.notesCountLabel : copy.featuresLabel}
                   </p>
-                  <p className="mt-3 text-2xl font-light text-white">
-                    {product.images.length}
+                  <p className="metric-value">
+                    {notes.length > 0 ? notes.length : characteristics.length}
                   </p>
                 </div>
-                <div className="border border-white/10 bg-white/[0.03] p-5">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-white/35">
-                    {copy.notesCountLabel}
-                  </p>
-                  <p className="mt-3 text-2xl font-light text-white">
-                    {notes.length}
-                  </p>
-                </div>
-                <div className="border border-white/10 bg-white/[0.03] p-5">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-white/35">
-                    Air Aroma
-                  </p>
-                  <p className="mt-3 text-sm uppercase tracking-[0.22em] text-brand-gold">
+                <div className="metric-card">
+                  <p className="metric-label">Air Aroma</p>
+                  <p className="mt-3 text-[0.98rem] font-semibold leading-7 text-accent-strong">
                     {copy.craftedLabel}
                   </p>
                 </div>
               </div>
+            </MountReveal>
 
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <Link
-                  to={toLocalePath("/contact")}
-                  className="inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
-                >
-                  {copy.contactCta}
-                </Link>
-                <Link
-                  to={collectionPath}
-                  className="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
-                >
-                  {copy.backToCollection}
-                </Link>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.08 }}
-              className="order-1 lg:order-2"
-            >
-              <div className="overflow-hidden border border-white/10 bg-[#121212] shadow-[0_30px_120px_rgba(0,0,0,0.35)]">
-                <div className="aspect-[4/5] overflow-hidden">
+            <MountReveal delay={0.12}>
+              <div className="surface-panel p-5 md:p-6">
+                <div className="media-frame aspect-[4/5]">
                   <img
                     src={activeImage.file}
                     alt={`${name} in ${activeImage.size}`}
@@ -223,239 +183,197 @@ export default function ProductDetail() {
                     className="h-full w-full object-cover"
                   />
                 </div>
-              </div>
 
-              <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {product.images.map((image, index) => (
-                  <button
-                    key={image.file}
-                    type="button"
-                    onClick={() => setActiveImageIndex(index)}
-                    className={`border p-2 text-start transition-colors ${
-                      index === activeImageIndex
-                        ? "border-brand-gold bg-brand-gold/10 text-brand-gold"
-                        : "border-white/10 bg-white/[0.03] text-white/70 hover:border-white/30"
-                    }`}
-                  >
-                    <div className="aspect-[4/4.5] overflow-hidden bg-[#111]">
-                      <img
-                        src={image.file}
-                        alt={`${name} ${image.size}`}
-                        width="600"
-                        height="600"
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <p className="mt-3 text-[10px] uppercase tracking-[0.24em]">
-                      {image.size}
-                    </p>
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-        <div className="grid gap-8 lg:grid-cols-3">
-          <motion.article
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            className="border border-white/10 bg-white/[0.03] p-8"
-          >
-            <p className="text-[10px] uppercase tracking-[0.3em] text-brand-gold">
-              {copy.storyLabel}
-            </p>
-            <p className="mt-5 text-[15px] leading-8 text-white/65">{story}</p>
-          </motion.article>
-
-          <motion.article
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ delay: 0.06 }}
-            className="border border-white/10 bg-white/[0.03] p-8"
-          >
-            <p className="text-[10px] uppercase tracking-[0.3em] text-brand-gold">
-              {notes.length > 0 ? copy.notesLabel : copy.featuresLabel}
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {(notes.length > 0 ? notes : characteristics).map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-white/10 px-3 py-1 text-[12px] text-white/70"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </motion.article>
-
-          <motion.article
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ delay: 0.12 }}
-            className="border border-white/10 bg-white/[0.03] p-8"
-          >
-            <p className="text-[10px] uppercase tracking-[0.3em] text-brand-gold">
-              {copy.idealLabel}
-            </p>
-            <ul className="mt-5 space-y-3 text-[15px] leading-7 text-white/65">
-              {idealUseCases.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-brand-gold" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </motion.article>
-        </div>
-      </section>
-
-      <section className="border-y border-white/5 bg-[#050505]">
-        <div className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-[0.95fr,1.05fr] lg:px-12">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-brand-gold">
-              {copy.featuresLabel}
-            </p>
-            <h2 className="mt-4 text-4xl font-light text-white md:text-5xl">
-              {name}
-            </h2>
-            <div className="mt-8 flex flex-wrap gap-2">
-              {characteristics.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-brand-gold/20 bg-brand-gold/10 px-3 py-1 text-[12px] text-brand-gold"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2">
-            <div className="border border-white/10 p-7">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-white/35">
-                {copy.finishesLabel}
-              </p>
-              <div className="mt-5 space-y-3 text-[15px] leading-7 text-white/65">
-                {product.images.map((image) => (
-                  <p key={image.file}>{image.size}</p>
-                ))}
-              </div>
-            </div>
-
-            {ifYouEnjoyed.length > 0 ? (
-              <div className="border border-white/10 p-7">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-white/35">
-                  {copy.enjoyedLabel}
-                </p>
-                <div className="mt-5 space-y-3 text-[15px] leading-7 text-white/65">
-                  {ifYouEnjoyed.map((item) => (
-                    <p key={item}>{item}</p>
+                <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {product.images.map((image, index) => (
+                    <button
+                      key={image.file}
+                      type="button"
+                      onClick={() => setActiveImageIndex(index)}
+                      className={
+                        index === activeImageIndex
+                          ? "surface-panel p-2 text-start"
+                          : "rounded-[1.2rem] border border-line bg-white/55 p-2 text-start transition-colors hover:border-accent-strong"
+                      }
+                    >
+                      <div className="media-frame aspect-[4/4.5] rounded-[1rem]">
+                        <img
+                          src={image.file}
+                          alt={`${name} ${image.size}`}
+                          width="600"
+                          height="700"
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <p className="mt-3 px-2 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-ink-soft">
+                        {image.size}
+                      </p>
+                    </button>
                   ))}
                 </div>
               </div>
-            ) : (
-              <div className="border border-white/10 p-7">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-white/35">
-                  {copy.galleryLabel}
-                </p>
-                <p className="mt-5 text-[15px] leading-7 text-white/65">
-                  {copy.galleryBody}
-                </p>
-              </div>
-            )}
+            </MountReveal>
           </div>
         </div>
       </section>
 
-      {relatedProducts.length > 0 && (
-        <section className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-brand-gold">
-            {copy.relatedLabel}
-          </p>
-          <h2 className="mt-4 max-w-3xl text-4xl font-light text-white md:text-5xl">
-            {copy.relatedTitle}
-          </h2>
+      <section className="section-block">
+        <div className="section-inner">
+          <div className="grid gap-6 xl:grid-cols-3">
+            <Reveal>
+              <article className="surface-panel h-full p-6 md:p-7">
+                <p className="eyebrow">{copy.storyLabel}</p>
+                <p className="mt-5 text-[1rem] leading-8 text-ink-soft">{story}</p>
+              </article>
+            </Reveal>
 
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
-            {relatedProducts.map((related, index) => {
-              const relatedName = getProductName(related, locale);
+            <Reveal delay={0.06}>
+              <article className="surface-panel h-full p-6 md:p-7">
+                <p className="eyebrow">
+                  {notes.length > 0 ? copy.notesLabel : copy.featuresLabel}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {(notes.length > 0 ? notes : characteristics).map((item) => (
+                    <span key={item} className="chip">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            </Reveal>
 
-              return (
-                <motion.article
-                  key={related.id}
-                  initial={{ opacity: 0, y: 22 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.45, delay: index * 0.08 }}
-                  className="flex h-full flex-col overflow-hidden border border-white/10 bg-white/[0.03]"
-                >
-                  <div className="aspect-[4/5] overflow-hidden bg-[#111]">
-                    <img
-                      src={related.images[0].file}
-                      alt={relatedName}
-                      width="1200"
-                      height="1500"
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+            <Reveal delay={0.12}>
+              <article className="surface-panel h-full p-6 md:p-7">
+                <p className="eyebrow">{copy.idealLabel}</p>
+                <div className="mt-5">
+                  <BulletList items={idealUseCases} />
+                </div>
+              </article>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="cta-band">
+        <div className="section-inner section-block">
+          <div className="grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
+            <Reveal>
+              <SectionIntro
+                eyebrow={copy.featuresLabel}
+                title={name}
+                body={
+                  product.type === "diffuser"
+                    ? isArabic
+                      ? "أنظمة نشر توازن بين المظهر والأداء اليومي."
+                      : "Diffusion hardware that balances visual refinement with everyday performance."
+                    : isArabic
+                      ? "مجموعة عطرية تقدم الشخصية والنفحات والاستخدام المقترح بوضوح."
+                      : "A fragrance profile that makes the character, notes, and intended use feel immediately legible."
+                }
+              />
+            </Reveal>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <Reveal>
+                <div className="surface-panel-dark h-full p-6 md:p-7">
+                  <p className="eyebrow text-white/80">{copy.finishesLabel}</p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {product.images.map((image) => (
+                      <span key={image.file} className="chip border-white/15 bg-white/6 text-white/75">
+                        {image.size}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.08}>
+                <div className="surface-panel-dark h-full p-6 md:p-7">
+                  <p className="eyebrow text-white/80">
+                    {ifYouEnjoyed.length > 0 ? copy.enjoyedLabel : copy.featuresLabel}
+                  </p>
+                  <div className="mt-5">
+                    <BulletList
+                      items={ifYouEnjoyed.length > 0 ? ifYouEnjoyed : characteristics}
+                      dark
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-7">
-                    <p className="text-[10px] uppercase tracking-[0.24em] text-brand-gold">
-                      {getProductCategoryLabel(related, locale)}
-                    </p>
-                    <h3 className="mt-3 text-2xl font-light text-white">
-                      {relatedName}
-                    </h3>
-                    <p className="mt-4 flex-1 text-[15px] leading-7 text-white/60">
-                      {getProductStory(related, locale)}
-                    </p>
-                    <Link
-                      to={toLocalePath(getProductDetailBasePath(related))}
-                      className="mt-8 max-w-max text-[11px] uppercase tracking-[0.24em] text-brand-gold transition-colors hover:text-white"
-                    >
-                      {copy.exploreLabel}
-                    </Link>
-                  </div>
-                </motion.article>
-              );
-            })}
-          </div>
-        </section>
-      )}
-
-      <section className="border-t border-white/10 bg-[#050505]">
-        <div className="mx-auto max-w-5xl px-6 py-24 text-center lg:px-12">
-          <h2 className="text-4xl font-light text-white md:text-5xl">
-            {copy.consultTitle}
-          </h2>
-          <p className="mx-auto mt-8 max-w-3xl text-[15px] leading-8 text-white/60">
-            {copy.consultBody}
-          </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              to={toLocalePath("/contact")}
-              className="inline-flex items-center justify-center bg-brand-gold px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-brand-black transition-colors hover:bg-white"
-            >
-              {copy.contactCta}
-            </Link>
-            <Link
-              to={toLocalePath("/products")}
-              className="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:border-white/70 hover:bg-white/10"
-            >
-              {copy.backToProducts}
-            </Link>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>
+
+      {relatedProducts.length > 0 ? (
+        <section className="section-block">
+          <div className="section-inner">
+            <Reveal>
+              <SectionIntro
+                eyebrow={copy.relatedLabel}
+                title={copy.relatedTitle}
+                body={
+                  isArabic
+                    ? "منتجات أخرى قريبة من هذا الاتجاه يمكن أن تساعد الفريق على مواصلة المقارنة."
+                    : "Other products in the same direction that can help a team continue comparing the collection."
+                }
+                className="mb-10"
+              />
+            </Reveal>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {relatedProducts.map((related, index) => {
+                const relatedName = getProductName(related, locale);
+
+                return (
+                  <div key={related.id}>
+                    <Reveal delay={index * 0.08}>
+                      <article className="surface-panel flex h-full flex-col overflow-hidden">
+                        <div className="aspect-[4/5] overflow-hidden">
+                          <img
+                            src={related.images[0].file}
+                            alt={relatedName}
+                            width="1200"
+                            height="1500"
+                            loading="lazy"
+                            decoding="async"
+                            className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                          />
+                        </div>
+                        <div className="flex flex-1 flex-col gap-4 p-6">
+                          <p className="eyebrow">{getProductCategoryLabel(related, locale)}</p>
+                          <h3 className="font-display text-[2rem] leading-[1.02] text-ink">
+                            {relatedName}
+                          </h3>
+                          <p className="text-[1rem] leading-8 text-ink-soft">
+                            {getProductStory(related, locale)}
+                          </p>
+                          <Link
+                            to={toLocalePath(getProductDetailBasePath(related))}
+                            className="button-subtle mt-auto self-start"
+                          >
+                            {copy.exploreLabel}
+                          </Link>
+                        </div>
+                      </article>
+                    </Reveal>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <FinalCta
+        title={copy.consultTitle}
+        body={copy.consultBody}
+        primary={{ label: copy.contactCta, to: toLocalePath("/contact") }}
+        secondary={{ label: copy.backToProducts, to: toLocalePath("/products") }}
+        tone="light"
+      />
     </div>
   );
 }
