@@ -14,7 +14,15 @@ const homeStructuredData = [
     "mainEntity": {
       "@type": "Organization",
       "name": "Air Aroma",
-      "url": "https://air-aroma.com"
+      "url": "https://air-aroma.com",
+      "sameAs": [
+        "https://www.facebook.com/AirAroma",
+        "https://www.instagram.com/airaroma",
+        "https://twitter.com/AirAroma",
+        "https://www.youtube.com/user/airaroma",
+        "https://maps.app.goo.gl/MUXsUc1ihvQJVN2Y7"
+      ],
+      "hasMap": "https://maps.app.goo.gl/MUXsUc1ihvQJVN2Y7"
     }
   },
   {

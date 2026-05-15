@@ -16,6 +16,14 @@ const structuredData = [
       "telephone": "+1-800-123-4567",
       "email": "info@air-aroma.com",
       "description": "Premium scent marketing agency designing custom fragrances for luxury brands worldwide.",
+      "sameAs": [
+        "https://www.facebook.com/AirAroma",
+        "https://www.instagram.com/airaroma",
+        "https://twitter.com/AirAroma",
+        "https://www.youtube.com/user/airaroma",
+        "https://maps.app.goo.gl/MUXsUc1ihvQJVN2Y7"
+      ],
+      "hasMap": "https://maps.app.goo.gl/MUXsUc1ihvQJVN2Y7",
       "address": [
         {
           "@type": "PostalAddress",

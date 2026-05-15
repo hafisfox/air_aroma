@@ -22,6 +22,7 @@ export default function Footer() {
           <Link to="/contact" className="hover:text-brand-gold transition-colors w-max">{t('nav.contact', 'Contact')}</Link>
           <a href="https://www.facebook.com/AirAroma" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors w-max" aria-label="Visit Air Aroma on Facebook">Facebook</a>
           <a href="https://www.instagram.com/airaroma" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors w-max" aria-label="Visit Air Aroma on Instagram">Instagram</a>
+          <a href="https://maps.app.goo.gl/MUXsUc1ihvQJVN2Y7" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors w-max" aria-label="Visit Air Aroma on Google Business">Google Business</a>
         </nav>
 
         {/* Column 3 — Social & legal */}

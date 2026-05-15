@@ -70,6 +70,11 @@ export default function SEOHead({
       <meta name="twitter:image" content={imageUrl} />
       <meta name="twitter:site" content="@AirAroma" />
 
+      {/* Social Profile Associations (og:see_also) */}
+      <meta property="og:see_also" content="https://www.instagram.com/airaroma" />
+      <meta property="og:see_also" content="https://www.facebook.com/AirAroma" />
+      <meta property="og:see_also" content="https://maps.app.goo.gl/MUXsUc1ihvQJVN2Y7" />
+
       {/* Schema.org JSON-LD */}
       {structuredData && (
         <script type="application/ld+json">
