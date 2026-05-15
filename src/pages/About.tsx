@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import SEOHead from "../components/SEOHead";
+import { useTranslation } from "react-i18next";
 
 const structuredData = [
   {
@@ -29,6 +30,8 @@ const structuredData = [
 ];
 
 export default function About() {
+  const { t } = useTranslation();
+
   return (
     <div className="w-full bg-brand-black text-[#f8f8f8]">
       <SEOHead
@@ -48,7 +51,7 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="text-4xl sm:text-6xl font-light tracking-wide leading-tight mb-6 text-white"
           >
-            About Us
+            {t("about.title", "About Us")}
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -56,7 +59,7 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-white/60 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
           >
-            Air Aroma was founded with a single purpose: to elevate the standard of environmental design through the power of scent.
+            {t("about.subtitle", "Air Aroma was founded with a single purpose: to elevate the standard of environmental design through the power of scent.")}
           </motion.p>
         </div>
       </section>
@@ -68,16 +71,16 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="md:pr-12"
+            className="md:pr-12 rtl:pr-0 md:rtl:pl-12"
           >
-            <h2 className="text-3xl font-light mb-8 leading-tight text-white">
-              Pioneering the Future<br/>of Sensory Experience
+            <h2 className="text-3xl font-light mb-8 leading-tight text-white whitespace-pre-line">
+              {t("about.storyTitle", "Pioneering the Future\nof Sensory Experience")}
             </h2>
             <p className="text-white/60 font-light leading-[1.8] mb-6 text-[15px]">
-              As the global demand for immersive experiences grows, Air Aroma leads the scent marketing industry by combining international expertise with specialized local insights. We design olfactory profiles that give spaces a distinctive, memorable identity.
+              {t("about.storyP1", "As the global demand for immersive experiences grows, Air Aroma leads the scent marketing industry by combining international expertise with specialized local insights. We design olfactory profiles that give spaces a distinctive, memorable identity.")}
             </p>
             <p className="text-white/60 font-light leading-[1.8] text-[15px]">
-              We understand the nuanced role that scent plays in shaping environments. From welcoming guests with traditional notes to modernizing retail spaces with bespoke blends, our work touches millions of lives every day.
+              {t("about.storyP2", "We understand the nuanced role that scent plays in shaping environments. From welcoming guests with traditional notes to modernizing retail spaces with bespoke blends, our work touches millions of lives every day.")}
             </p>
           </motion.div>
           <motion.div 
@@ -104,7 +107,7 @@ export default function About() {
           viewport={{ once: true }}
           className="text-2xl font-light mb-20 tracking-wide text-white"
         >
-          Why Choose Air Aroma?
+          {t("about.whyChoose", "Why Choose Air Aroma?")}
         </motion.h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-16">
           <motion.article 
@@ -115,9 +118,9 @@ export default function About() {
             className="flex flex-col items-center group"
           >
             <div className="w-16 h-px bg-white/20 mb-8 transition-colors group-hover:bg-brand-gold" aria-hidden="true"></div>
-            <h3 className="text-lg font-light mb-4 text-white">Local Expertise</h3>
+            <h3 className="text-lg font-light mb-4 text-white">{t("about.feature1Title", "Local Expertise")}</h3>
             <p className="text-white/50 font-light leading-[1.8] text-[14px] max-w-sm">
-              Headquartered with dedicated teams for rapid installation and uncompromising maintenance.
+              {t("about.feature1Desc", "Headquartered with dedicated teams for rapid installation and uncompromising maintenance.")}
             </p>
           </motion.article>
           <motion.article 
@@ -128,9 +131,9 @@ export default function About() {
             className="flex flex-col items-center group"
           >
             <div className="w-16 h-px bg-white/20 mb-8 transition-colors group-hover:bg-brand-gold" aria-hidden="true"></div>
-            <h3 className="text-lg font-light mb-4 text-white">Master Perfumers</h3>
+            <h3 className="text-lg font-light mb-4 text-white">{t("about.feature2Title", "Master Perfumers")}</h3>
             <p className="text-white/50 font-light leading-[1.8] text-[14px] max-w-sm">
-              Our bespoke fragrances are crafted in collaboration with the world's leading boutique fragrance houses.
+              {t("about.feature2Desc", "Our bespoke fragrances are crafted in collaboration with the world's leading boutique fragrance houses.")}
             </p>
           </motion.article>
           <motion.article 
@@ -141,9 +144,9 @@ export default function About() {
             className="flex flex-col items-center group"
           >
             <div className="w-16 h-px bg-white/20 mb-8 transition-colors group-hover:bg-brand-gold" aria-hidden="true"></div>
-            <h3 className="text-lg font-light mb-4 text-white">Cutting-Edge Tech</h3>
+            <h3 className="text-lg font-light mb-4 text-white">{t("about.feature3Title", "Cutting-Edge Tech")}</h3>
             <p className="text-white/50 font-light leading-[1.8] text-[14px] max-w-sm">
-              We deploy advanced, reliable cold-air diffusion systems designed for extensive use and exact control.
+              {t("about.feature3Desc", "We deploy advanced, reliable cold-air diffusion systems designed for extensive use and exact control.")}
             </p>
           </motion.article>
         </div>

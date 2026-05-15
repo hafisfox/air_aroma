@@ -2,19 +2,22 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-
-const navLinks = [
-  { name: "Scent marketing", path: "/scent-marketing" },
-  { name: "Products", path: "/products" },
-  { name: "Clients", path: "/clients" },
-  { name: "Blog", path: "/blog" },
-  { name: "Contact", path: "/contact" },
-];
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
+
+  const navLinks = [
+    { name: t("nav.scentMarketing"), path: "/scent-marketing" },
+    { name: t("nav.products"), path: "/products" },
+    { name: t("nav.clients"), path: "/clients" },
+    { name: t("nav.blog"), path: "/blog" },
+    { name: t("nav.contact"), path: "/contact" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +42,7 @@ export default function Navbar() {
       <div className="w-full flex justify-between items-center px-6 lg:px-12">
         
         {/* Mobile Menu Button */}
-        <div className="w-[26px]">
+        <div className="w-[80px] flex items-center">
           <button 
             className="md:hidden text-white hover:text-brand-gold transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -58,13 +61,15 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Right Spacer */}
-        <div className="w-[26px]"></div>
+        {/* Desktop Right - Language Switcher */}
+        <div className="w-[80px] flex justify-end items-center">
+          <LanguageSwitcher />
+        </div>
       </div>
       
       {/* Bottom tier (Desktop) */}
       <div className={`hidden md:flex justify-between items-center px-6 lg:px-12 transition-all duration-500 ${scrolled ? 'h-0 opacity-0 overflow-hidden pointer-events-none' : 'pt-4 pb-1 opacity-100'} text-[13px] font-light tracking-wide uppercase`}>
-        <div className="flex space-x-10 mx-auto">
+        <div className="flex space-x-10 mx-auto rtl:space-x-reverse">
           {navLinks.map((link) => (
             <Link 
               key={link.name} 
