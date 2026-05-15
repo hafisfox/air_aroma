@@ -46,7 +46,7 @@ const services = [
 
 export default function ScentMarketing() {
   return (
-    <div className="w-full bg-white text-black">
+    <div className="w-full bg-brand-black text-[#f8f8f8]">
       <SEOHead
         title="Scent Marketing Services | Air Aroma — Olfactory Branding for Luxury Brands"
         description="Professional scent marketing solutions for luxury hospitality, premium retail, and corporate environments. Custom olfactory branding that increases dwell time and elevates brand perception."
@@ -55,7 +55,7 @@ export default function ScentMarketing() {
         structuredData={structuredData}
       />
 
-      <section id="scent-marketing-hero" aria-label="Scent marketing introduction" className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-gray-100">
+      <section id="scent-marketing-hero" aria-label="Scent marketing introduction" className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-white/10">
         <div className="max-w-4xl">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -69,14 +69,14 @@ export default function ScentMarketing() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-neutral-600 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
+            className="text-white/60 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
           >
             Scent is the strongest sense tied to memory and emotion. We design olfactory experiences that increase dwell time, elevate brand perception, and forge lasting connections.
           </motion.p>
         </div>
       </section>
 
-      <section id="scent-marketing-services" aria-label="Scent marketing service areas" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto border-b border-gray-100">
+      <section id="scent-marketing-services" aria-label="Scent marketing service areas" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto border-b border-white/10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
           {services.map((item, idx) => (
             <article key={idx} className="group">
@@ -84,7 +84,7 @@ export default function ScentMarketing() {
                 <img src={item.img} alt={item.alt} loading="lazy" className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" />
               </div>
               <h2 className="text-xl font-light mb-4">{item.title}</h2>
-              <p className="text-neutral-500 font-light text-[15px] leading-relaxed">{item.desc}</p>
+              <p className="text-white/50 font-light text-[15px] leading-relaxed">{item.desc}</p>
             </article>
           ))}
         </div>

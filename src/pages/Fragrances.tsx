@@ -65,7 +65,7 @@ const structuredData = [
 
 export default function Fragrances() {
   return (
-    <div className="w-full bg-white text-black">
+    <div className="w-full bg-brand-black text-[#f8f8f8]">
       <SEOHead
         title="Premium Fragrances Collection | Air Aroma — Bespoke Scent Design"
         description="Discover Air Aroma's collection of bespoke fragrances crafted from the finest ingredients. From rich Arabian oud to fresh citrus blends, perfectly tailored for luxury hotels, retail, and corporate spaces."
@@ -74,7 +74,7 @@ export default function Fragrances() {
         structuredData={structuredData}
       />
 
-      <section id="fragrances-hero" aria-label="Fragrances collection introduction" className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-gray-100">
+      <section id="fragrances-hero" aria-label="Fragrances collection introduction" className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-white/10">
         <div className="max-w-4xl">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -88,7 +88,7 @@ export default function Fragrances() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-neutral-600 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
+            className="text-white/60 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
           >
             Crafted for discerning tastes. Our palette ranges from rich woods and resins, to fresh, contemporary citrus blends perfectly tailored for premium spaces.
           </motion.p>
@@ -98,8 +98,8 @@ export default function Fragrances() {
       <section id="fragrances-collection" aria-label="Fragrance collection" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           {fragrances.map((fragrance, idx) => (
-            <article key={idx} className="group flex flex-col md:flex-row gap-8 items-center border-b border-gray-100 pb-12">
-               <div className="w-full md:w-1/2 overflow-hidden aspect-square flex-shrink-0 bg-neutral-50">
+            <article key={idx} className="group flex flex-col md:flex-row gap-8 items-center border-b border-white/10 pb-12">
+               <div className="w-full md:w-1/2 overflow-hidden aspect-square flex-shrink-0 bg-[#111]">
                   <img 
                     src={fragrance.img} 
                     alt={fragrance.alt}
@@ -109,10 +109,10 @@ export default function Fragrances() {
                </div>
                <div className="w-full md:w-1/2">
                   <h2 className="text-2xl font-light mb-2">{fragrance.name}</h2>
-                  <p className="text-neutral-400 uppercase tracking-widest text-[11px] mb-6 font-medium">
+                  <p className="text-white/40 uppercase tracking-widest text-[11px] mb-6 font-medium">
                     {fragrance.notes.join(" • ")}
                   </p>
-                  <p className="text-neutral-500 font-light leading-relaxed text-[15px]">
+                  <p className="text-white/50 font-light leading-relaxed text-[15px]">
                     {fragrance.desc}
                   </p>
                </div>

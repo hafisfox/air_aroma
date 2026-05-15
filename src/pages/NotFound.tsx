@@ -4,7 +4,7 @@ import SEOHead from "../components/SEOHead";
 
 export default function NotFound() {
   return (
-    <div className="w-full bg-white text-black min-h-[70vh] flex flex-col justify-center items-center text-center px-6">
+    <div className="w-full bg-brand-black text-[#f8f8f8] min-h-[70vh] flex flex-col justify-center items-center text-center px-6">
       <SEOHead
         title="Page Not Found | Air Aroma"
         description="The page you are looking for does not exist."
@@ -23,7 +23,7 @@ export default function NotFound() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="text-neutral-600 text-lg font-light tracking-wide mb-12"
+        className="text-white/60 text-lg font-light tracking-wide mb-12"
       >
         The page you are looking for could not be found.
       </motion.p>

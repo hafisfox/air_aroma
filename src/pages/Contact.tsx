@@ -56,7 +56,7 @@ const structuredData = [
 
 export default function Contact() {
   return (
-    <div className="w-full bg-white text-black">
+    <div className="w-full bg-brand-black text-[#f8f8f8]">
       <SEOHead
         title="Contact Air Aroma | Schedule a Fragrance Consultation Worldwide"
         description="Get in touch with Air Aroma for a complimentary scent consultation and fragrance demonstration. Offices in New York, London, and Dubai. Email info@air-aroma.com or call +1 800 123 4567."
@@ -66,7 +66,7 @@ export default function Contact() {
       />
 
       {/* Hero Section */}
-      <section id="contact-hero" aria-label="Contact introduction" className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-gray-100">
+      <section id="contact-hero" aria-label="Contact introduction" className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-white/10">
         <div className="max-w-4xl">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -80,7 +80,7 @@ export default function Contact() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-neutral-600 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
+            className="text-white/60 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
           >
             Experience the power of scent. Schedule a complimentary consultation and fragrance demonstration anywhere in the world.
           </motion.p>
@@ -93,20 +93,20 @@ export default function Contact() {
             <h2 className="text-2xl font-light mb-8 text-neutral-900">Get in Touch</h2>
             <form className="space-y-8" aria-label="Contact form" id="contact-form">
               <div>
-                <label htmlFor="contact-name" className="block text-[11px] uppercase tracking-widest text-neutral-400 mb-2">Name</label>
-                <input id="contact-name" type="text" name="name" autoComplete="name" className="w-full border-b border-gray-200 py-3 text-[15px] focus:outline-none focus:border-black transition-colors bg-transparent font-light" placeholder="Your name" />
+                <label htmlFor="contact-name" className="block text-[11px] uppercase tracking-widest text-white/40 mb-2">Name</label>
+                <input id="contact-name" type="text" name="name" autoComplete="name" className="w-full border-b border-white/20 py-3 text-[15px] focus:outline-none focus:border-black transition-colors bg-transparent font-light" placeholder="Your name" />
               </div>
               <div>
-                <label htmlFor="contact-email" className="block text-[11px] uppercase tracking-widest text-neutral-400 mb-2">Email</label>
-                <input id="contact-email" type="email" name="email" autoComplete="email" className="w-full border-b border-gray-200 py-3 text-[15px] focus:outline-none focus:border-black transition-colors bg-transparent font-light" placeholder="Your email address" />
+                <label htmlFor="contact-email" className="block text-[11px] uppercase tracking-widest text-white/40 mb-2">Email</label>
+                <input id="contact-email" type="email" name="email" autoComplete="email" className="w-full border-b border-white/20 py-3 text-[15px] focus:outline-none focus:border-black transition-colors bg-transparent font-light" placeholder="Your email address" />
               </div>
               <div>
-                <label htmlFor="contact-company" className="block text-[11px] uppercase tracking-widest text-neutral-400 mb-2">Company</label>
-                <input id="contact-company" type="text" name="organization" autoComplete="organization" className="w-full border-b border-gray-200 py-3 text-[15px] focus:outline-none focus:border-black transition-colors bg-transparent font-light" placeholder="Your organization" />
+                <label htmlFor="contact-company" className="block text-[11px] uppercase tracking-widest text-white/40 mb-2">Company</label>
+                <input id="contact-company" type="text" name="organization" autoComplete="organization" className="w-full border-b border-white/20 py-3 text-[15px] focus:outline-none focus:border-black transition-colors bg-transparent font-light" placeholder="Your organization" />
               </div>
               <div>
-                <label htmlFor="contact-message" className="block text-[11px] uppercase tracking-widest text-neutral-400 mb-2">Message</label>
-                <textarea id="contact-message" name="message" className="w-full border-b border-gray-200 py-3 text-[15px] focus:outline-none focus:border-black transition-colors bg-transparent font-light resize-none" rows={4} placeholder="How can we help you?"></textarea>
+                <label htmlFor="contact-message" className="block text-[11px] uppercase tracking-widest text-white/40 mb-2">Message</label>
+                <textarea id="contact-message" name="message" className="w-full border-b border-white/20 py-3 text-[15px] focus:outline-none focus:border-black transition-colors bg-transparent font-light resize-none" rows={4} placeholder="How can we help you?"></textarea>
               </div>
               <button type="button" className="bg-black text-white px-8 py-4 uppercase tracking-widest text-[11px] hover:bg-neutral-800 transition-colors block w-full mt-8">
                 Send Message
@@ -114,10 +114,10 @@ export default function Contact() {
             </form>
           </div>
 
-          <aside className="bg-neutral-50 p-12 flex flex-col justify-center" aria-label="Office locations and contact details">
+          <aside className="bg-[#111] p-12 flex flex-col justify-center" aria-label="Office locations and contact details">
             <div className="mb-12">
               <h3 className="text-xl font-light mb-4">North America</h3>
-              <address className="text-neutral-500 font-light leading-relaxed text-[15px] not-italic">
+              <address className="text-white/50 font-light leading-relaxed text-[15px] not-italic">
                 Global Headquarters<br />
                 New York, NY<br />
               </address>
@@ -125,7 +125,7 @@ export default function Contact() {
             
             <div className="mb-12">
               <h3 className="text-xl font-light mb-4">Europe & Middle East</h3>
-              <address className="text-neutral-500 font-light leading-relaxed text-[15px] not-italic">
+              <address className="text-white/50 font-light leading-relaxed text-[15px] not-italic">
                 Regional Office<br />
                 London, UK / Dubai, UAE<br />
               </address>
@@ -133,9 +133,9 @@ export default function Contact() {
 
             <div>
               <h3 className="text-xl font-light mb-4">Direct Contact</h3>
-              <address className="text-neutral-500 font-light leading-relaxed text-[15px] not-italic">
-                Email: <a href="mailto:info@air-aroma.com" className="underline decoration-1 underline-offset-4 hover:text-black transition-colors">info@air-aroma.com</a><br />
-                Phone: <a href="tel:+18001234567" className="underline decoration-1 underline-offset-4 hover:text-black transition-colors">+1 800 123 4567</a>
+              <address className="text-white/50 font-light leading-relaxed text-[15px] not-italic">
+                Email: <a href="mailto:info@air-aroma.com" className="underline decoration-1 underline-offset-4 hover:text-white transition-colors">info@air-aroma.com</a><br />
+                Phone: <a href="tel:+18001234567" className="underline decoration-1 underline-offset-4 hover:text-white transition-colors">+1 800 123 4567</a>
               </address>
             </div>
           </aside>

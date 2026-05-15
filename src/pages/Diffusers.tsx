@@ -46,7 +46,7 @@ const structuredData = [
 
 export default function Diffusers() {
   return (
-    <div className="w-full bg-white text-black">
+    <div className="w-full bg-brand-black text-[#f8f8f8]">
       <SEOHead
         title="Aroma Diffusers | Air Aroma — Cold Air Diffusion Technology"
         description="State-of-the-art cold air diffusion technology by Air Aroma. HVAC-integrated and standalone aroma diffusers engineered for efficiency and designed for absolute discretion in commercial and luxury spaces."
@@ -55,7 +55,7 @@ export default function Diffusers() {
         structuredData={structuredData}
       />
 
-      <section id="diffusers-hero" aria-label="Aroma diffusers introduction" className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-gray-100">
+      <section id="diffusers-hero" aria-label="Aroma diffusers introduction" className="relative h-[60vh] flex flex-col justify-center px-6 lg:px-12 border-b border-white/10">
         <div className="max-w-4xl">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -69,7 +69,7 @@ export default function Diffusers() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-neutral-600 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
+            className="text-white/60 text-lg sm:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
           >
             State-of-the-art cold air diffusion technology. Engineered for efficiency, designed for absolute discretion.
           </motion.p>
@@ -78,7 +78,7 @@ export default function Diffusers() {
 
       <section id="diffuser-products" aria-label="Diffuser product range" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
         <article className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-32">
-          <div className="aspect-[4/3] overflow-hidden bg-neutral-50">
+          <div className="aspect-[4/3] overflow-hidden bg-[#111]">
             <img 
               src="https://images.unsplash.com/photo-1596462502278-27bf85033e5a?auto=format&fit=crop&q=80" 
               alt="Air Aroma HVAC-integrated cold air diffusion system for large commercial spaces"
@@ -87,12 +87,12 @@ export default function Diffusers() {
             />
           </div>
           <div className="md:pl-12">
-            <p className="uppercase tracking-widest text-[11px] font-medium text-neutral-400 mb-4">Enterprise Grade</p>
+            <p className="uppercase tracking-widest text-[11px] font-medium text-white/40 mb-4">Enterprise Grade</p>
             <h2 className="text-3xl font-light mb-6">HVAC Integration</h2>
-            <p className="text-neutral-500 font-light leading-relaxed mb-8 text-[15px]">
+            <p className="text-white/50 font-light leading-relaxed mb-8 text-[15px]">
               Our flagship HVAC diffusers connect directly to central air conditioning systems. Perfect for massive spaces like mall atriums, mega-hotels, and sprawling office complexes. 
             </p>
-            <ul className="space-y-4 text-neutral-500 font-light text-[14px]" aria-label="HVAC diffuser features">
+            <ul className="space-y-4 text-white/50 font-light text-[14px]" aria-label="HVAC diffuser features">
               <li className="flex items-start">
                 <span className="w-1.5 h-1.5 bg-neutral-300 rounded-full mr-4 mt-2" aria-hidden="true"></span> 
                 Covers up to 10,000 m³ using high-efficiency airflow
@@ -110,7 +110,7 @@ export default function Diffusers() {
         </article>
 
         <article className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div className="md:order-last aspect-[4/3] overflow-hidden bg-neutral-50">
+          <div className="md:order-last aspect-[4/3] overflow-hidden bg-[#111]">
             <img 
               src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&q=80" 
               alt="Air Aroma standalone architectural aroma diffuser in anodized aluminum finish"
@@ -119,12 +119,12 @@ export default function Diffusers() {
             />
           </div>
           <div className="md:pr-12">
-            <p className="uppercase tracking-widest text-[11px] font-medium text-neutral-400 mb-4">Architectural Series</p>
+            <p className="uppercase tracking-widest text-[11px] font-medium text-white/40 mb-4">Architectural Series</p>
             <h2 className="text-3xl font-light mb-6">Standalone Units</h2>
-            <p className="text-neutral-500 font-light leading-relaxed mb-8 text-[15px]">
+            <p className="text-white/50 font-light leading-relaxed mb-8 text-[15px]">
               Sleek, anodized aluminum designs that look like high-end decor. These units offer flexible placement for retail boutiques, VIP rooms, and luxury residences.
             </p>
-            <ul className="space-y-4 text-neutral-500 font-light text-[14px]" aria-label="Standalone diffuser features">
+            <ul className="space-y-4 text-white/50 font-light text-[14px]" aria-label="Standalone diffuser features">
               <li className="flex items-start">
                 <span className="w-1.5 h-1.5 bg-neutral-300 rounded-full mr-4 mt-2" aria-hidden="true"></span> 
                 Plug-and-play simplicity with wall mounting options
