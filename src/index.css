@@ -66,4 +66,16 @@ h1, h2, h3, h4, .font-serif {
 
 html {
   scroll-behavior: smooth;
+  overscroll-behavior: none;
+}
+
+/* Hide scrollbar for a more cinematic feel */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
