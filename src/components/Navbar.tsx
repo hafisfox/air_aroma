@@ -1,12 +1,8 @@
-import { Menu, ShoppingCart, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  STORE_URL,
-  mainNavItems,
-  referenceImages,
-} from "../data/referenceContent";
+import { mainNavItems, referenceImages } from "../data/referenceContent";
 import type { Locale } from "../seo/site";
 import { stripLocalePrefix, withLocale } from "../seo/site";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -48,9 +44,9 @@ export default function Navbar({ locale }: { locale: Locale }) {
           />
         </Link>
 
-        <a className="site-header__cart" href={`${STORE_URL}cart/`} aria-label="Cart">
-          <ShoppingCart size={22} strokeWidth={1.55} />
-        </a>
+        <div className="site-header__actions">
+          <LanguageSwitcher />
+        </div>
       </div>
 
       <nav className="site-header__nav" aria-label="Main navigation">
@@ -68,9 +64,9 @@ export default function Navbar({ locale }: { locale: Locale }) {
             ))}
           </div>
 
-          <a href={STORE_URL} className="site-header__store">
-            {locale === "ar" ? "المتجر" : "Store"}
-          </a>
+          <Link to={withLocale("/contact", locale)} className="site-header__cta">
+            {locale === "ar" ? "استفسر الآن" : "Enquire"}
+          </Link>
         </div>
       </nav>
 
@@ -95,16 +91,12 @@ export default function Navbar({ locale }: { locale: Locale }) {
                 {item.label[locale]}
               </Link>
             ))}
-            <a href={STORE_URL} className="mobile-navigation__link">
-              {locale === "ar" ? "المتجر" : "Store"}
-            </a>
-            <div className="mobile-navigation__utility">
-              <LanguageSwitcher />
-            </div>
+            <Link to={withLocale("/contact", locale)} className="mobile-navigation__link">
+              {locale === "ar" ? "استفسر الآن" : "Enquire"}
+            </Link>
           </motion.nav>
         ) : null}
       </AnimatePresence>
     </header>
   );
 }
-

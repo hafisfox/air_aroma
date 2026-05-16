@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { footerColumns, referenceImages } from "../data/referenceContent";
 import type { Locale } from "../seo/site";
 import { withLocale } from "../seo/site";
-import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Footer({ locale }: { locale: Locale }) {
   return (
@@ -59,7 +58,6 @@ export default function Footer({ locale }: { locale: Locale }) {
             {locale === "ar" ? "جميع الحقوق محفوظة." : "All rights reserved."}
           </p>
           <div className="site-footer__region">
-            <LanguageSwitcher />
             <span>{locale === "ar" ? "اختر البلد أو المنطقة" : "Select country or region"}</span>
             <img
               src={referenceImages.flagUs}
@@ -75,4 +73,3 @@ export default function Footer({ locale }: { locale: Locale }) {
     </footer>
   );
 }
-

@@ -1,11 +1,7 @@
-import { Phone, ShoppingCart } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import SecondaryNav from "../components/SecondaryNav";
-import {
-  AROMAX_STORE_URL,
-  aromaxSecondaryNav,
-  referenceImages,
-} from "../data/referenceContent";
+import { aromaxSecondaryNav, referenceImages } from "../data/referenceContent";
 import {
   getProductById,
   getProductCharacteristics,
@@ -183,7 +179,7 @@ function AromaxDetail({
         </div>
       </section>
 
-      <section id="buy-now" className="quiet-section">
+      <section id="color-options" className="quiet-section">
         <div className="reference-container aromax-colors">
           <div className="aromax-colors__copy">
             <h2>{isArabic ? "عطرك، لونك." : "Your fragrance, your color."}</h2>
@@ -193,9 +189,9 @@ function AromaxDetail({
                 : "The Aromax is available in 4 brilliant color choices. Matching the Aromax to your interior style has never been easier. All that's left to do is pair the right aroma from our home luxury scents range."}
             </p>
           </div>
-          <a href={AROMAX_STORE_URL} className="button-secondary">
-            {isArabic ? "اشتر الآن" : "Buy Now"}
-          </a>
+          <Link to={toLocalePath("/contact#contact-form")} className="button-secondary">
+            {isArabic ? "استفسر عن آروماكس" : "Enquire about Aromax"}
+          </Link>
         </div>
 
         <div className="aromax-color-grid mt-14">
@@ -234,21 +230,20 @@ function AromaxDetail({
 
           <article className="split-action">
             <span className="split-action__icon" aria-hidden="true">
-              <ShoppingCart size={17} />
+              <MessageCircle size={17} />
             </span>
-            <h3>{isArabic ? "تسوق عبر الإنترنت" : "Shop online"}</h3>
+            <h3>{isArabic ? "احصل على توصية" : "Request a recommendation"}</h3>
             <p>
               {isArabic
-                ? "زر متجر Air Aroma لاكتشاف العطور والموزعات وطلبها مباشرة إلى بابك."
-                : "Visit the Air Aroma online store to discover our range of scents and diffusers and get them delivered directly to your door."}
+                ? "أخبرنا عن مساحتك أو علامتك التجارية وسنقترح نظام النشر والرائحة الأنسب."
+                : "Tell us about your space or brand and we'll suggest the right diffuser system and scent route."}
             </p>
-            <a href={AROMAX_STORE_URL} className="button-subtle">
-              {isArabic ? "اشتر آروماكس" : "Buy an Aromax"}
-            </a>
+            <Link to={toLocalePath("/contact#contact-form")} className="button-subtle">
+              {isArabic ? "إرسال استفسار" : "Send enquiry"}
+            </Link>
           </article>
         </div>
       </section>
     </div>
   );
 }
-

@@ -11,7 +11,6 @@ export interface Product {
   characteristicsAr: string[];
   images: { size: string; file: string }[];
   type: "fragrance" | "diffuser";
-  storeUrl?: string;
   placeholderStatus?: "available" | "showcase-only";
   anchorId?: string;
   usedByEn?: string[];
@@ -227,7 +226,6 @@ export const products: Product[] = [
       { size: "Red", file: "/products/AROMAX/Red-Aromax.jpg" },
     ],
     type: "diffuser",
-    storeUrl: "https://www.air-aroma.com/store/aromax/",
     placeholderStatus: "available",
     anchorId: "aromax",
   },

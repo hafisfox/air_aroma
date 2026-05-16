@@ -3,7 +3,7 @@ import type { Locale } from "../seo/site";
 export type AnchorId =
   | "overview"
   | "tech-specs"
-  | "buy-now"
+  | "color-options"
   | "diffusers"
   | "signature-scents"
   | "scents"
@@ -34,9 +34,6 @@ export interface ShowcaseSection {
   tone?: "light" | "warm" | "grey" | "dark";
   placeholder?: boolean;
 }
-
-export const STORE_URL = "https://www.air-aroma.com/store/";
-export const AROMAX_STORE_URL = "https://www.air-aroma.com/store/aromax/";
 
 export const referenceImages = {
   logo: "https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/09/airaroma-logo2x.png",
@@ -81,7 +78,6 @@ export const footerColumns = [
     { label: { en: "Products", ar: "المنتجات" }, path: "/products" },
     { label: { en: "Clients", ar: "العملاء" }, path: "/clients" },
     { label: { en: "Blog", ar: "المدونة" }, path: "/blog" },
-    { label: { en: "Store", ar: "المتجر" }, href: STORE_URL },
   ],
   [
     { label: { en: "About", ar: "عن الشركة" }, path: "/about" },
@@ -116,7 +112,7 @@ export const diffusersSecondaryNav: SecondaryNavItem[] = [
 export const aromaxSecondaryNav: SecondaryNavItem[] = [
   { label: { en: "Overview", ar: "نظرة عامة" }, href: "#overview", anchorId: "overview" },
   { label: { en: "Tech Specs", ar: "المواصفات" }, href: "#tech-specs", anchorId: "tech-specs" },
-  { label: { en: "Buy Now", ar: "اشتر الآن" }, href: "#buy-now", anchorId: "buy-now" },
+  { label: { en: "Colors", ar: "الألوان" }, href: "#color-options", anchorId: "color-options" },
 ];
 
 export const contactSecondaryNav: SecondaryNavItem[] = [
@@ -187,8 +183,8 @@ export const productShowcases: ShowcaseSection[] = [
     },
     image: referenceImages.productAropromo,
     imageAlt: { en: "Aropromo scenting device", ar: "جهاز أروبرومو للتعطير" },
-    href: STORE_URL,
-    cta: { en: "Visit Store", ar: "زيارة المتجر" },
+    href: "/contact#contact-form",
+    cta: { en: "Enquire", ar: "استفسر" },
     tone: "dark",
     placeholder: true,
   },
@@ -217,8 +213,8 @@ export const diffuserShowcases: ShowcaseSection[] = [
     },
     image: referenceImages.diffuserAroscent,
     imageAlt: { en: "Aroscent aroma diffuser", ar: "موزع أروسنت" },
-    href: STORE_URL,
-    cta: { en: "Shop online", ar: "تسوق الآن" },
+    href: "/contact#contact-form",
+    cta: { en: "Enquire", ar: "استفسر" },
     tone: "dark",
     placeholder: true,
   },
@@ -303,4 +299,3 @@ export const officeDetails = {
     ],
   },
 };
-
