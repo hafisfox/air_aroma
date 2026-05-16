@@ -7,6 +7,7 @@ export type AnchorId =
   | "diffusers"
   | "signature-scents"
   | "scents"
+  | "essential-oils"
   | "private-label"
   | "aropromo"
   | "aromax"
@@ -44,6 +45,7 @@ export const referenceImages = {
   productDiffuser: "https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/10/download-7.jpg",
   productSignature: "https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/10/download-8.jpg",
   productScents: "https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/10/download-9.jpg",
+  productEssentialOils: "https://images.unsplash.com/photo-1608528577891-eb0559d18e58?auto=format&fit=crop&w=1600&q=80",
   productPrivateLabel: "https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2025/08/park-hyatt-tile-private-label-.jpg",
   productAropromo: "https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2020/10/download-10.jpg",
   diffuserAromax: "https://d3vawd8bbgt5rs.cloudfront.net/wp-content/uploads/2021/05/tile-product-aromax.jpg",
@@ -98,6 +100,7 @@ export const productsSecondaryNav: SecondaryNavItem[] = [
   { label: { en: "Diffusers", ar: "الموزعات" }, href: "#diffusers", anchorId: "diffusers" },
   { label: { en: "Signature Scents", ar: "العطور المميزة" }, href: "#signature-scents", anchorId: "signature-scents" },
   { label: { en: "Scents", ar: "العطور" }, href: "#scents", anchorId: "scents" },
+  { label: { en: "Essential Oils", ar: "الزيوت الأساسية" }, href: "#essential-oils", anchorId: "essential-oils" },
   { label: { en: "Private Label", ar: "العلامة الخاصة" }, href: "#private-label", anchorId: "private-label" },
   { label: { en: "Aropromo", ar: "أروبرومو" }, href: "#aropromo", anchorId: "aropromo" },
 ];
@@ -125,8 +128,8 @@ export const productShowcases: ShowcaseSection[] = [
     id: "diffusers",
     title: { en: "Diffusers", ar: "الموزعات" },
     description: {
-      en: "Market leading scent diffuser technology. Elegant, discreet and easy to use aroma diffuser systems.",
-      ar: "تقنية نشر عطرية رائدة. أنظمة أنيقة وهادئة وسهلة الاستخدام.",
+      en: "Choose the delivery system that suits the scale, quietness, and operating pattern of your space.",
+      ar: "اختر نظام النشر الذي يناسب حجم المساحة وهدوءها وطريقة تشغيلها اليومية.",
     },
     image: referenceImages.productDiffuser,
     imageAlt: { en: "Aromax diffuser", ar: "موزع آروماكس" },
@@ -138,8 +141,8 @@ export const productShowcases: ShowcaseSection[] = [
     id: "signature-scents",
     title: { en: "Signature Scents", ar: "العطور المميزة" },
     description: {
-      en: "Create your own scent. Perfectly tailored to your brand and exclusively yours to use.",
-      ar: "اصنع عطرك الخاص، مصمماً بدقة لعلامتك ومخصصاً لاستخدامك وحدك.",
+      en: "Develop a fragrance identity that belongs to the brand, the arrival, and the wider guest experience.",
+      ar: "طوّر هوية عطرية تنتمي إلى العلامة ولحظة الوصول وتجربة الضيوف الأوسع.",
     },
     image: referenceImages.productSignature,
     imageAlt: { en: "Air Aroma blotter sample", ar: "عينة عطرية من Air Aroma" },
@@ -151,14 +154,27 @@ export const productShowcases: ShowcaseSection[] = [
     id: "scents",
     title: { en: "Scents", ar: "العطور" },
     description: {
-      en: "A carefully curated range of fragrances from essential oils to bespoke aromas.",
-      ar: "مجموعة منتقاة بعناية من العطور، من الزيوت الأساسية إلى الروائح المصممة خصيصاً.",
+      en: "Review finished scent directions before choosing a more tailored fragrance path.",
+      ar: "راجع اتجاهات عطرية جاهزة قبل اختيار مسار عطري أكثر تخصيصاً.",
     },
     image: referenceImages.productScents,
     imageAlt: { en: "Summerbliss fragrance oil", ar: "زيت عطري من Air Aroma" },
     href: "/fragrances",
     cta: { en: "View", ar: "عرض" },
     tone: "grey",
+  },
+  {
+    id: "essential-oils",
+    title: { en: "Essential Oils", ar: "الزيوت الأساسية" },
+    description: {
+      en: "A quieter route for wellness, residential, and spa environments that need a natural scent layer.",
+      ar: "مسار أكثر هدوءاً لبيئات العافية والسكن والسبا التي تحتاج طبقة عطرية طبيعية.",
+    },
+    image: referenceImages.productEssentialOils,
+    imageAlt: { en: "Essential oils arranged for scent blending", ar: "زيوت أساسية مرتبة للمزج العطري" },
+    href: "/essential-oils",
+    cta: { en: "Explore", ar: "استكشف" },
+    tone: "light",
   },
   {
     id: "private-label",

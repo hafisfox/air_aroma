@@ -76,6 +76,125 @@ export default function Contact() {
         label={isArabic ? "أقسام التواصل" : "Contact sections"}
       />
 
+      <section className="contact-hero">
+        <div className="reference-container section-split">
+          <div className="section-intro">
+            <p className="eyebrow">{isArabic ? "ابدأ التوصية" : "Start the Recommendation"}</p>
+            <h1 className="section-title">
+              {isArabic
+                ? "أخبرنا عن المساحة، وسنساعدك على اختيار العطر ونظام النشر."
+                : "Tell us about the space, and we will help match the scent with the right diffuser system."}
+            </h1>
+          </div>
+          <p className="section-body">
+            {isArabic
+              ? "كلما كان الموجز أوضح، أصبح من الأسهل تضييق الاختيار بين عطر جاهز أو عطر مميز أو زيوت أساسية أو جهاز نشر محدد."
+              : "The clearer the brief, the easier it becomes to narrow the route between a finished fragrance, a signature scent, essential oils, or a specific diffuser system."}
+          </p>
+        </div>
+      </section>
+
+      <section id="contact-form" className="quiet-section">
+        <div className="reference-container contact-layout">
+          <aside className="contact-brief">
+            <p className="eyebrow">{isArabic ? "ما الذي يساعدنا؟" : "What Helps Us Respond"}</p>
+            <ul>
+              <li>{isArabic ? "نوع المساحة أو المشروع" : "The type of space or project"}</li>
+              <li>{isArabic ? "البلد وحجم التغطية التقريبي" : "Country and approximate coverage size"}</li>
+              <li>{isArabic ? "هل تبحث عن عطر أو جهاز أو كليهما" : "Whether you need fragrance, hardware, or both"}</li>
+            </ul>
+          </aside>
+
+          <form
+            className="contact-form"
+            method="post"
+            action="/api/contact"
+            onSubmit={handleSubmit}
+          >
+            <input type="hidden" name="locale" value={locale} />
+            <div className="field hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input id="website" name="website" tabIndex={-1} autoComplete="off" />
+            </div>
+
+            <div className="contact-form__grid">
+              <div className="contact-form__row">
+                <Field label={isArabic ? "الاسم الأول" : "First name"} name="firstName" required />
+                <Field label={isArabic ? "اسم العائلة" : "Last name"} name="lastName" required />
+              </div>
+              <Field label={isArabic ? "الشركة" : "Company"} name="company" />
+
+              <div className="field">
+                <label>
+                  {isArabic ? "البريد الإلكتروني" : "Email"} <span className="required">*</span>
+                </label>
+                <div className="contact-form__row">
+                  <div>
+                    <input name="email" type="email" required autoComplete="email" />
+                    <p className="field__hint">{isArabic ? "أدخل البريد الإلكتروني" : "Enter Email"}</p>
+                  </div>
+                  <div>
+                    <input name="emailConfirm" type="email" required autoComplete="email" />
+                    <p className="field__hint">{isArabic ? "تأكيد البريد الإلكتروني" : "Confirm Email"}</p>
+                  </div>
+                </div>
+              </div>
+
+              <Field label={isArabic ? "الهاتف" : "Phone"} name="phone" type="tel" />
+
+              <div className="contact-form__row">
+                <SelectField
+                  label={isArabic ? "البلد" : "Country"}
+                  name="country"
+                  options={countries}
+                  required
+                />
+                <SelectField
+                  label={isArabic ? "الولاية / المنطقة" : "State"}
+                  name="state"
+                  options={states}
+                  required
+                />
+              </div>
+              <SelectField
+                label={isArabic ? "سبب التواصل" : "Reason"}
+                name="reason"
+                options={[...contactReasons]}
+                required
+              />
+
+              <div className="field">
+                <label htmlFor="message">
+                  {isArabic ? "الرسالة" : "Message"} <span className="required">*</span>
+                </label>
+                <textarea id="message" name="message" required />
+              </div>
+
+              <label className="checkbox-field">
+                <input name="subscribe" type="checkbox" defaultChecked />
+                <span>{isArabic ? "الاشتراك في النشرة الإخبارية" : "Subscribe to our newsletter"}</span>
+              </label>
+
+              {status ? (
+                <div className="form-status" data-tone={status.ok ? "success" : "error"} role="status">
+                  {status.message}
+                </div>
+              ) : null}
+
+              <button type="submit" className="reference-button w-fit min-w-[160px]" disabled={isSubmitting}>
+                {isSubmitting
+                  ? isArabic
+                    ? "جار الإرسال..."
+                    : "Submitting..."
+                  : isArabic
+                    ? "إرسال"
+                    : "Submit"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
       <section id="locations" className="contact-offices">
         <div className="reference-container contact-offices__grid">
           {[officeDetails.local, officeDetails.corporate].map((office) => (
@@ -85,92 +204,6 @@ export default function Contact() {
             </article>
           ))}
         </div>
-      </section>
-
-      <section id="contact-form" className="quiet-section">
-        <form
-          className="contact-form"
-          method="post"
-          action="/api/contact"
-          onSubmit={handleSubmit}
-        >
-          <input type="hidden" name="locale" value={locale} />
-          <div className="field hidden" aria-hidden="true">
-            <label htmlFor="website">Website</label>
-            <input id="website" name="website" tabIndex={-1} autoComplete="off" />
-          </div>
-
-          <div className="contact-form__grid">
-            <Field label={isArabic ? "الاسم الأول" : "First name"} name="firstName" required />
-            <Field label={isArabic ? "اسم العائلة" : "Last name"} name="lastName" required />
-            <Field label={isArabic ? "الشركة" : "Company"} name="company" />
-
-            <div className="field">
-              <label>
-                {isArabic ? "البريد الإلكتروني" : "Email"} <span className="required">*</span>
-              </label>
-              <div className="contact-form__row">
-                <div>
-                  <input name="email" type="email" required autoComplete="email" />
-                  <p className="field__hint">{isArabic ? "أدخل البريد الإلكتروني" : "Enter Email"}</p>
-                </div>
-                <div>
-                  <input name="emailConfirm" type="email" required autoComplete="email" />
-                  <p className="field__hint">{isArabic ? "تأكيد البريد الإلكتروني" : "Confirm Email"}</p>
-                </div>
-              </div>
-            </div>
-
-            <Field label={isArabic ? "الهاتف" : "Phone"} name="phone" type="tel" />
-
-            <SelectField
-              label={isArabic ? "البلد" : "Country"}
-              name="country"
-              options={countries}
-              required
-            />
-            <SelectField
-              label={isArabic ? "الولاية / المنطقة" : "State"}
-              name="state"
-              options={states}
-              required
-            />
-            <SelectField
-              label={isArabic ? "سبب التواصل" : "Reason"}
-              name="reason"
-              options={[...contactReasons]}
-              required
-            />
-
-            <div className="field">
-              <label htmlFor="message">
-                {isArabic ? "الرسالة" : "Message"} <span className="required">*</span>
-              </label>
-              <textarea id="message" name="message" required />
-            </div>
-
-            <label className="checkbox-field">
-              <input name="subscribe" type="checkbox" defaultChecked />
-              <span>{isArabic ? "الاشتراك في النشرة الإخبارية" : "Subscribe to our newsletter"}</span>
-            </label>
-
-            {status ? (
-              <div className="form-status" data-tone={status.ok ? "success" : "error"} role="status">
-                {status.message}
-              </div>
-            ) : null}
-
-            <button type="submit" className="reference-button w-fit min-w-[160px]" disabled={isSubmitting}>
-              {isSubmitting
-                ? isArabic
-                  ? "جار الإرسال..."
-                  : "Submitting..."
-                : isArabic
-                  ? "إرسال"
-                  : "Submit"}
-            </button>
-          </div>
-        </form>
       </section>
     </div>
   );
@@ -223,4 +256,3 @@ function SelectField({
     </div>
   );
 }
-

@@ -1,132 +1,182 @@
 import { Link } from "react-router-dom";
-import type { CSSProperties } from "react";
 import {
   clientLogos,
   featuredClients,
   referenceImages,
 } from "../data/referenceContent";
+import {
+  getProductById,
+  getProductCategoryLabel,
+  getProductDetailBasePath,
+  getProductName,
+  type Product,
+} from "../data/products";
 import { useLocaleRouting } from "../lib/localeRouting";
 
-const slides = [
+const pathwayItems = [
   {
-    title: { en: "Sensory\n/\nBranding", ar: "العلامات\n/\nالحسية" },
+    label: { en: "Diffusion Systems", ar: "أنظمة النشر" },
+    title: { en: "Match the hardware to the space.", ar: "طابق الجهاز مع المساحة." },
     description: {
-      en: "Crafting signature fragrances for iconic brands.",
-      ar: "نصنع عطوراً مميزة لعلامات أيقونية.",
+      en: "For homes, hospitality, retail, and larger commercial zones.",
+      ar: "للمنازل والضيافة والتجزئة والمناطق التجارية الأكبر.",
     },
-    image: referenceImages.homeHeroLana,
+    href: "/diffusers",
   },
   {
-    title: { en: "Custom\nScent Design", ar: "تصميم\nعطور مخصصة" },
+    label: { en: "Fragrance Library", ar: "مكتبة العطور" },
+    title: { en: "Start with a clear scent direction.", ar: "ابدأ باتجاه عطري واضح." },
     description: {
-      en: "Discover your distinctive brand scent.",
-      ar: "اكتشف الرائحة الخاصة بعلامتك.",
+      en: "Review finished blends by mood, notes, and project fit.",
+      ar: "راجع خلطات جاهزة بحسب المزاج والنفحات وملاءمة المشروع.",
     },
-    image: referenceImages.homeHeroCustomScent,
+    href: "/fragrances",
   },
   {
-    title: { en: "Premium\nScent Diffusion", ar: "نشر عطري\nفاخر" },
+    label: { en: "Signature Scent", ar: "العطر المميز" },
+    title: { en: "Create a fragrance that belongs to the brand.", ar: "اصنع عطراً ينتمي إلى العلامة." },
     description: {
-      en: "High-performance diffusers that make an impact.",
-      ar: "موزعات عالية الأداء تترك أثراً واضحاً.",
+      en: "For projects that need a private scent identity and rollout plan.",
+      ar: "للمشاريع التي تحتاج هوية عطرية خاصة وخطة تطبيق واضحة.",
     },
-    image: referenceImages.aromaxHero,
-  },
-  {
-    title: { en: "Signature\nFragrance", ar: "العطر\nالمميز" },
-    description: {
-      en: "Design a fragrance that belongs to your brand.",
-      ar: "صمم عطراً ينتمي إلى علامتك.",
-    },
-    image: referenceImages.productSignature,
+    href: "/signature-scent",
   },
 ];
+
+const featuredProductIds = ["aromax", "amber-grand", "white-tea"];
+
+function isProduct(product: Product | undefined): product is Product {
+  return Boolean(product);
+}
 
 export default function Home() {
   const { locale, toLocalePath } = useLocaleRouting();
   const isArabic = locale === "ar";
+  const featuredProducts = featuredProductIds.map(getProductById).filter(isProduct);
 
   return (
     <div>
-      <section className="home-hero" aria-label={isArabic ? "أبرز محتوى" : "Featured content"}>
-        {slides.map((slide, index) => (
-          <article
-            key={slide.title.en}
-            className="home-hero__slide"
-            style={{ "--slide-index": index } as CSSProperties}
-            aria-hidden={index !== 0}
-          >
+      <section className="home-hero" aria-label={isArabic ? "مقدمة الموقع" : "Site introduction"}>
+        <div className="reference-container--wide home-hero__grid">
+          <div className="home-hero__copy">
+            <p className="eyebrow">{isArabic ? "Air Aroma" : "Air Aroma"}</p>
+            <h1 className="home-hero__title">
+              {isArabic
+                ? "روائح ومنتجات نشر مصممة للمساحات التي يجب أن تُتذكر."
+                : "Fragrance and diffusion systems for spaces designed to be remembered."}
+            </h1>
+            <p>
+              {isArabic
+                ? "نساعد فرق الضيافة والتجزئة والمساكن الراقية على اختيار العطر ونظام النشر المناسبين، من أول اتجاه عطري إلى تجربة يومية قابلة للتشغيل."
+                : "We help hospitality, retail, and premium residential teams choose the right scent direction and delivery system, from the first fragrance brief to a daily operating experience."}
+            </p>
+            <div className="action-row">
+              <Link to={toLocalePath("/products")} className="button-primary">
+                {isArabic ? "استكشف المنتجات" : "Explore Products"}
+              </Link>
+              <Link to={toLocalePath("/contact")} className="button-secondary">
+                {isArabic ? "ناقش مشروعك" : "Discuss Your Project"}
+              </Link>
+            </div>
+          </div>
+
+          <div className="home-hero__media">
             <img
-              src={slide.image}
-              alt=""
+              src={referenceImages.productsHero}
+              alt={
+                isArabic
+                  ? "منتجات Air Aroma للعطور ونشر الروائح"
+                  : "Air Aroma fragrance and scent diffusion products"
+              }
               width="1800"
               height="900"
-              fetchPriority={index === 0 ? "high" : undefined}
-              loading={index === 0 ? "eager" : "lazy"}
+              fetchPriority="high"
               decoding="async"
             />
-            <div className="home-hero__content">
-              <h1 className="home-hero__title">{slide.title[locale]}</h1>
-              <p>{slide.description[locale]}</p>
-            </div>
-          </article>
-        ))}
-        <div className="home-hero__dots" aria-hidden="true">
-          {slides.map((slide) => (
-            <span key={slide.title.en} />
+          </div>
+        </div>
+      </section>
+
+      <section className="quiet-section quiet-section--compact">
+        <div className="reference-container product-pathways">
+          {pathwayItems.map((item) => (
+            <Link
+              key={item.href}
+              to={toLocalePath(item.href)}
+              className="pathway-card"
+            >
+              <span className="eyebrow">{item.label[locale]}</span>
+              <h2>{item.title[locale]}</h2>
+              <p>{item.description[locale]}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="quiet-section quiet-section--border">
+        <div className="reference-container section-split">
+          <div className="section-intro">
+            <p className="eyebrow">{isArabic ? "مجموعة مختارة" : "Curated Starting Points"}</p>
+            <h2 className="section-title">
+              {isArabic
+                ? "ابدأ بمنتج واضح، ثم ضيّق القرار مع الفريق."
+                : "Start with a tangible product, then narrow the decision with the team."}
+            </h2>
+          </div>
+          <p className="section-body">
+            {isArabic
+              ? "تعرض هذه المجموعة ثلاثة مسارات مختلفة: جهاز نشر، عطر دافئ، واتجاه أكثر نقاءً وهدوءاً."
+              : "This selection shows three different routes: a diffuser system, a warmer scent profile, and a cleaner quieter fragrance direction."}
+          </p>
+        </div>
+
+        <div className="reference-container--wide featured-product-grid mt-12">
+          {featuredProducts.map((product) => (
+            <Link
+              key={product.id}
+              to={toLocalePath(getProductDetailBasePath(product))}
+              className="featured-product"
+            >
+              <div className="featured-product__image">
+                <img
+                  src={product.images[0].file}
+                  alt={getProductName(product, locale)}
+                  width="900"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className="featured-product__content">
+                <span className="eyebrow">{getProductCategoryLabel(product, locale)}</span>
+                <h3>{getProductName(product, locale)}</h3>
+                <span className="button-subtle">
+                  {isArabic ? "عرض التفاصيل" : "View details"}
+                </span>
+              </div>
+            </Link>
           ))}
         </div>
       </section>
 
       <section className="quiet-section">
-        <div className="reference-container">
-          <div className="section-intro section-intro--center">
+        <div className="reference-container section-split">
+          <div className="section-intro">
+            <p className="eyebrow">{isArabic ? "ثقة العملاء" : "Client Confidence"}</p>
             <h2 className="section-title">
               {isArabic
-                ? "وكالة تسويق روائح، تصمم العطور للعلامات الفاخرة"
-                : "Scent Marketing Agency, designing fragrances for luxury brands"}
+                ? "تجارب عطرية لعلامات تحتاج حضوراً ثابتاً كل يوم."
+                : "Scent experiences for brands that need presence to hold every day."}
             </h2>
           </div>
-          <div className="reference-copy mt-10">
-            <p>
-              {isArabic
-                ? "Air Aroma هي وكالة رائدة في تسويق الروائح؛ نصمم عطوراً مخصصة للعلامات الفاخرة حول العالم. مع أكثر من 25 عاماً من الخبرة في حلول الهواء المعطر وشبكة عالمية متميزة، نساعد العلامات على خلق تجارب لا تنسى من خلال الرائحة."
-                : "Air Aroma is the leading scent marketing agency; we design custom fragrances for luxury brands around the world. With over 25 years experience offering scented air solutions, combined with an unrivaled global network, we help brands create memorable experiences for their customers through scent."}
-            </p>
-            <p className="mt-6">
-              {isArabic ? "تشمل خبراتنا تصميم " : "Our expertise includes custom "}
-              <Link to={toLocalePath("/signature-scent")}>
-                {isArabic ? "العطر المميز" : "Signature Scent"}
-              </Link>
-              {isArabic ? "، و" : " design, natural "}
-              <Link to={toLocalePath("/essential-oils")}>
-                {isArabic ? "الزيوت الأساسية" : "Essential Oils"}
-              </Link>
-              {isArabic ? " وأنظمة " : " and premium "}
-              <Link to={toLocalePath("/diffusers")}>
-                {isArabic ? "موزعات العطور" : "Aroma Diffuser"}
-              </Link>
-              {isArabic ? " الفاخرة. " : " Systems. "}
-              <Link to={toLocalePath("/contact")}>
-                {isArabic ? "اتصل" : "Contact"}
-              </Link>
-              {isArabic
-                ? " بنا لإنشاء عطر علامتك المميز."
-                : " us to create your brand's Signature Fragrance."}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="quiet-section quiet-section--border">
-        <div className="section-intro section-intro--center mb-16">
-          <h2 className="section-title">{isArabic ? "أبرز العملاء" : "Featured Clients"}</h2>
+          <Link to={toLocalePath("/clients")} className="button-secondary">
+            {isArabic ? "عرض العملاء" : "View Clients"}
+          </Link>
         </div>
 
-        <div className="client-mosaic">
+        <div className="client-proof mt-12">
           {featuredClients.map((client) => (
-            <article key={client.name} className="client-mosaic__feature">
-              <div className="client-mosaic__title">{client.name}</div>
+            <article key={client.name} className="client-proof__feature">
               <img
                 src={client.image}
                 alt={client.alt[locale]}
@@ -135,12 +185,14 @@ export default function Home() {
                 loading="lazy"
                 decoding="async"
               />
+              <h3>{client.name}</h3>
             </article>
           ))}
 
-          {clientLogos.map((logo) => (
-            <div key={logo.name} className="client-mosaic__logo">
+          <div className="client-proof__logos">
+            {clientLogos.map((logo) => (
               <img
+                key={logo.name}
                 src={logo.image}
                 alt={logo.name}
                 width="260"
@@ -148,38 +200,34 @@ export default function Home() {
                 loading="lazy"
                 decoding="async"
               />
-            </div>
-          ))}
-
-          <Link to={toLocalePath("/clients")} className="client-mosaic__more">
-            {isArabic ? "عرض المزيد من العملاء" : "View more clients"}
-          </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="quiet-section">
+      <section className="quiet-section quiet-section--border">
         <div className="editorial-teasers">
           <article className="editorial-teaser">
-            <h3>{isArabic ? "العطور الزهرية" : "Floral Fragrances"}</h3>
+            <h3>{isArabic ? "هل تحتاج إلى عطر خاص؟" : "Need a private scent identity?"}</h3>
             <p>
               {isArabic
-                ? "تلتقط الخلاصات الزهرية نوعاً من الجمال الذي تعبّر عنه الرائحة بأفضل شكل."
-                : "Floral essences capture a type of beauty best expressed in scent. The ancient pull to the sweet, tart, or hazy aroma of a blossoming floral has connected humans to their environment for thousands of years. Florals..."}
+                ? "حوّل شخصية العلامة أو المكان إلى اتجاه عطري يمكن مراجعته وتشغيله بثقة."
+                : "Turn the character of a brand or destination into a fragrance direction that can be reviewed and operated with confidence."}
             </p>
-            <Link to={toLocalePath("/fragrances")} className="button-subtle">
-              {isArabic ? "اقرأ المزيد" : "Read More"}
+            <Link to={toLocalePath("/signature-scent")} className="button-subtle">
+              {isArabic ? "العطر المميز" : "Signature Scent"}
             </Link>
           </article>
 
           <article className="editorial-teaser">
-            <h3>{isArabic ? "من يستخدم الروائح؟" : "Who's Scenting?"}</h3>
+            <h3>{isArabic ? "هل تبحث عن توصية؟" : "Looking for a recommendation?"}</h3>
             <p>
               {isArabic
-                ? "نصمم الروائح للفنادق والمتاجر والمؤسسات المالية وعلامات الأزياء والفعاليات والمنازل والمزيد."
-                : "We design scents for hotels, retail stores, financial institutions, fashion brands, events, residential homes and so much more."}
+                ? "أخبرنا عن المساحة، وسنساعدك على اختيار العطر ونظام النشر المناسبين."
+                : "Tell us about the space, and we will help match the fragrance route with the right diffuser system."}
             </p>
-            <Link to={toLocalePath("/scent-marketing")} className="button-subtle">
-              {isArabic ? "اقرأ المزيد" : "Read More"}
+            <Link to={toLocalePath("/contact#contact-form")} className="button-subtle">
+              {isArabic ? "ابدأ الاستفسار" : "Start Enquiry"}
             </Link>
           </article>
         </div>

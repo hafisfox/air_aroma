@@ -4,11 +4,17 @@ import SecondaryNav from "../components/SecondaryNav";
 import { aromaxSecondaryNav, referenceImages } from "../data/referenceContent";
 import {
   getProductById,
+  getProductCategoryLabel,
   getProductCharacteristics,
   getProductCollectionBasePath,
+  getProductDetailBasePath,
+  getProductIfYouEnjoyed,
   getProductName,
   getProductNotes,
   getProductStory,
+  getProductUsedBy,
+  getRelatedProducts,
+  type Product,
 } from "../data/products";
 import { useLocaleRouting } from "../lib/localeRouting";
 import NotFound from "./NotFound";
@@ -31,73 +37,161 @@ export default function ProductDetail() {
   }
 
   if (product.id === "aromax") {
-    return <AromaxDetail locale={locale} isArabic={isArabic} toLocalePath={toLocalePath} />;
+    return (
+      <AromaxDetail
+        product={product}
+        locale={locale}
+        isArabic={isArabic}
+        toLocalePath={toLocalePath}
+      />
+    );
   }
 
   const name = getProductName(product, locale);
   const notes = getProductNotes(product, locale);
   const characteristics = getProductCharacteristics(product, locale);
+  const usedBy = getProductUsedBy(product, locale);
+  const ifYouEnjoyed = getProductIfYouEnjoyed(product, locale);
+  const relatedProducts = getRelatedProducts(product, 3);
 
   return (
     <div>
-      <section className="quiet-section">
-        <div className="reference-container simple-page__grid">
-          <div>
-            <p className="eyebrow">{isArabic ? "عطر من Air Aroma" : "Air Aroma scent"}</p>
-            <h1 className="simple-page__title mt-4">{name}</h1>
+      <section className="product-detail-hero">
+        <div className="reference-container--wide product-detail-hero__grid">
+          <div className="product-detail-hero__media">
+            <img
+              src={product.images[0].file}
+              alt={name}
+              width="1100"
+              height="1300"
+              fetchPriority="high"
+              decoding="async"
+            />
           </div>
-          <div className="simple-page__body">
+          <div className="product-detail-hero__copy">
+            <p className="eyebrow">{getProductCategoryLabel(product, locale)}</p>
+            <h1>{name}</h1>
             <p>{getProductStory(product, locale)}</p>
+            <div className="product-chip-row">
+              {characteristics.map((item) => (
+                <span key={item} className="chip">
+                  {item}
+                </span>
+              ))}
+            </div>
             <div className="action-row">
-              <Link to={toLocalePath("/contact")} className="button-primary">
-                {isArabic ? "تواصل معنا" : "Contact"}
+              <Link to={toLocalePath("/contact#contact-form")} className="button-primary">
+                {isArabic ? "اطلب توصية" : "Request Recommendation"}
               </Link>
               <Link
                 to={toLocalePath(getProductCollectionBasePath(product))}
                 className="button-secondary"
               >
-                {isArabic ? "العودة إلى المجموعة" : "Back to collection"}
+                {isArabic ? "العودة إلى المجموعة" : "Back to Collection"}
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="quiet-section pt-0">
-        <div className="reference-container--wide simple-card-grid">
-          <article className="simple-card">
+      <section className="quiet-section quiet-section--compact">
+        <div className="reference-container--wide product-detail-grid">
+          <article className="product-detail-panel product-detail-panel--image">
             <img
-              src={product.images[0].file}
-              alt={name}
+              src={product.images[1]?.file ?? product.images[0].file}
+              alt={`${name} ${product.images[1]?.size ?? product.images[0].size}`}
               width="900"
               height="900"
               loading="lazy"
               decoding="async"
             />
           </article>
-          <article className="simple-card">
-            <h2>{isArabic ? "النفحات" : "Notes"}</h2>
-            <p>{notes.length > 0 ? notes.join(", ") : characteristics.join(", ")}</p>
-          </article>
-          <article className="simple-card">
-            <h2>{isArabic ? "الطابع" : "Characteristics"}</h2>
-            <p>{characteristics.join(", ")}</p>
-          </article>
+
+          <DetailPanel title={isArabic ? "النفحات" : "Notes"} items={notes} />
+          <DetailPanel title={isArabic ? "الطابع" : "Character"} items={characteristics} />
+          <DetailPanel
+            title={isArabic ? "مناسب لـ" : "Often Used For"}
+            items={usedBy.length > 0 ? usedBy : characteristics.slice(0, 2)}
+          />
+          <DetailPanel
+            title={isArabic ? "إذا أعجبك" : "If You Enjoyed"}
+            items={ifYouEnjoyed.length > 0 ? ifYouEnjoyed : [isArabic ? "العطور الفندقية الهادئة" : "quiet hotel scent profiles"]}
+          />
         </div>
       </section>
+
+      {relatedProducts.length > 0 ? (
+        <section className="quiet-section quiet-section--border">
+          <div className="reference-container section-split mb-12">
+            <div className="section-intro">
+              <p className="eyebrow">{isArabic ? "عطور قريبة" : "Related Scents"}</p>
+              <h2 className="section-title">
+                {isArabic
+                  ? "استكشف اتجاهات أخرى قبل تثبيت المسار."
+                  : "Compare nearby directions before fixing the route."}
+              </h2>
+            </div>
+            <Link to={toLocalePath("/fragrances")} className="button-secondary">
+              {isArabic ? "عرض كل العطور" : "View All Fragrances"}
+            </Link>
+          </div>
+
+          <div className="reference-container--wide related-product-grid">
+            {relatedProducts.map((related) => (
+              <Link
+                key={related.id}
+                to={toLocalePath(getProductDetailBasePath(related))}
+                className="related-product-card"
+              >
+                <img
+                  src={related.images[0].file}
+                  alt={getProductName(related, locale)}
+                  width="800"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div>
+                  <span className="eyebrow">{getProductCategoryLabel(related, locale)}</span>
+                  <h3>{getProductName(related, locale)}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }
 
+function DetailPanel({ title, items }: { title: string; items: string[] }) {
+  return (
+    <article className="product-detail-panel">
+      <h2>{title}</h2>
+      <div className="product-chip-row">
+        {items.map((item) => (
+          <span key={item} className="chip">
+            {item}
+          </span>
+        ))}
+      </div>
+    </article>
+  );
+}
+
 function AromaxDetail({
+  product,
   locale,
   isArabic,
   toLocalePath,
 }: {
+  product: Product;
   locale: "en" | "ar";
   isArabic: boolean;
   toLocalePath: (pathname: string) => string;
 }) {
+  const characteristics = getProductCharacteristics(product, locale);
+
   return (
     <div>
       <SecondaryNav
@@ -106,55 +200,64 @@ function AromaxDetail({
         label={isArabic ? "محتوى آروماكس" : "Aromax sections"}
       />
 
-      <section className="page-hero page-hero--dark aromax-hero">
-        <div className="page-hero__media">
-          <img
-            src={referenceImages.aromaxHero}
-            alt=""
-            width="1800"
-            height="900"
-            fetchPriority="high"
-            decoding="async"
-          />
+      <section className="product-detail-hero product-detail-hero--diffuser">
+        <div className="reference-container--wide product-detail-hero__grid">
+          <div className="product-detail-hero__media">
+            <img
+              src="/products/AROMAX/Aromax-Silver-01.jpg"
+              alt={getProductName(product, locale)}
+              width="1100"
+              height="1300"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </div>
+          <div className="product-detail-hero__copy">
+            <p className="eyebrow">{isArabic ? "موزع عطور فاخر" : "Luxury Diffuser"}</p>
+            <h1>{isArabic ? "آروماكس" : "Aromax"}</h1>
+            <p>
+              {isArabic
+                ? "موزع منزلي مستقل يجمع بين هيكل ألمنيوم بسيط وتشغيل هادئ وإخراج عطري قابل للضبط."
+                : "A standalone home diffuser with a minimal aluminum body, quiet operation, and adjustable scent output."}
+            </p>
+            <div className="product-chip-row">
+              {characteristics.map((item) => (
+                <span key={item} className="chip">
+                  {item}
+                </span>
+              ))}
+            </div>
+            <div className="action-row">
+              <Link to={toLocalePath("/contact#contact-form")} className="button-primary">
+                {isArabic ? "استفسر عن آروماكس" : "Enquire About Aromax"}
+              </Link>
+              <Link to={toLocalePath("/diffusers")} className="button-secondary">
+                {isArabic ? "كل الموزعات" : "All Diffusers"}
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className="page-hero__content">
-          <h1>{isArabic ? "آروماكس" : "Aromax"}</h1>
-          <p className="text-[clamp(18px,2vw,22px)] leading-[1.24]">
+      </section>
+
+      <section id="overview" className="quiet-section quiet-section--compact">
+        <div className="reference-container section-split">
+          <div className="section-intro">
+            <p className="eyebrow">{isArabic ? "نظرة عامة" : "Overview"}</p>
+            <h2 className="section-title">
+              {isArabic
+                ? "موزع بسيط للمساحات التي تحتاج حضوراً عطرياً هادئاً."
+                : "A simple diffuser for spaces that need a quiet scent presence."}
+            </h2>
+          </div>
+          <p className="section-body">
             {isArabic
-              ? "آروماكس أكثر من مجرد موزع عطر. إنه التصميم والابتكار والطبيعة معاً لصنع أفضل موزع منزلي."
-              : "The Aromax aromatherapy diffuser is more than just an aroma diffuser. It's design, innovation and nature coming together to create the best home scent diffuser."}
+              ? "تصميمه المستقل يجعله مناسباً للمنازل والشقق والمكاتب الصغيرة، مع مؤقت مدمج ومخرجات عطرية يمكن ضبطها بحسب إيقاع الاستخدام."
+              : "Its standalone design suits homes, apartments, and smaller offices, with a built-in timer and fragrance output that can be adjusted to the rhythm of use."}
           </p>
         </div>
       </section>
 
-      <section id="overview" className="quiet-section">
-        <div className="reference-container aromax-overview">
-          <h2>{isArabic ? "تعرّف على آروماكس. ناعم، أنيق، وجاهز لتعطير منزلك." : "Meet the Aromax. Smooth, stylish, and ready to fragrance your home."}</h2>
-          <div className="aromax-overview__copy">
-            <p>
-              {isArabic
-                ? "اصنع أجواء عطرية مثالية مع موزع آروماكس. التصميم البسيط والهيكل المصنوع من الألمنيوم عالي الجودة يجعلان آروماكس موزعاً منزلياً أساسياً ينسجم مع أي مساحة داخلية."
-                : "Create the perfect scented ambience with the Aromax aromatherapy diffuser. The minimalist design and high end aluminum enclosure of the Aromax make it the essential home diffuser to complement any interior."}
-            </p>
-            <p className="mt-6">
-              {isArabic
-                ? "مع تشغيل فائق الهدوء ومؤقت مدمج وإخراج عطري قابل للتعديل، يمكنك الحفاظ على رائحة مساحتك رائعة وبأسلوب أنيق."
-                : "With whisper silent operation, a built-in timer and an adjustable scent output, you can keep your space smelling great in style."}
-            </p>
-          </div>
-          <img
-            className="aromax-overview__product"
-            src="/products/AROMAX/Aromax-Silver-01.jpg"
-            alt={isArabic ? "موزع آروماكس الفضي" : "Silver Aromax diffuser"}
-            width="900"
-            height="900"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      </section>
-
-      <section id="tech-specs" className="quiet-section pt-0">
+      <section id="tech-specs" className="quiet-section quiet-section--border">
         <div className="aromax-story">
           <img
             src={referenceImages.aromaxContent}
@@ -167,34 +270,30 @@ function AromaxDetail({
           <div className="aromax-story__copy">
             <h2>
               {isArabic
-                ? "يتحد الشكل والوظيفة لصنع موزع عطر يبدو بجمال رائحته."
-                : "Form and function combine to create a fragrance diffuser that looks as good as it smells."}
+                ? "الشكل والوظيفة يعملان كجزء من المساحة."
+                : "Form and function work as part of the room."}
             </h2>
             <p>
               {isArabic
-                ? "عند تصميم آروماكس، كان الهدف هو صنع أفضل موزع زيوت للمنازل والشقق والمكاتب الصغيرة. يمنحه الشكل المنحني إحساساً ودوداً وهادئاً، بينما تعكس وظائفه البسيطة عناية واضحة بالتفاصيل."
-                : "When we set out to design the Aromax, we wanted to create the best oil diffuser ideal for apartments, homes or small offices. The curved shaped design gives the Aromax an inviting and approachable feel, creating a sense of understated luxury. The craftsmanship and attention to detail is reflected in the Aromax's functions which are simple and user friendly."}
+                ? "الهدف من آروماكس هو نشر العطر دون أن يفرض الجهاز نفسه بصرياً. الحواف الناعمة والهيكل المعدني الهادئ يجعلان حضوره قريباً من قطعة داخلية مختارة بعناية."
+                : "Aromax is built to scent the space without visually dominating it. Its soft shape and quiet metal body make it feel closer to a considered interior object."}
             </p>
           </div>
         </div>
       </section>
 
       <section id="color-options" className="quiet-section">
-        <div className="reference-container aromax-colors">
-          <div className="aromax-colors__copy">
-            <h2>{isArabic ? "عطرك، لونك." : "Your fragrance, your color."}</h2>
-            <p>
-              {isArabic
-                ? "يتوفر آروماكس بأربعة ألوان رائعة. لم يكن تنسيق آروماكس مع أسلوب منزلك أسهل من الآن. كل ما تبقى هو اختيار الرائحة المناسبة من مجموعة العطور المنزلية الفاخرة."
-                : "The Aromax is available in 4 brilliant color choices. Matching the Aromax to your interior style has never been easier. All that's left to do is pair the right aroma from our home luxury scents range."}
-            </p>
+        <div className="reference-container section-split mb-12">
+          <div className="section-intro">
+            <p className="eyebrow">{isArabic ? "الألوان" : "Color Options"}</p>
+            <h2 className="section-title">{isArabic ? "اختر اللون قبل اختيار الرائحة." : "Choose the finish before the fragrance."}</h2>
           </div>
           <Link to={toLocalePath("/contact#contact-form")} className="button-secondary">
-            {isArabic ? "استفسر عن آروماكس" : "Enquire about Aromax"}
+            {isArabic ? "استفسر عن آروماكس" : "Enquire About Aromax"}
           </Link>
         </div>
 
-        <div className="aromax-color-grid mt-14">
+        <div className="aromax-color-grid">
           {aromaxColorTiles.map((tile) => (
             <article key={tile.label.en} className="aromax-color-card">
               <h3>{tile.label[locale]}</h3>
@@ -220,8 +319,8 @@ function AromaxDetail({
             <h3>{isArabic ? "اتصل بنا" : "Call us"}</h3>
             <p>
               {isArabic
-                ? "تواصل مع ممثل Air Aroma اليوم وسنساعدك على تعطير مساحتك بأفضل شكل."
-                : "Contact an Air Aroma representative today and we'll get your business smelling great in no time."}
+                ? "تواصل مع ممثل Air Aroma وسنساعدك على اختيار الجهاز والرائحة."
+                : "Contact an Air Aroma representative and we will help match the diffuser with the right scent."}
             </p>
             <Link to={toLocalePath("/contact")} className="button-subtle">
               {isArabic ? "اتصل" : "Contact"}
@@ -235,8 +334,8 @@ function AromaxDetail({
             <h3>{isArabic ? "احصل على توصية" : "Request a recommendation"}</h3>
             <p>
               {isArabic
-                ? "أخبرنا عن مساحتك أو علامتك التجارية وسنقترح نظام النشر والرائحة الأنسب."
-                : "Tell us about your space or brand and we'll suggest the right diffuser system and scent route."}
+                ? "أخبرنا عن المساحة وسنقترح نظام النشر والرائحة الأنسب."
+                : "Tell us about the space and we will suggest the right diffuser system and scent route."}
             </p>
             <Link to={toLocalePath("/contact#contact-form")} className="button-subtle">
               {isArabic ? "إرسال استفسار" : "Send enquiry"}

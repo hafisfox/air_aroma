@@ -3,12 +3,21 @@ import SecondaryNav from "../components/SecondaryNav";
 import {
   diffuserShowcases,
   diffusersSecondaryNav,
+  referenceImages,
 } from "../data/referenceContent";
+import {
+  getProductById,
+  getProductCharacteristics,
+  getProductDetailBasePath,
+  getProductName,
+} from "../data/products";
 import { useLocaleRouting } from "../lib/localeRouting";
 
 export default function Diffusers() {
   const { locale, toLocalePath } = useLocaleRouting();
   const isArabic = locale === "ar";
+  const aromax = getProductById("aromax");
+  const secondaryDiffusers = diffuserShowcases.filter((item) => item.id !== "aromax");
 
   return (
     <div>
@@ -18,68 +27,128 @@ export default function Diffusers() {
         label={isArabic ? "أنواع الموزعات" : "Diffuser types"}
       />
 
-      <section className="quiet-section">
-        <div className="section-intro section-intro--center">
-          <h1 className="section-title">{isArabic ? "الموزعات" : "Diffusers"}</h1>
-          <p className="section-body text-[clamp(28px,4vw,42px)] leading-[1.22]">
-            {isArabic
-              ? "اكتشف منتجات موزعات Air Aroma. أنظمة عطرية أنيقة وهادئة وسهلة الاستخدام. عندما لا يكفي إلا أفضل موزع."
-              : "Discover Air Aroma scent diffuser products. Elegant, discreet, and easy to use aroma diffuser systems. When only the best diffuser will do."}
-          </p>
+      <section className="product-hub-hero product-hub-hero--quiet">
+        <div className="reference-container--wide product-hub-hero__grid">
+          <div className="product-hub-hero__copy">
+            <p className="eyebrow">{isArabic ? "أنظمة النشر" : "Diffusion Systems"}</p>
+            <h1>
+              {isArabic
+                ? "أجهزة عطرية هادئة تجعل الاختيار مرتبطاً بالمساحة، لا بالشكل فقط."
+                : "Quiet scent hardware chosen by space, scale, and operating rhythm."}
+            </h1>
+            <p>
+              {isArabic
+                ? "من جهاز منزلي مستقل إلى أنظمة تغطي مناطق أكبر، الهدف هو اختيار طريقة نشر تبدو طبيعية داخل التجربة اليومية."
+                : "From standalone home diffusion to systems for larger zones, the goal is to choose a delivery method that feels natural inside the daily experience."}
+            </p>
+            <div className="action-row">
+              <Link to={toLocalePath("/products/aromax")} className="button-primary">
+                {isArabic ? "عرض آروماكس" : "View Aromax"}
+              </Link>
+              <Link to={toLocalePath("/contact#contact-form")} className="button-secondary">
+                {isArabic ? "اطلب توصية" : "Request Recommendation"}
+              </Link>
+            </div>
+          </div>
+
+          <div className="product-hub-hero__media">
+            <img
+              src={referenceImages.aromaxHero}
+              alt={isArabic ? "موزع آروماكس داخل مساحة داخلية" : "Aromax diffuser in an interior space"}
+              width="1800"
+              height="900"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </div>
         </div>
       </section>
 
-      <section className="quiet-section pt-0">
-        <div className="diffuser-grid">
-          {diffuserShowcases.map((item) => {
-            const content = (
-              <>
-                <div className="diffuser-card__content">
-                  <h2>{item.title[locale]}</h2>
-                  <p>{item.description[locale]}</p>
-                  <span>{item.cta[locale]}</span>
-                </div>
+      {aromax ? (
+        <section id="aromax" className="quiet-section quiet-section--compact">
+          <article className="reference-container--wide featured-diffuser">
+            <div className="featured-diffuser__image">
+              <img
+                src="/products/AROMAX/Aromax-Silver-01.jpg"
+                alt={getProductName(aromax, locale)}
+                width="900"
+                height="900"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div className="featured-diffuser__content">
+              <p className="eyebrow">{isArabic ? "الجهاز الرئيسي" : "Flagship Diffuser"}</p>
+              <h2>{getProductName(aromax, locale)}</h2>
+              <p>
+                {isArabic
+                  ? "تصميم مستقل للمنازل والمكاتب الصغيرة، مع تشغيل هادئ وإخراج عطري قابل للضبط."
+                  : "A standalone diffuser for homes and smaller offices, with quiet operation and adjustable scent output."}
+              </p>
+              <div className="product-chip-row">
+                {getProductCharacteristics(aromax, locale).map((item) => (
+                  <span key={item} className="chip">
+                    {item}
+                  </span>
+                ))}
+              </div>
+              <Link
+                to={toLocalePath(getProductDetailBasePath(aromax))}
+                className="button-primary"
+              >
+                {isArabic ? "استكشف آروماكس" : "Explore Aromax"}
+              </Link>
+            </div>
+          </article>
+        </section>
+      ) : null}
+
+      <section className="quiet-section quiet-section--border">
+        <div className="reference-container section-split mb-12">
+          <div className="section-intro">
+            <p className="eyebrow">{isArabic ? "خيارات أخرى" : "Other Systems"}</p>
+            <h2 className="section-title">
+              {isArabic
+                ? "أنظمة تحتاج توصية بحسب الحجم والاستخدام."
+                : "Systems best matched through scale and use case."}
+            </h2>
+          </div>
+          <p className="section-body">
+            {isArabic
+              ? "تساعد هذه الخيارات في تغطية المساحات الأكبر أو المتطلبات التجارية، لذلك يبدأ مسارها عادة من موجز سريع."
+              : "These options support larger spaces or commercial requirements, so their path usually starts with a short project brief."}
+          </p>
+        </div>
+
+        <div className="product-route-grid product-route-grid--three">
+          {secondaryDiffusers.map((item) => (
+            <Link
+              key={item.id}
+              id={item.id}
+              to={toLocalePath(item.href)}
+              className="product-route-card"
+              data-tone={item.tone}
+            >
+              <div className="product-route-card__media">
                 <img
-                  className="diffuser-card__image"
                   src={item.image}
                   alt={item.imageAlt[locale]}
-                  width="800"
-                  height="800"
+                  width="900"
+                  height="900"
                   loading="lazy"
                   decoding="async"
                 />
-              </>
-            );
-
-            if (item.href.startsWith("http")) {
-              return (
-                <a
-                  key={item.id}
-                  id={item.id}
-                  href={item.href}
-                  className="diffuser-card"
-                  data-tone={item.tone}
-                >
-                  {content}
-                </a>
-              );
-            }
-
-            return (
-              <Link
-                key={item.id}
-                id={item.id}
-                to={toLocalePath(item.href)}
-                className="diffuser-card"
-                data-tone={item.tone}
-              >
-                {content}
-              </Link>
-            );
-          })}
+              </div>
+              <div className="product-route-card__content">
+                <span className="eyebrow">{isArabic ? "استفسار موجه" : "Guided Enquiry"}</span>
+                <h2>{item.title[locale]}</h2>
+                <p>{item.description[locale]}</p>
+                <span className="button-subtle">{item.cta[locale]}</span>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
     </div>
   );
 }
-
